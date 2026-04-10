@@ -12,58 +12,65 @@
       font-family: Arial, sans-serif;
     }
 
-    /* 🔥 Fondo adaptado tipo app/juego */
+    /* 🖼️ FONDO OPTIMIZADO */
     #fondo {
       position: fixed;
-      top: 0;
-      left: 0;
-
-      width: 100vw;
-      height: 100vh;
+      inset: 0;
+      width: 100%;
+      height: 100%;
 
       object-fit: cover;
       object-position: center;
+
+      transform: scale(1.02); /* elimina bordes raros */
     }
 
-    /* 🎮 Botón JUGAR centrado */
-    #btn-jugar {
+    /* 🔥 CONTENEDOR CENTRADO */
+    .container {
       position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
+      inset: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1;
+    }
 
-      padding: 20px 60px;
-      font-size: 28px;
-      font-weight: bold;
+    /* 🎮 BOTÓN JUGAR PRO */
+    #btn-jugar {
+      font-size: clamp(22px, 4vw, 42px);
+      padding: clamp(14px, 2vw, 26px) clamp(50px, 6vw, 90px);
 
-      background: rgba(255, 0, 0, 0.85);
+      font-weight: 900;
+      letter-spacing: 2px;
+
       color: white;
+      background: linear-gradient(145deg, #ff0000, #b30000);
 
-      border: 3px solid white;
-      border-radius: 12px;
+      border: 3px solid rgba(255,255,255,0.9);
+      border-radius: 14px;
 
       cursor: pointer;
-      z-index: 1;
 
-      transition: 0.2s;
+      box-shadow: 
+        0 10px 25px rgba(0,0,0,0.6),
+        inset 0 0 10px rgba(255,255,255,0.15);
+
+      text-shadow: 0 2px 5px rgba(0,0,0,0.6);
+
+      transition: transform 0.15s ease, filter 0.15s ease;
     }
 
+    /* ✨ hover estilo juego */
     #btn-jugar:hover {
-      transform: translate(-50%, -50%) scale(1.05);
-      background: rgba(255, 0, 0, 1);
+      transform: scale(1.08);
+      filter: brightness(1.15);
     }
 
+    /* 👇 click */
     #btn-jugar:active {
-      transform: translate(-50%, -50%) scale(0.98);
+      transform: scale(0.98);
     }
 
-    /* 📱 Ajuste para móviles */
-    @media (max-width: 600px) {
-      #btn-jugar {
-        font-size: 20px;
-        padding: 15px 40px;
-      }
-    }
   </style>
 </head>
 
@@ -71,9 +78,11 @@
 
   <img id="fondo" src="./inicio1.png">
 
-  <button id="btn-jugar" onclick="alert('Iniciando juego...')">
-    JUGAR
-  </button>
+  <div class="container">
+    <button id="btn-jugar" onclick="alert('Iniciando juego...')">
+      JUGAR
+    </button>
+  </div>
 
 </body>
 </html>
