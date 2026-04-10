@@ -12,7 +12,7 @@
       background: black;
     }
 
-    /* 🔥 CONTENEDOR DEL FONDO */
+    /* 🔥 FONDO */
     .fondo {
       position: fixed;
       inset: 0;
@@ -22,16 +22,20 @@
       background: black;
     }
 
+    /* 🖼️ IMAGEN MÁS VIVA */
     .fondo img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
+      width: 110%;
+      height: 110%;
+      object-fit: cover; /* 🔥 clave para que llene toda la pantalla */
+      filter: brightness(1.25) contrast(1.2) saturate(1.2);
+      transform: scale(1.05);
     }
 
+    /* 🔥 OVERLAY MÁS SUAVE */
     .overlay {
       position: absolute;
       inset: 0;
-      background: rgba(0,0,0,0.5);
+      background: rgba(0,0,0,0.25);
     }
 
     /* 🎮 CONTENIDO */
@@ -45,7 +49,7 @@
       z-index: 2;
     }
 
-    /* 🎮 BOTÓN VERDE */
+    /* 🎮 BOTÓN */
     #btn-jugar {
       font-size: clamp(28px, 4.5vw, 60px);
       padding: clamp(18px, 3vw, 32px) clamp(70px, 10vw, 140px);
@@ -61,12 +65,12 @@
       cursor: pointer;
 
       transition: 0.25s ease;
-      box-shadow: 0 0 20px rgba(46, 204, 113, 0.4);
+      box-shadow: 0 0 25px rgba(46, 204, 113, 0.5);
     }
 
     #btn-jugar:hover {
       transform: scale(1.08);
-      box-shadow: 0 0 30px rgba(46, 204, 113, 0.7);
+      box-shadow: 0 0 40px rgba(46, 204, 113, 0.8);
     }
 
   </style>
