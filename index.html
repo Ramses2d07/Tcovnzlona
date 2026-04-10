@@ -12,18 +12,20 @@
       font-family: Arial, sans-serif;
     }
 
+    /* 🔥 Fondo adaptado tipo app/juego */
     #fondo {
       position: fixed;
       top: 0;
       left: 0;
+
       width: 100vw;
       height: 100vh;
+
       object-fit: cover;
       object-position: center;
-      z-index: 0;
     }
 
-    /* 🔥 BOTÓN JUGAR */
+    /* 🎮 Botón JUGAR centrado */
     #btn-jugar {
       position: absolute;
       top: 50%;
@@ -34,14 +36,13 @@
       font-size: 28px;
       font-weight: bold;
 
-      background: rgba(255, 0, 0, 0.8);
+      background: rgba(255, 0, 0, 0.85);
       color: white;
 
       border: 3px solid white;
       border-radius: 12px;
 
       cursor: pointer;
-
       z-index: 1;
 
       transition: 0.2s;
@@ -54,6 +55,14 @@
 
     #btn-jugar:active {
       transform: translate(-50%, -50%) scale(0.98);
+    }
+
+    /* 📱 Ajuste para móviles */
+    @media (max-width: 600px) {
+      #btn-jugar {
+        font-size: 20px;
+        padding: 15px 40px;
+      }
     }
   </style>
 </head>
