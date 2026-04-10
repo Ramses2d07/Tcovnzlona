@@ -6,13 +6,8 @@
   <style>
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
       height: 100vh;
       overflow: hidden;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
       background: black;
     }
 
@@ -27,55 +22,39 @@
       z-index: -1;
     }
 
-    /* 🎮 Contenedor encima del fondo */
-    .inicio {
-      position: absolute;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-    }
-
-    /* 🔥 Botón adaptado al fondo */
-    button {
+    /* 🎯 ÁREA INVISIBLE DEL BOTÓN */
+    #boton-invisible {
       position: absolute;
 
-      /* 👉 AJUSTA ESTO SEGÚN TU IMAGEN */
-      top: 65%;   /* sube o baja el botón */
+      /* 🔥 AJUSTA ESTO HASTA QUE COINCIDA CON TU IMAGEN */
+      top: 62%;
       left: 50%;
       transform: translate(-50%, -50%);
 
-      padding: 15px 35px;
-      font-size: 20px;
+      width: 220px;   /* tamaño del botón real */
+      height: 60px;   /* altura del botón real */
+
+      background: transparent;
       border: none;
-      border-radius: 12px;
-
-      background: rgba(255, 193, 7, 0.9);
-      color: black;
-      font-weight: bold;
-
       cursor: pointer;
-    }
-
-    button:hover {
-      transform: translate(-50%, -50%) scale(1.05);
     }
 
     #juego {
       display: none;
+      color: white;
+      text-align: center;
+      margin-top: 50px;
     }
   </style>
 </head>
 
 <body>
 
-  <!-- 🖼️ Fondo -->
+  <!-- 🖼️ Fondo con botón dibujado -->
   <img id="fondo" src="./inicio.png">
 
-  <!-- 🎮 Botón encima del fondo -->
-  <div class="inicio">
-    <button onclick="entrarJuego()">Jugar</button>
-  </div>
+  <!-- 🎯 Botón invisible encima del botón de la imagen -->
+  <button id="boton-invisible" onclick="entrarJuego()"></button>
 
   <!-- 🎮 Juego -->
   <div id="juego">
@@ -84,7 +63,8 @@
 
   <script>
     function entrarJuego() {
-      document.querySelector(".inicio").style.display = "none";
+      document.getElementById("boton-invisible").style.display = "none";
+      document.getElementById("fondo").style.display = "none";
       document.getElementById("juego").style.display = "block";
     }
   </script>
