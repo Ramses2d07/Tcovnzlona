@@ -7,7 +7,11 @@
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background: linear-gradient(45deg, #0f5132, #198754);
+
+      /* 🔥 PARCHE: imagen de fondo */
+      background: url("inicio.svg") no-repeat center center;
+      background-size: cover;
+
       color: white;
       display: flex;
       justify-content: center;
@@ -22,6 +26,7 @@
       border-radius: 20px;
       box-shadow: 0 0 20px rgba(0,0,0,0.5);
       width: 300px;
+      transition: 0.5s;
     }
 
     h1 {
@@ -57,13 +62,18 @@
       font-size: 12px;
       opacity: 0.7;
     }
+
+    /* 🎮 Juego oculto */
+    #juego {
+      display: none;
+    }
   </style>
 </head>
 
 <body>
 
   <!-- 🟢 INICIO -->
-  <div class="inicio">
+  <div class="inicio" id="pantallaInicio">
     <h1>🃏 Truco Venezolano</h1>
     <p>El juego de cartas más clásico en versión digital</p>
 
@@ -74,9 +84,16 @@
     </div>
   </div>
 
+  <!-- 🎮 JUEGO -->
+  <div id="juego">
+    <h1>🎮 Juego iniciado</h1>
+    <p>Aquí va tu juego</p>
+  </div>
+
   <script>
     function entrarJuego() {
-      alert("Aquí luego cargaremos el juego 🎮");
+      document.getElementById("pantallaInicio").style.display = "none";
+      document.getElementById("juego").style.display = "block";
     }
   </script>
 
