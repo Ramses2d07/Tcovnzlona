@@ -16,23 +16,18 @@
     .fondo {
       position: fixed;
       inset: 0;
-
       display: flex;
       justify-content: center;
       align-items: center;
-
       background: black;
     }
 
-    /* 🖼️ IMAGEN RESPONSIVE REAL */
     .fondo img {
       width: 100%;
       height: 100%;
-
-      object-fit: contain; /* 🔥 CLAVE REAL */
+      object-fit: contain;
     }
 
-    /* 🔥 CAPA OSCURA */
     .overlay {
       position: absolute;
       inset: 0;
@@ -43,12 +38,10 @@
     .container {
       position: absolute;
       inset: 0;
-
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-
       z-index: 2;
     }
 
@@ -59,28 +52,31 @@
       color: gold;
       margin-bottom: 40px;
       text-shadow: 0 0 15px rgba(0,0,0,0.9);
+      letter-spacing: 2px;
     }
 
-    /* 🎮 BOTÓN */
+    /* 🎮 BOTÓN NUEVO VERDE */
     #btn-jugar {
-      font-size: clamp(26px, 4vw, 55px);
-      padding: clamp(16px, 3vw, 30px) clamp(60px, 10vw, 120px);
+      font-size: clamp(28px, 4.5vw, 60px);
+      padding: clamp(18px, 3vw, 32px) clamp(70px, 10vw, 140px);
 
       font-weight: 900;
       color: white;
 
-      background: linear-gradient(145deg, #c40000, #7a0000);
+      background: linear-gradient(145deg, #2ecc71, #1e8f4f);
 
-      border: 3px solid gold;
-      border-radius: 14px;
+      border: 4px solid #f1c40f; /* amarillo */
+      border-radius: 16px;
 
       cursor: pointer;
 
-      transition: 0.2s;
+      transition: 0.25s ease;
+      box-shadow: 0 0 20px rgba(46, 204, 113, 0.4);
     }
 
     #btn-jugar:hover {
-      transform: scale(1.07);
+      transform: scale(1.08);
+      box-shadow: 0 0 30px rgba(46, 204, 113, 0.7);
     }
 
   </style>
@@ -88,7 +84,7 @@
 
 <body>
 
-  <!-- 🔥 FONDO BIEN CONTROLADO -->
+  <!-- 🔥 FONDO -->
   <div class="fondo">
     <img src="./inicio11.png">
     <div class="overlay"></div>
