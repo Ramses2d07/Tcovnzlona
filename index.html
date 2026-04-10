@@ -9,24 +9,47 @@
       height: 100vh;
       overflow: hidden;
       font-family: Arial, sans-serif;
-
-      /* 🔥 FONDO PROFESIONAL */
-      background: 
-        linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.8)),
-        url('./inicio11.png');
-
-      background-size: cover;       /* se adapta */
-      background-position: center;  /* siempre centrado */
-      background-repeat: no-repeat; /* no se repite */
+      background: black;
     }
 
-    /* 🔥 CONTENEDOR */
-    .container {
+    /* 🔥 CONTENEDOR DEL FONDO */
+    .fondo {
+      position: fixed;
+      inset: 0;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      background: black;
+    }
+
+    /* 🖼️ IMAGEN RESPONSIVE REAL */
+    .fondo img {
+      width: 100%;
       height: 100%;
+
+      object-fit: contain; /* 🔥 CLAVE REAL */
+    }
+
+    /* 🔥 CAPA OSCURA */
+    .overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+    }
+
+    /* 🎮 CONTENIDO */
+    .container {
+      position: absolute;
+      inset: 0;
+
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
+
+      z-index: 2;
     }
 
     /* 🎴 TÍTULO */
@@ -34,12 +57,8 @@
       font-size: clamp(35px, 6vw, 80px);
       font-weight: 900;
       color: gold;
-      text-shadow: 
-        0 0 10px rgba(255,215,0,0.8),
-        0 0 25px rgba(255,215,0,0.6),
-        0 5px 10px rgba(0,0,0,0.9);
       margin-bottom: 40px;
-      text-align: center;
+      text-shadow: 0 0 15px rgba(0,0,0,0.9);
     }
 
     /* 🎮 BOTÓN */
@@ -48,9 +67,8 @@
       padding: clamp(16px, 3vw, 30px) clamp(60px, 10vw, 120px);
 
       font-weight: 900;
-      letter-spacing: 2px;
-
       color: white;
+
       background: linear-gradient(145deg, #c40000, #7a0000);
 
       border: 3px solid gold;
@@ -58,20 +76,11 @@
 
       cursor: pointer;
 
-      box-shadow: 
-        0 0 15px rgba(255,215,0,0.4),
-        0 10px 25px rgba(0,0,0,0.8);
-
-      transition: all 0.2s ease;
+      transition: 0.2s;
     }
 
     #btn-jugar:hover {
       transform: scale(1.07);
-      filter: brightness(1.2);
-    }
-
-    #btn-jugar:active {
-      transform: scale(0.95);
     }
 
   </style>
@@ -79,10 +88,17 @@
 
 <body>
 
+  <!-- 🔥 FONDO BIEN CONTROLADO -->
+  <div class="fondo">
+    <img src="./inicio11.png">
+    <div class="overlay"></div>
+  </div>
+
+  <!-- 🎮 CONTENIDO -->
   <div class="container">
     <div class="titulo">TRUCO VENEZOLANO</div>
 
-    <button id="btn-jugar" onclick="alert('Iniciando juego...')">
+    <button id="btn-jugar">
       JUGAR
     </button>
   </div>
