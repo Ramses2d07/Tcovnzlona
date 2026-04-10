@@ -9,31 +9,51 @@
       height: 100vh;
       overflow: hidden;
       background: black;
+      font-family: Arial, sans-serif;
     }
 
     #fondo {
       position: fixed;
       top: 0;
       left: 0;
-      width: 100%;
-      height: 100%;
+      width: 100vw;
+      height: 100vh;
       object-fit: cover;
+      object-position: center;
+      z-index: 0;
     }
 
-    /* 🔴 BOTÓN TEMPORAL VISIBLE */
-    #boton-invisible {
+    /* 🔥 BOTÓN JUGAR */
+    #btn-jugar {
       position: absolute;
-      top: 65%;
+      top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
 
-      width: 220px;
-      height: 60px;
+      padding: 20px 60px;
+      font-size: 28px;
+      font-weight: bold;
 
-      background: red;
-      border: 2px solid white;
+      background: rgba(255, 0, 0, 0.8);
+      color: white;
+
+      border: 3px solid white;
+      border-radius: 12px;
+
       cursor: pointer;
-      opacity: 0.7;
+
+      z-index: 1;
+
+      transition: 0.2s;
+    }
+
+    #btn-jugar:hover {
+      transform: translate(-50%, -50%) scale(1.05);
+      background: rgba(255, 0, 0, 1);
+    }
+
+    #btn-jugar:active {
+      transform: translate(-50%, -50%) scale(0.98);
     }
   </style>
 </head>
@@ -42,8 +62,8 @@
 
   <img id="fondo" src="./inicio1.png">
 
-  <button id="boton-invisible" onclick="alert('click funcionando')">
-    CLICK
+  <button id="btn-jugar" onclick="alert('Iniciando juego...')">
+    JUGAR
   </button>
 
 </body>
