@@ -44,7 +44,7 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      gap: 20px; /* 🔥 separación entre botones */
+      gap: 20px;
       z-index: 2;
     }
 
@@ -72,7 +72,7 @@
       box-shadow: 0 0 40px rgba(46, 204, 113, 0.8);
     }
 
-    /* 🌐 BOTÓN IDIOMA (2 escalas más pequeño) */
+    /* 🌐 IDIOMA */
     #lang {
       font-size: clamp(14px, 2.5vw, 28px);
       padding: clamp(10px, 1.5vw, 18px) clamp(25px, 4vw, 60px);
@@ -101,6 +101,10 @@
 
 <body>
 
+  <!-- 🔊 SONIDOS MODERNOS -->
+  <audio id="clickSound" src="click-modern.mp3"></audio>
+  <audio id="selectSound" src="select-modern.mp3"></audio>
+
   <!-- 🔥 FONDO -->
   <div class="fondo">
     <img src="./inicio11.png">
@@ -110,7 +114,7 @@
   <!-- 🎮 CONTENIDO -->
   <div class="container">
 
-    <button id="btn-jugar">JUGAR</button>
+    <button id="btn-jugar" onclick="jugar()">JUGAR</button>
 
     <select id="lang" onchange="cambiarIdioma()">
       <option value="es">Español</option>
@@ -120,7 +124,21 @@
   </div>
 
   <script>
+    function playSound(id) {
+      const sound = document.getElementById(id);
+      sound.currentTime = 0;
+      sound.volume = 0.6;
+      sound.play();
+    }
+
+    function jugar() {
+      playSound("clickSound");
+      // window.location.href = "game.html";
+    }
+
     function cambiarIdioma() {
+      playSound("selectSound");
+
       const lang = document.getElementById("lang").value;
       const btn = document.getElementById("btn-jugar");
 
