@@ -16,7 +16,7 @@
       overflow: hidden;
     }
 
-    /* 🖼️ Imagen de fondo REAL */
+    /* 🖼️ Fondo con tu SVG */
     #fondo {
       position: fixed;
       top: 0;
@@ -35,6 +35,16 @@
       width: 300px;
     }
 
+    h1 {
+      margin-bottom: 10px;
+      font-size: 32px;
+    }
+
+    p {
+      font-size: 16px;
+      opacity: 0.9;
+    }
+
     button {
       margin-top: 20px;
       padding: 12px 20px;
@@ -45,6 +55,18 @@
       background: #ffc107;
       color: black;
       font-weight: bold;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+      background: #ffcd39;
+    }
+
+    .footer {
+      margin-top: 15px;
+      font-size: 12px;
+      opacity: 0.7;
     }
 
     #juego {
@@ -55,18 +77,25 @@
 
 <body>
 
-  <!-- 🔥 AQUÍ VA TU SVG -->
-  <img id="fondo" src="archivo_00000000e36471f68594f16fe26dea91 (1).svg">
+  <!-- 🔥 AQUÍ TU IMAGEN -->
+  <img id="fondo" src="inicio.svg">
 
+  <!-- 🟢 INICIO -->
   <div class="inicio" id="pantallaInicio">
     <h1>🃏 Truco Venezolano</h1>
     <p>El juego de cartas más clásico en versión digital</p>
 
     <button onclick="entrarJuego()">Jugar</button>
+
+    <div class="footer">
+      Presiona jugar para comenzar
+    </div>
   </div>
 
+  <!-- 🎮 JUEGO -->
   <div id="juego">
     <h1>🎮 Juego iniciado</h1>
+    <p>Aquí va tu juego</p>
   </div>
 
   <script>
