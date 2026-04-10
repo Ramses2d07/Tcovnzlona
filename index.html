@@ -8,15 +8,16 @@
       margin: 0;
       font-family: Arial, sans-serif;
       color: white;
+      height: 100vh;
+      overflow: hidden;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
       text-align: center;
-      overflow: hidden;
+      background: black;
     }
 
-    /* 🔥 Fondo correcto para GitHub */
+    /* 🔥 Fondo SVG */
     #fondo {
       position: fixed;
       top: 0;
@@ -31,18 +32,7 @@
       background: rgba(0,0,0,0.6);
       padding: 40px;
       border-radius: 20px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.5);
       width: 300px;
-    }
-
-    h1 {
-      margin-bottom: 10px;
-      font-size: 32px;
-    }
-
-    p {
-      font-size: 16px;
-      opacity: 0.9;
     }
 
     button {
@@ -57,11 +47,6 @@
       font-weight: bold;
     }
 
-    button:hover {
-      transform: scale(1.05);
-      background: #ffcd39;
-    }
-
     #juego {
       display: none;
     }
@@ -70,8 +55,8 @@
 
 <body>
 
-  <!-- 🔥 IMAGEN (GitHub Pages compatible) -->
-  <img id="fondo" src="inicio.svg">
+  <!-- 🔥 PARCHE DEFINITIVO -->
+  <img id="fondo" src="./inicio.svg" onerror="this.style.display='none'">
 
   <!-- 🟢 INICIO -->
   <div class="inicio" id="pantallaInicio">
