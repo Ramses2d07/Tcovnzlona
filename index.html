@@ -7,7 +7,6 @@
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      color: white;
       height: 100vh;
       overflow: hidden;
       display: flex;
@@ -17,6 +16,7 @@
       background: black;
     }
 
+    /* 🖼️ Fondo */
     #fondo {
       position: fixed;
       top: 0;
@@ -27,23 +27,38 @@
       z-index: -1;
     }
 
+    /* 🎮 Contenedor encima del fondo */
     .inicio {
-      background: rgba(0,0,0,0.6);
-      padding: 40px;
-      border-radius: 20px;
-      width: 300px;
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
     }
 
+    /* 🔥 Botón adaptado al fondo */
     button {
-      margin-top: 20px;
-      padding: 12px 20px;
-      font-size: 18px;
+      position: absolute;
+
+      /* 👉 AJUSTA ESTO SEGÚN TU IMAGEN */
+      top: 65%;   /* sube o baja el botón */
+      left: 50%;
+      transform: translate(-50%, -50%);
+
+      padding: 15px 35px;
+      font-size: 20px;
       border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      background: #ffc107;
+      border-radius: 12px;
+
+      background: rgba(255, 193, 7, 0.9);
       color: black;
       font-weight: bold;
+
+      cursor: pointer;
+    }
+
+    button:hover {
+      transform: translate(-50%, -50%) scale(1.05);
     }
 
     #juego {
@@ -54,23 +69,22 @@
 
 <body>
 
+  <!-- 🖼️ Fondo -->
   <img id="fondo" src="./inicio.png">
 
-  <div class="inicio" id="pantallaInicio">
-    <h1>🃏 Truco Venezolano</h1>
-    <p>El juego de cartas más clásico en versión digital</p>
-
+  <!-- 🎮 Botón encima del fondo -->
+  <div class="inicio">
     <button onclick="entrarJuego()">Jugar</button>
   </div>
 
+  <!-- 🎮 Juego -->
   <div id="juego">
     <h1>🎮 Juego iniciado</h1>
-    <p>Aquí va tu juego</p>
   </div>
 
   <script>
     function entrarJuego() {
-      document.getElementById("pantallaInicio").style.display = "none";
+      document.querySelector(".inicio").style.display = "none";
       document.getElementById("juego").style.display = "block";
     }
   </script>
