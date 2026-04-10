@@ -1,0 +1,16 @@
+<h1>🃏 Truco Venezolano</h1>
+
+<button onclick="jugar()">Jugar carta</button>
+
+<p id="resultado"></p>
+
+<script>
+function jugar() {
+  let cartas = ["1 de Espada", "7 de Oro", "3 de Copa"];
+
+  let carta = cartas[Math.floor(Math.random() * cartas.length)];
+
+  document.getElementById("resultado").innerText =
+    "Sacaste: " + carta;
+}
+</script>
