@@ -63,7 +63,7 @@
 
       cursor: pointer;
 
-      transition: 0.25s ease;
+      transition: 0.15s ease;
       box-shadow: 0 0 25px rgba(46, 204, 113, 0.5);
     }
 
@@ -88,7 +88,7 @@
       cursor: pointer;
 
       box-shadow: 0 0 20px rgba(46, 204, 113, 0.4);
-      transition: 0.25s ease;
+      transition: 0.15s ease;
     }
 
     #lang:hover {
@@ -100,10 +100,6 @@
 </head>
 
 <body>
-
-  <!-- 🔊 SONIDOS MODERNOS -->
-  <audio id="clickSound" src="click-modern.mp3"></audio>
-  <audio id="selectSound" src="select-modern.mp3"></audio>
 
   <!-- 🔥 FONDO -->
   <div class="fondo">
@@ -124,29 +120,49 @@
   </div>
 
   <script>
-    function playSound(id) {
-      const sound = document.getElementById(id);
-      sound.currentTime = 0;
-      sound.volume = 0.6;
-      sound.play();
+    // 🎮 AUDIO ENGINE (SIN ARCHIVOS)
+    let audioCtx;
+
+    function initAudio() {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+    }
+
+    function playSound(type) {
+      initAudio();
+
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+
+      osc.type = "sine";
+
+      if (type === "click") {
+        osc.frequency.value = 650; // sonido más “click”
+      } else {
+        osc.frequency.value = 420; // sonido más suave
+      }
+
+      gain.gain.value = 0.05;
+
+      osc.start();
+      osc.stop(audioCtx.currentTime + 0.08);
     }
 
     function jugar() {
-      playSound("clickSound");
-      // window.location.href = "game.html";
+      playSound("click");
     }
 
     function cambiarIdioma() {
-      playSound("selectSound");
+      playSound("select");
 
       const lang = document.getElementById("lang").value;
       const btn = document.getElementById("btn-jugar");
 
-      if (lang === "es") {
-        btn.textContent = "JUGAR";
-      } else {
-        btn.textContent = "PLAY";
-      }
+      btn.textContent = (lang === "es") ? "JUGAR" : "PLAY";
     }
   </script>
 
