@@ -43,7 +43,7 @@ body {
   gap: 40px;
 }
 
-/* PERFIL */
+/* PERFIL PREMIUM */
 .profile {
   width: 280px;
   padding: 18px 12px;
@@ -106,6 +106,7 @@ body {
   100% { transform: translateX(100%); }
 }
 
+/* AVATAR */
 .avatar {
   width: 48px;
   height: 48px;
@@ -114,7 +115,7 @@ body {
   background: url("https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png") center/cover no-repeat;
 }
 
-/* INFO */
+/* STATS */
 .stats {
   display: flex;
   flex-direction: column;
@@ -130,26 +131,12 @@ body {
   font-weight: 600;
 }
 
-/* ICONOS SVG */
+/* ICONOS */
 .icon {
-  width: 14px;
-  height: 14px;
+  width: 16px;
+  height: 16px;
   display: inline-flex;
-}
-
-/* MEDALLA */
-.medal svg {
-  filter: drop-shadow(0 0 3px rgba(255,215,0,0.5));
-}
-
-/* COIN */
-.coin svg {
-  filter: drop-shadow(0 0 3px rgba(255,215,0,0.5));
-}
-
-/* TROFEO */
-.trophy svg {
-  filter: drop-shadow(0 0 3px rgba(255,255,255,0.3));
+  filter: drop-shadow(0 0 3px rgba(255,255,255,0.25));
 }
 
 /* MESAS */
@@ -161,6 +148,7 @@ body {
   margin-top: 85px;
 }
 
+/* MESA */
 .table {
   width: 280px;
   height: 150px;
@@ -176,10 +164,57 @@ body {
     inset 0 0 25px rgba(0,0,0,0.9),
     0 15px 35px rgba(0,0,0,0.7);
 
+  position: relative;
+
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+}
+
+/* SILLAS (RESTO ORIGINAL) */
+.seat {
+  position: absolute;
+  width: 42px;
+  height: 42px;
+  background: linear-gradient(145deg, #ff2b2b, #8b0000);
+  border-radius: 10px;
+}
+
+.t2 .seat:nth-child(1) {
+  left: -40px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.t2 .seat:nth-child(2) {
+  right: -40px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.t4 .seat:nth-child(1) {
+  top: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.t4 .seat:nth-child(2) {
+  right: -40px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.t4 .seat:nth-child(3) {
+  bottom: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.t4 .seat:nth-child(4) {
+  left: -40px;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 /* BOTÓN */
@@ -204,6 +239,23 @@ body {
     inset 0 2px 0 rgba(255,255,255,0.35),
     inset 0 -3px 6px rgba(0,0,0,0.2);
 }
+
+/* ===== ICONOS SVG PREMIUM ===== */
+
+/* MEDALLA */
+.medal svg {
+  filter: drop-shadow(0 0 4px rgba(255,215,0,0.6));
+}
+
+/* MONEDA */
+.coin svg {
+  filter: drop-shadow(0 0 4px rgba(255,215,0,0.6));
+}
+
+/* TROFEO */
+.trophy svg {
+  filter: drop-shadow(0 0 4px rgba(255,255,255,0.35));
+}
 </style>
 </head>
 
@@ -222,10 +274,17 @@ body {
 
       <div class="stat-row">
         <span class="icon medal">
-          <!-- MEDALLA SVG -->
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="gold">
-            <circle cx="12" cy="9" r="6"></circle>
-            <path d="M8 14l-2 8 6-3 6 3-2-8"></path>
+          <!-- MEDALLA REALISTA -->
+          <svg viewBox="0 0 64 64">
+            <defs>
+              <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#fff2a8"/>
+                <stop offset="50%" stop-color="#d4af37"/>
+                <stop offset="100%" stop-color="#8a6a00"/>
+              </linearGradient>
+            </defs>
+            <circle cx="32" cy="22" r="14" fill="url(#g1)"/>
+            <path d="M24 34 L20 60 L32 52 L44 60 L40 34 Z" fill="#b8860b"/>
           </svg>
         </span>
         <span>Nivel 7</span>
@@ -233,10 +292,17 @@ body {
 
       <div class="stat-row">
         <span class="icon coin">
-          <!-- MONEDA SVG -->
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="#f1c40f">
-            <circle cx="12" cy="12" r="9"></circle>
-            <circle cx="12" cy="12" r="5" fill="#ffd84d"></circle>
+          <!-- MONEDA REALISTA -->
+          <svg viewBox="0 0 64 64">
+            <defs>
+              <radialGradient id="g2">
+                <stop offset="0%" stop-color="#fff6b0"/>
+                <stop offset="60%" stop-color="#f1c40f"/>
+                <stop offset="100%" stop-color="#b8860b"/>
+              </radialGradient>
+            </defs>
+            <circle cx="32" cy="32" r="26" fill="url(#g2)"/>
+            <circle cx="32" cy="32" r="14" fill="#ffd84d" opacity="0.8"/>
           </svg>
         </span>
         <span>Créditos 12,500</span>
@@ -244,10 +310,18 @@ body {
 
       <div class="stat-row">
         <span class="icon trophy">
-          <!-- TROFEO SVG -->
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="#c0c0c0">
-            <path d="M7 4h10v3a5 5 0 0 1-10 0V4z"></path>
-            <path d="M9 14h6v6H9z"></path>
+          <!-- TROFEO REALISTA -->
+          <svg viewBox="0 0 64 64">
+            <defs>
+              <linearGradient id="g3">
+                <stop offset="0%" stop-color="#ffffff"/>
+                <stop offset="50%" stop-color="#c0c0c0"/>
+                <stop offset="100%" stop-color="#6d6d6d"/>
+              </linearGradient>
+            </defs>
+            <path d="M20 10 H44 V20 C44 30 38 36 32 36 C26 36 20 30 20 20 Z" fill="url(#g3)"/>
+            <rect x="26" y="36" width="12" height="14" fill="#9a9a9a"/>
+            <rect x="22" y="50" width="20" height="8" fill="#777"/>
           </svg>
         </span>
         <span>Partidas 128</span>
@@ -260,10 +334,16 @@ body {
   <div class="tables">
 
     <div class="table t2">
+      <div class="seat"></div>
+      <div class="seat"></div>
       <button class="play-btn">2 PLAYERS</button>
     </div>
 
     <div class="table t4">
+      <div class="seat"></div>
+      <div class="seat"></div>
+      <div class="seat"></div>
+      <div class="seat"></div>
       <button class="play-btn">4 PLAYERS</button>
     </div>
 
