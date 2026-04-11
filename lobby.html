@@ -81,6 +81,7 @@ body {
   position: relative;
   width: 320px;
   height: 180px;
+
   border-radius: 18px;
 
   background:
@@ -99,6 +100,7 @@ body {
   position: absolute;
   width: 42px;
   height: 42px;
+
   background: linear-gradient(145deg, #ff2b2b, #8b0000);
   border-radius: 10px;
 
@@ -117,31 +119,23 @@ body {
   transform: translateX(-50%);
   width: 36px;
   height: 18px;
+
   background: linear-gradient(145deg, #cc0000, #5a0000);
   border-radius: 6px;
   box-shadow: 0 6px 12px rgba(0,0,0,0.5);
 }
 
 /* =========================
-   🎯 2 PLAYERS (CORREGIDO)
+   🎯 2 PLAYERS (CORRECTO)
 ========================= */
 
-/* arriba → AHORA IZQUIERDA */
 .table.t2 .seat:nth-child(1){
-  top: 50%;
-  left: -55px;
-  transform: translateY(-50%);
+  top: -55px;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
-/* derecha */
 .table.t2 .seat:nth-child(2){
-  right: -55px;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-/* abajo */
-.table.t2 .seat:nth-child(3){
   bottom: -55px;
   left: 50%;
   transform: translateX(-50%);
@@ -156,7 +150,7 @@ body {
 .table.t4 .seat:nth-child(3){ bottom:-55px; left:50%; transform:translateX(-50%); }
 .table.t4 .seat:nth-child(4){ left:-55px; top:50%; transform:translateY(-50%); }
 
-/* 🎮 BOTÓN (BORDE MÁS GRUESO Y MÁS BLANCO) */
+/* 🎮 BOTÓN */
 .play-btn {
   position: absolute;
   top: 50%;
@@ -179,7 +173,7 @@ body {
 
   background: linear-gradient(145deg, #ffcc00, #e6a800);
 
-  border: 4px solid #ffffff; /* 🔥 MÁS GRUESO Y MÁS BLANCO */
+  border: 4px solid #ffffff;
 
   border-radius: 12px;
 
@@ -190,7 +184,15 @@ body {
     0 10px 18px rgba(0,0,0,0.6);
 }
 
-/* TEXTO CORRECTO */
+.play-btn:hover {
+  transform: translate(-50%, -50%) scale(1.05);
+}
+
+.play-btn:active {
+  transform: translate(-50%, -48%) scale(0.98);
+}
+
+/* TEXTO */
 .sub {
   position: absolute;
   width: 100%;
@@ -206,14 +208,8 @@ body {
   opacity: 0.95;
 }
 
-/* orden correcto */
-.sub.mode {
-  bottom: -40px;
-}
-
-.sub.type {
-  bottom: -24px;
-}
+.sub:nth-of-type(1){ bottom:-24px; }
+.sub:nth-of-type(2){ bottom:-40px; }
 
 </style>
 </head>
@@ -237,12 +233,11 @@ body {
     <div class="table t2">
       <div class="seat"></div>
       <div class="seat"></div>
-      <div class="seat"></div>
 
       <button class="play-btn">PLAY</button>
 
-      <div class="sub mode">2 PLAYERS</div>
-      <div class="sub type">INDIVIDUAL</div>
+      <div class="sub">2 PLAYERS</div>
+      <div class="sub">INDIVIDUAL</div>
     </div>
 
     <!-- 4 PLAYERS -->
@@ -254,8 +249,8 @@ body {
 
       <button class="play-btn">PLAY</button>
 
-      <div class="sub mode">4 PLAYERS</div>
-      <div class="sub type">TEAM MODE</div>
+      <div class="sub">4 PLAYERS</div>
+      <div class="sub">TEAM MODE</div>
     </div>
 
   </div>
