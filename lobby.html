@@ -47,32 +47,22 @@ body {
   width: 340px;
   padding: 18px 14px;
   border-radius: 18px;
-
   background: linear-gradient(145deg,#3a3f46,#1e2228);
   border: 1px solid rgba(255,255,255,0.15);
-
   box-shadow: 0 10px 25px rgba(0,0,0,0.6);
-
   position: relative;
   overflow: hidden;
-
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 12px;
 }
 
-/* brillo */
 .profile::before {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    120deg,
-    transparent,
-    rgba(255,255,255,0.2),
-    transparent
-  );
+  background: linear-gradient(120deg, transparent, rgba(255,255,255,0.2), transparent);
   animation: shine 6s linear infinite;
 }
 
@@ -81,38 +71,44 @@ body {
   to { transform: translateX(100%); }
 }
 
-/* MEDALLA */
+/* 🔥 MEDALLA REAL */
 .medal {
-  width: 110px;
-  height: 110px;
-  background: url("medalla.png") center/contain no-repeat;
+  width: 120px;
+  height: 120px;
+  background: url("mdlla.png") center/contain no-repeat;
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-/* avatar */
+/* avatar centrado dentro */
 .avatar {
-  width: 60px;
-  height: 60px;
+  width: 58px;
+  height: 58px;
   border-radius: 50%;
   background: url("https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png") center/cover no-repeat;
   z-index: 2;
 }
 
-/* número */
+/* 🔥 NIVEL EN LA BASE DE LA MEDALLA */
 .level-number {
   position: absolute;
-  bottom: 6px;
-  font-size: 18px;
+  bottom: 2px;
+
+  font-size: 20px;
   font-weight: 900;
+  letter-spacing: 1px;
+
+  font-family: Impact, Arial Black, sans-serif;
 
   background: linear-gradient(#fff,#ffd84d,#b8860b);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 
-  text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+  text-shadow:
+    0 2px 4px rgba(0,0,0,0.8),
+    0 0 6px rgba(255,215,0,0.6);
 }
 
 /* stats */
@@ -144,33 +140,25 @@ body {
   width: 280px;
   height: 150px;
   border-radius: 18px;
-
   background:
     radial-gradient(circle at 50% 40%, rgba(255,255,255,0.12), transparent 60%),
     radial-gradient(circle, #0f7a35, #042610);
-
   border: 10px solid #3b2314;
-
-  box-shadow:
-    inset 0 0 25px rgba(0,0,0,0.9);
-
+  box-shadow: inset 0 0 25px rgba(0,0,0,0.9);
   position: relative;
-
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
 }
 
-/* SILLAS */
+/* SILLAS (ya correctas) */
 .seat {
   position: absolute;
   width: 46px;
   height: 36px;
-
   background: linear-gradient(145deg,#ff3f3f 0%,#7a0000 55%,#3a0000 100%);
   border-radius: 10px;
-
   box-shadow:
     inset 0 -5px 10px rgba(0,0,0,0.7),
     inset 0 2px 3px rgba(255,255,255,0.14),
@@ -196,16 +184,11 @@ body {
   transform: translateX(-50%);
   width: 38px;
   height: 20px;
-
   background: linear-gradient(145deg,#a80000,#2a0000);
   border-radius: 6px;
-
-  box-shadow:
-    inset 0 -3px 5px rgba(0,0,0,0.7),
-    0 3px 6px rgba(0,0,0,0.45);
 }
 
-/* SILLAS CORREGIDAS */
+/* posiciones correctas */
 .t2 .seat:nth-child(1) {
   left: -55px;
   top: 50%;
@@ -242,17 +225,14 @@ body {
   transform: translateY(-50%) rotate(90deg);
 }
 
-/* BOTÓN CORREGIDO (NEÓN BLANCO) */
+/* BOTÓN */
 .play-btn {
   width: 120px;
   height: 42px;
-
   font-weight: 900;
   color: #fff;
 
-  background:
-    linear-gradient(145deg,#ffe27a 0%,#ffb800 40%,#a66b00 100%);
-
+  background: linear-gradient(145deg,#ffe27a 0%,#ffb800 40%,#a66b00 100%);
   border-radius: 12px;
 
   border: 1px solid rgba(255,255,255,0.9);
@@ -288,50 +268,3 @@ body {
   <div class="profile">
 
     <div class="medal">
-      <div class="avatar"></div>
-      <div class="level-number">7</div>
-    </div>
-
-    <div class="stats">
-      <div class="stat-row"><span>🎖️</span><span>LEVEL 7</span></div>
-      <div class="stat-row"><span>🪙</span><span>COINS 12,500</span></div>
-      <div class="stat-row"><span>🎮</span><span>GAMES 128</span></div>
-    </div>
-
-  </div>
-
-  <div class="tables">
-
-    <div class="table t2">
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <button class="play-btn" onclick="joinGame(2,'INDIVIDUAL')">2 PLAYERS</button>
-      <div class="mode-label">INDIVIDUAL</div>
-    </div>
-
-    <div class="table t4">
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <button class="play-btn" onclick="joinGame(4,'EQUIPO')">4 PLAYERS</button>
-      <div class="mode-label">EQUIPO</div>
-    </div>
-
-  </div>
-
-</div>
-
-<script>
-function joinGame(players, mode) {
-  if (players === 2) {
-    window.location.href = "game2players.html";
-  }
-  if (players === 4) {
-    window.location.href = "gamer4player.html";
-  }
-}
-</script>
-
-</body>
-</html>
