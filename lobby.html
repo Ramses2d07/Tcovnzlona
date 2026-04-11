@@ -45,18 +45,56 @@ body {
   gap: 40px;
 }
 
-/* PERFIL */
+/* PERFIL (METAL PREMIUM) */
 .profile {
   width: 280px;
   padding: 12px;
   border-radius: 18px;
-  border: 2px solid #9aa0a6;
-  background: linear-gradient(135deg, #2b2f36, #1f232a);
+
+  /* base gris metálica */
+  background: linear-gradient(145deg,
+    #3a3f46 0%,
+    #2b2f36 35%,
+    #1e2228 70%,
+    #2f343b 100%
+  );
+
+  border: 1px solid rgba(255,255,255,0.15);
+
+  box-shadow:
+    0 10px 25px rgba(0,0,0,0.6),
+    inset 0 1px 0 rgba(255,255,255,0.12),
+    inset 0 -2px 8px rgba(0,0,0,0.7);
+
+  position: relative;
+  overflow: hidden;
+
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 6px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+}
+
+/* brillo metálico animado suave */
+.profile::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    120deg,
+    transparent 0%,
+    rgba(255,255,255,0.08) 25%,
+    rgba(255,255,255,0.15) 50%,
+    rgba(255,255,255,0.08) 75%,
+    transparent 100%
+  );
+  transform: translateX(-100%);
+  animation: shine 5s linear infinite;
+}
+
+@keyframes shine {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
 }
 
 .avatar {
@@ -65,17 +103,23 @@ body {
   border-radius: 50%;
   background: url("avatar.png") center/cover no-repeat;
   border: 2px solid #f1c40f;
+  position: relative;
+  z-index: 2;
 }
 
 .name {
   font-weight: 700;
   font-size: 11px;
+  position: relative;
+  z-index: 2;
 }
 
 .stats {
   font-size: 9px;
   opacity: 0.85;
   text-align: center;
+  position: relative;
+  z-index: 2;
 }
 
 /* MESAS */
@@ -111,7 +155,7 @@ body {
   gap: 4px;
 }
 
-/* SILLAS (SIN CAMBIOS) */
+/* SILLAS */
 .seat {
   position: absolute;
   width: 42px;
@@ -183,7 +227,7 @@ body {
     0 0 5px rgba(255,255,255,0.45);
 }
 
-/* TEXTO */
+/* TEXTO METAL SUAVE */
 .mode-label {
   font-size: 10px;
   font-weight: 300;
