@@ -87,7 +87,9 @@ body {
   position: absolute;
   top: 60%;
   left: 50%;
-  transform: translate(-50%, -50%);
+
+  /* CORRECCIÓN IMPORTANTE */
+  transform: translateX(-50%);
 }
 
 /* Mesa */
@@ -194,7 +196,6 @@ body {
 
 <div class="game-ui">
 
-  <!-- PROFILE COMPACTO -->
   <div class="profile">
     <div class="avatar"></div>
     <div class="name">Jugador 01</div>
@@ -203,7 +204,6 @@ body {
 
   <div class="tables">
 
-    <!-- 2 jugadores -->
     <div class="table t2">
       <div class="seat"></div>
       <div class="seat"></div>
@@ -216,7 +216,6 @@ body {
       </div>
     </div>
 
-    <!-- 4 jugadores -->
     <div class="table t4">
       <div class="seat"></div>
       <div class="seat"></div>
