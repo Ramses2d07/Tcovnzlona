@@ -14,34 +14,40 @@ body {
   color: white;
 }
 
+/* 🔥 OSCURECIDO GENERAL */
 .overlay {
   position: fixed;
   inset: 0;
   background: rgba(0,0,0,0.75);
-  backdrop-filter: blur(8px);
+  backdrop-filter: blur(6px);
 }
 
-/* 👤 HUD */
+/* 👤 PERFIL HUD ARRIBA */
 .profile {
   position: fixed;
   top: 10px;
   left: 50%;
   transform: translateX(-50%);
+
   display: flex;
-  gap: 12px;
   align-items: center;
+  gap: 12px;
+
   padding: 10px 16px;
+
   background: rgba(0,0,0,0.6);
-  border-radius: 14px;
   border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 14px;
+
+  z-index: 10;
 }
 
 .avatar {
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  border: 2px solid gold;
   overflow: hidden;
+  border: 2px solid #f1c40f;
 }
 
 .avatar img {
@@ -50,25 +56,34 @@ body {
   object-fit: cover;
 }
 
-/* 🎰 MESAS MÁS PEQUEÑAS */
+.badge {
+  font-size: 12px;
+  margin-top: 3px;
+  padding: 3px 8px;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.08);
+}
+
+/* 🎰 MESAS */
 .tables {
   display: flex;
   justify-content: center;
-  gap: 60px;
-  margin-top: 130px;
+  gap: 50px;
+  margin-top: 140px;
+  flex-wrap: wrap;
 }
 
 /* 🪵 MESA CASINO REAL */
 .table {
   position: relative;
-  width: 240px;   /* 🔥 MÁS PEQUEÑA */
-  height: 160px;
+  width: 230px;
+  height: 150px;
 
-  border-radius: 16px;
+  border-radius: 14px;
 
-  /* 🟢 PAÑO CON HUNDIMIENTO */
+  /* 🟢 PAÑO VERDE */
   background:
-    radial-gradient(circle at center, #0c6b2f 0%, #06401c 80%);
+    radial-gradient(circle at center, #0e6b2f 0%, #06401c 80%);
 
   /* 🟤 BORDE MADERA GRUESO */
   border: 14px solid #5a3b1e;
@@ -77,41 +92,42 @@ body {
   box-shadow:
     inset 0 0 20px rgba(0,0,0,0.6),
     inset 0 0 10px rgba(255,255,255,0.08),
-    0 25px 40px rgba(0,0,0,0.8);
+    0 20px 40px rgba(0,0,0,0.85);
 }
 
-/* 🪑 ASIENTOS CASINO (YA NO CUADROS PLANOS) */
+/* 🪑 SILLAS CASINO (PERSONAS REPRESENTADAS BIEN) */
 .seat {
   position: absolute;
-  width: 45px;
-  height: 45px;
+  width: 42px;
+  height: 42px;
 
-  border-radius: 50%;
+  border-radius: 10px;
 
-  /* 🔥 SILLA REAL */
+  /* silla con volumen */
   background:
-    radial-gradient(circle at 30% 30%, #ffffff, #777);
+    radial-gradient(circle at top left, #ffffff, #666);
 
-  border: 2px solid rgba(255,215,0,0.6);
+  border: 2px solid rgba(255,255,255,0.6);
 
   box-shadow:
-    0 0 12px rgba(255,215,0,0.4),
-    inset 0 -4px 8px rgba(0,0,0,0.5);
+    0 0 10px rgba(255,255,255,0.25),
+    inset 0 -4px 6px rgba(0,0,0,0.4);
 }
 
-/* 🪑 POSICIONES 2 JUGADORES (ASIENTOS REALES) */
-.t2 .s1 { top: -25px; left: 50%; transform: translateX(-50%); }
-.t2 .s2 { bottom: -25px; left: 50%; transform: translateX(-50%); }
+/* 🪑 2 jugadores */
+.t2 .s1 { top: -22px; left: 50%; transform: translateX(-50%); }
+.t2 .s2 { bottom: -22px; left: 50%; transform: translateX(-50%); }
 
-/* 🪑 4 JUGADORES */
-.t4 .s1 { top: -25px; left: 50%; transform: translateX(-50%); }
-.t4 .s2 { right: -25px; top: 50%; transform: translateY(-50%); }
-.t4 .s3 { bottom: -25px; left: 50%; transform: translateX(-50%); }
-.t4 .s4 { left: -25px; top: 50%; transform: translateY(-50%); }
+/* 🪑 4 jugadores */
+.t4 .s1 { top: -22px; left: 50%; transform: translateX(-50%); }
+.t4 .s2 { right: -22px; top: 50%; transform: translateY(-50%); }
+.t4 .s3 { bottom: -22px; left: 50%; transform: translateX(-50%); }
+.t4 .s4 { left: -22px; top: 50%; transform: translateY(-50%); }
 
-/* 🎮 BOTÓN */
+/* 🎮 BOTÓN CASINO */
 .play-btn {
-  padding: 8px 14px;
+  padding: 9px 14px;
+
   font-size: 12px;
   font-weight: 900;
 
@@ -119,12 +135,17 @@ body {
 
   background: linear-gradient(145deg, #2ecc71, #1e8f4f);
 
-  border: 2px solid #f1c40f;
+  border: 2px solid #f1c40f; /* amarillo casino */
   border-radius: 10px;
 
-  box-shadow: 0 0 10px rgba(0,0,0,0.6);
+  cursor: pointer;
+
+  box-shadow:
+    0 0 10px rgba(0,0,0,0.6),
+    0 0 8px rgba(241,196,15,0.4);
 }
 
+/* 📌 TEXTO CENTRAL */
 .label {
   position: absolute;
   top: 50%;
@@ -135,8 +156,8 @@ body {
 
 .sub {
   font-size: 11px;
-  opacity: 0.8;
-  margin-top: 4px;
+  margin-top: 5px;
+  opacity: 0.85;
 }
 
 </style>
@@ -146,21 +167,26 @@ body {
 
 <div class="overlay"></div>
 
-<!-- 👤 PERFIL -->
+<!-- 👤 PERFIL HUD -->
 <div class="profile">
+
   <div class="avatar">
     <img src="https://i.imgur.com/6VBx3io.png">
   </div>
+
   <div>
-    PLAYER_01<br>
-    <small>LEVEL 1 | 100 CREDITS</small>
+    <div>PLAYER_01</div>
+    <div class="badge">LEVEL 1</div>
+    <div class="badge">MATCHES 0</div>
+    <div class="badge">CREDITS: 100</div>
   </div>
+
 </div>
 
 <!-- 🎰 MESAS -->
 <div class="tables">
 
-  <!-- 2P -->
+  <!-- 2 PLAYERS -->
   <div class="table t2">
 
     <div class="seat s1"></div>
@@ -173,7 +199,7 @@ body {
 
   </div>
 
-  <!-- 4P -->
+  <!-- 4 PLAYERS -->
   <div class="table t4">
 
     <div class="seat s1"></div>
