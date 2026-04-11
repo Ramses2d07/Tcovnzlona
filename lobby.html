@@ -78,12 +78,14 @@ body {
   text-align: center;
 }
 
-/* MESAS */
+/* MESAS CONTENEDOR */
 .tables {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 55px;
+  gap: 55px; /* MISMA SEPARACIÓN */
+  transform: scale(0.8); /* ↓ DOS ESCALAS MÁS ABAJO */
+  transform-origin: top center;
 }
 
 /* MESA */
@@ -155,12 +157,12 @@ body {
   transform: translateY(-50%);
 }
 
-/* BOTÓN MÁS PEQUEÑO (ALTO REDUCIDO) */
+/* BOTÓN */
 .play-btn {
   width: 140px;
-  height: 38px; /* ↓ más pequeño en alto */
+  height: 38px;
 
-  font-size: 14px; /* misma letra */
+  font-size: 14px;
   font-weight: 900;
 
   font-family: Arial, sans-serif;
@@ -184,7 +186,7 @@ body {
     0 0 6px rgba(255,255,255,0.5);
 }
 
-/* TEXTO MÁS DELGADO + MÁS PEGADO */
+/* TEXTO METAL SUAVE */
 .mode-label {
   font-size: 10px;
   font-weight: 300;
