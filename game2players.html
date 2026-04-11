@@ -81,33 +81,16 @@ body {
   margin-top: 6px;
 }
 
-/* MEDALLA */
+/* MEDALLA (SIN CAMBIOS BASE) */
 .level-badge {
-  width: 60px;
-  height: 34px;
+  width: 80px;
+  height: 80px;
   margin: 6px auto 0;
 
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-
-  font-weight: 900;
-  font-size: 14px;
-  color: #fff;
-
-  border-radius: 10px 4px 10px 4px;
-
-  background: linear-gradient(145deg, #ffd700, #b8860b, #8b6508);
-
-  border: 1px solid rgba(255,255,255,0.35);
-
-  box-shadow:
-    inset 0 2px 4px rgba(255,255,255,0.4),
-    inset 0 -4px 6px rgba(0,0,0,0.6),
-    0 6px 14px rgba(0,0,0,0.7);
-
-  position: relative;
-  overflow: hidden;
 }
 
 /* IMAGEN MEDALLA */
@@ -115,38 +98,45 @@ body {
   position: absolute;
   width: 100%;
   height: 100%;
-  top: 0;
-  left: 0;
-  z-index: 0;
+  object-fit: contain;
 }
 
-/* TEXTO NIVEL */
-.badge-text {
-  position: relative;
-  z-index: 2;
-}
-
-/* brillo */
-.level-badge::after {
-  content: "";
+/* PARCHE COLOR (NUEVO) */
+.badge-color {
   position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    120deg,
-    transparent 0%,
-    rgba(255,255,255,0.25) 40%,
-    transparent 70%
-  );
-  transform: translateX(-100%);
-  animation: shine 4s infinite;
+  width: 55%;
+  height: 55%;
+  border-radius: 50%;
+  mix-blend-mode: color;
+  opacity: 0.85;
 }
 
-@keyframes shine {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
+/* COLORES */
+.bronze { background: #cd7f32; }
+.silver { background: #c0c0c0; }
+.gold { background: #ffd700; }
+.diamond { background: #6fe7ff; }
+
+/* TEXTO NIVEL (MEJORADO) */
+.badge-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  
+  font-size: 20px;
+  font-weight: 900;
+
+  background: linear-gradient(#ffffff, #bbbbbb, #ffffff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  text-shadow:
+    0 2px 3px rgba(0,0,0,0.9),
+    0 0 6px rgba(255,255,255,0.4);
 }
 
-/* COLORES NIVEL */
+/* COLORES NIVEL (SE CONSERVAN) */
 .level-bronze { filter: hue-rotate(20deg) brightness(0.8); }
 .level-silver { filter: grayscale(1) brightness(1.2); }
 .level-gold { filter: saturate(1.2); }
@@ -230,7 +220,8 @@ body {
       <div class="level-text">Nivel</div>
 
       <div class="level-badge" id="myLevel">
-        <img src="mdlla.png" class="badge-img" alt="medalla">
+        <img src="mdlla.png" class="badge-img">
+        <div class="badge-color"></div>
         <span class="badge-text">7</span>
       </div>
     </div>
@@ -241,7 +232,8 @@ body {
       <div class="level-text">Nivel</div>
 
       <div class="level-badge" id="enemyLevel">
-        <img src="mdlla.png" class="badge-img" alt="medalla">
+        <img src="mdlla.png" class="badge-img">
+        <div class="badge-color"></div>
         <span class="badge-text">-</span>
       </div>
     </div>
@@ -269,13 +261,14 @@ function updatePot() {
 
 function setLevelStyle(elementId, level) {
   const el = document.getElementById(elementId);
+  const colorLayer = el.querySelector(".badge-color");
 
-  el.classList.remove("level-bronze", "level-silver", "level-gold", "level-diamond");
+  colorLayer.className = "badge-color";
 
-  if (level < 5) el.classList.add("level-bronze");
-  else if (level < 10) el.classList.add("level-silver");
-  else if (level < 20) el.classList.add("level-gold");
-  else el.classList.add("level-diamond");
+  if (level < 5) colorLayer.classList.add("bronze");
+  else if (level < 10) colorLayer.classList.add("silver");
+  else if (level < 20) colorLayer.classList.add("gold");
+  else colorLayer.classList.add("diamond");
 
   el.querySelector(".badge-text").innerText = level;
 }
