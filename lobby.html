@@ -72,7 +72,7 @@ body {
   gap: 10px;
 }
 
-/* BRILLO */
+/* brillo */
 .profile::before {
   content: "";
   position: absolute;
@@ -94,7 +94,7 @@ body {
   100% { transform: translateX(100%); }
 }
 
-/* AVATAR */
+/* avatar */
 .avatar {
   width: 50px;
   height: 50px;
@@ -103,7 +103,7 @@ body {
   background: url("https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png") center/cover no-repeat;
 }
 
-/* STATS */
+/* stats */
 .stats {
   display: flex;
   flex-direction: row;
@@ -112,7 +112,7 @@ body {
   gap: 10px;
 }
 
-/* TEXTO METÁLICO */
+/* texto metálico */
 .stat-row {
   display: flex;
   align-items: center;
@@ -130,7 +130,7 @@ body {
     0 0 6px rgba(255,255,255,0.15);
 }
 
-/* ICONOS */
+/* iconos */
 .icon {
   width: 18px;
   height: 18px;
@@ -170,7 +170,7 @@ body {
   flex-direction: column;
 }
 
-/* SILLAS */
+/* sillas */
 .seat {
   position: absolute;
   width: 42px;
@@ -187,7 +187,7 @@ body {
 .t4 .seat:nth-child(3) { bottom: -48px; left: 50%; transform: translateX(-50%); }
 .t4 .seat:nth-child(4) { left: -48px; top: 50%; transform: translateY(-50%); }
 
-/* BOTÓN */
+/* botón */
 .play-btn {
   width: 110px;
   height: 40px;
@@ -207,6 +207,23 @@ body {
     0 6px 14px rgba(0,0,0,0.45),
     inset 0 2px 0 rgba(255,255,255,0.35),
     inset 0 -3px 6px rgba(0,0,0,0.2);
+}
+
+/* etiquetas modo */
+.mode-label {
+  margin-top: 6px;
+
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+
+  background: linear-gradient(180deg, #ffffff, #bdbdbd, #ffffff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  text-shadow:
+    0 1px 0 #000,
+    0 0 6px rgba(255,255,255,0.12);
 }
 </style>
 </head>
@@ -249,6 +266,7 @@ body {
       <div class="seat"></div>
       <div class="seat"></div>
       <button class="play-btn">2 PLAYERS</button>
+      <div class="mode-label">INDIVIDUAL</div>
     </div>
 
     <div class="table t4">
@@ -257,6 +275,7 @@ body {
       <div class="seat"></div>
       <div class="seat"></div>
       <button class="play-btn">4 PLAYERS</button>
+      <div class="mode-label">EQUIPO</div>
     </div>
 
   </div>
