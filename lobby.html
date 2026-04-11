@@ -43,7 +43,7 @@ body {
   gap: 40px;
 }
 
-/* PERFIL RESTAURADO */
+/* PERFIL CON EFECTOS + CUADRÍCULA */
 .profile {
   width: 340px;
   padding: 18px 14px;
@@ -54,10 +54,51 @@ body {
 
   box-shadow: 0 10px 25px rgba(0,0,0,0.6);
 
+  position: relative;
+  overflow: hidden;
+
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 12px;
+}
+
+/* brillo animado */
+.profile::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    120deg,
+    transparent 0%,
+    rgba(255,255,255,0.08) 30%,
+    rgba(255,255,255,0.18) 50%,
+    rgba(255,255,255,0.08) 70%,
+    transparent 100%
+  );
+  transform: translateX(-100%);
+  animation: shine 6s linear infinite;
+}
+
+/* CUADRÍCULA */
+.profile::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background-image:
+    linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px);
+
+  background-size: 18px 18px;
+  opacity: 0.25;
+
+  pointer-events: none;
+}
+
+@keyframes shine {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
 }
 
 /* avatar */
@@ -67,6 +108,8 @@ body {
   border-radius: 50%;
   background: url("https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png") center/cover no-repeat;
   border: 2px solid #f1c40f;
+  position: relative;
+  z-index: 2;
 }
 
 /* stats */
@@ -75,6 +118,8 @@ body {
   display: flex;
   justify-content: space-between;
   gap: 10px;
+  position: relative;
+  z-index: 2;
 }
 
 .stat-row {
@@ -103,12 +148,18 @@ body {
   width: 280px;
   height: 150px;
   border-radius: 18px;
+
   background:
     radial-gradient(circle at 50% 40%, rgba(255,255,255,0.12), transparent 60%),
     radial-gradient(circle, #0f7a35, #042610);
+
   border: 10px solid #3b2314;
-  box-shadow: inset 0 0 25px rgba(0,0,0,0.9);
+
+  box-shadow:
+    inset 0 0 25px rgba(0,0,0,0.9);
+
   position: relative;
+
   display: flex;
   justify-content: center;
   align-items: center;
