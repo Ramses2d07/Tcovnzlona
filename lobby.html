@@ -148,7 +148,7 @@ body {
 }
 
 /* =========================
-   BOTÓN NEÓN (BLANCO → NEGRO → AMARILLO)
+   BOTÓN + TEXTO NEÓN/BORDE
 ========================= */
 
 .play-btn {
@@ -163,6 +163,7 @@ body {
   font-size: 14px;
   font-weight: 900;
   font-family: Arial, sans-serif;
+
   color: #fff;
 
   background: linear-gradient(145deg, #ffd84d, #ffb800);
@@ -170,23 +171,17 @@ body {
   border: 0;
   cursor: pointer;
 
-  position: relative;
-  z-index: 2;
-
-  /* NEGRO pegado + BLANCO neón externo */
   box-shadow:
-    /* negro pegado */
     0 0 0 1px #000,
-
-    /* blanco neón externo (difuso) */
-    0 0 6px 1px rgba(255,255,255,0.9),
-    0 0 14px 3px rgba(255,255,255,0.35),
-
-    /* profundidad */
+    0 0 10px 2px rgba(255,255,255,0.35),
     0 8px 18px rgba(0,0,0,0.45),
-
     inset 0 2px 0 rgba(255,255,255,0.4),
     inset 0 -3px 6px rgba(0,0,0,0.2);
+
+  /* TEXTO CON BORDE + GLOW */
+  text-shadow:
+    0 1px 0 #000,
+    0 0 6px rgba(255,255,255,0.5);
 }
 
 .play-btn:active {
@@ -233,7 +228,7 @@ body {
       <div class="seat"></div>
       <div class="seat"></div>
       <div class="seat"></div>
-      <button class="play-btn">PLAY</button>
+      <button class="play-btn">TEAM MODE</button>
       <div class="labels">TEAM MODE</div>
     </div>
 
