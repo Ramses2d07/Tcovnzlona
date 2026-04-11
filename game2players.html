@@ -81,12 +81,11 @@ body {
   margin-top: 6px;
 }
 
-/* MEDALLA (SIN CAMBIOS BASE) */
+/* MEDALLA */
 .level-badge {
   width: 80px;
   height: 80px;
   margin: 6px auto 0;
-
   position: relative;
   display: flex;
   align-items: center;
@@ -101,7 +100,7 @@ body {
   object-fit: contain;
 }
 
-/* PARCHE COLOR (NUEVO) */
+/* CAPA COLOR */
 .badge-color {
   position: absolute;
   width: 55%;
@@ -117,26 +116,33 @@ body {
 .gold { background: #ffd700; }
 .diamond { background: #6fe7ff; }
 
-/* TEXTO NIVEL (MEJORADO) */
+/* TEXTO NIVEL (CORREGIDO) */
 .badge-text {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   
-  font-size: 20px;
+  font-size: 22px;
   font-weight: 900;
-
-  background: linear-gradient(#ffffff, #bbbbbb, #ffffff);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: #fff;
 
   text-shadow:
-    0 2px 3px rgba(0,0,0,0.9),
-    0 0 6px rgba(255,255,255,0.4);
+    0 2px 0 #000,
+    0 3px 6px rgba(0,0,0,0.9),
+    0 0 6px rgba(255,255,255,0.3);
+
+  z-index: 3;
+  isolation: isolate;
 }
 
-/* COLORES NIVEL (SE CONSERVAN) */
+/* COLOR DEL TEXTO SEGÚN NIVEL */
+.text-bronze { color: #cd7f32; }
+.text-silver { color: #e0e0e0; }
+.text-gold { color: #ffd700; }
+.text-diamond { color: #6fe7ff; }
+
+/* COLORES NIVEL (ORIGINALES SE CONSERVAN) */
 .level-bronze { filter: hue-rotate(20deg) brightness(0.8); }
 .level-silver { filter: grayscale(1) brightness(1.2); }
 .level-gold { filter: saturate(1.2); }
@@ -262,15 +268,29 @@ function updatePot() {
 function setLevelStyle(elementId, level) {
   const el = document.getElementById(elementId);
   const colorLayer = el.querySelector(".badge-color");
+  const text = el.querySelector(".badge-text");
 
   colorLayer.className = "badge-color";
+  text.className = "badge-text";
 
-  if (level < 5) colorLayer.classList.add("bronze");
-  else if (level < 10) colorLayer.classList.add("silver");
-  else if (level < 20) colorLayer.classList.add("gold");
-  else colorLayer.classList.add("diamond");
+  if (level < 5) {
+    colorLayer.classList.add("bronze");
+    text.classList.add("text-bronze");
+  }
+  else if (level < 10) {
+    colorLayer.classList.add("silver");
+    text.classList.add("text-silver");
+  }
+  else if (level < 20) {
+    colorLayer.classList.add("gold");
+    text.classList.add("text-gold");
+  }
+  else {
+    colorLayer.classList.add("diamond");
+    text.classList.add("text-diamond");
+  }
 
-  el.querySelector(".badge-text").innerText = level;
+  text.innerText = level;
 }
 
 updatePot();
