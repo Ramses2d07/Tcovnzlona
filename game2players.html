@@ -3,7 +3,7 @@
 <head>  
 <meta charset="UTF-8">  
 <meta name="viewport" content="width=device-width, initial-scale=1.0">  
-<title>4 Players Room</title>  
+<title>2 Players Room</title>  
 
 <style>  
 * { box-sizing: border-box; }  
@@ -210,37 +210,13 @@ body {
   </div>  
 </div>  
 
-<div class="player-card">  
-  <div class="avatar"></div>  
-  <div class="name">Esperando...</div>  
-  <div class="level-text">Nivel</div>  
-  <div class="level-badge" id="p3">  
-    <img src="mdlla.png" class="badge-img">  
-    <div class="badge-color"></div>  
-    <span class="badge-text">-</span>  
-    <div class="rank-label">-</div>  
-  </div>  
-</div>  
-
-<div class="player-card">  
-  <div class="avatar"></div>  
-  <div class="name">Esperando...</div>  
-  <div class="level-text">Nivel</div>  
-  <div class="level-badge" id="p4">  
-    <img src="mdlla.png" class="badge-img">  
-    <div class="badge-color"></div>  
-    <span class="badge-text">-</span>  
-    <div class="rank-label">-</div>  
-  </div>  
-</div>  
-
 </div>  
 
 <div class="table">  
   <div class="pot" id="potText">BOTE: 0</div>  
 </div>  
 
-<div class="status" id="statusText">Esperando jugadores...</div>  
+<div class="status" id="statusText">Esperando jugador...</div>  
 
 </div>  
 
@@ -285,8 +261,6 @@ function setLevelStyle(id, level) {
 
 setLevelStyle("p1", 7);  
 setTimeout(()=>setLevelStyle("p2",5),2000);  
-setTimeout(()=>setLevelStyle("p3",12),3000);  
-setTimeout(()=>setLevelStyle("p4",22),4000);  
 </script>  
 
 </body>  
