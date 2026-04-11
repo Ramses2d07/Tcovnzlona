@@ -56,7 +56,6 @@ body {
   background: linear-gradient(145deg,#2c3138,#14171b);
   border: 1px solid rgba(255,255,255,0.2);
   text-align: center;
-
   box-shadow: 0 6px 15px rgba(0,0,0,0.6);
 }
 
@@ -99,17 +98,28 @@ body {
   position: relative;
 }
 
-/* POTE */
+/* BOTE (parche aplicado) */
 .pot {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-weight: bold;
-  font-size: 16px;
-  color: #f1c40f;
 
-  text-shadow: 0 0 8px rgba(255,255,0,0.6);
+  width: 140px;
+  padding: 10px;
+
+  border-radius: 12px;
+
+  background: linear-gradient(145deg,#2c3138,#14171b);
+  border: 1px solid rgba(255,255,255,0.2);
+
+  box-shadow: 0 6px 15px rgba(0,0,0,0.6);
+
+  text-align: center;
+
+  font-weight: bold;
+  font-size: 14px;
+  color: #eaeaea;
 }
 
 /* ESTADO */
@@ -142,16 +152,15 @@ body {
 
 <div class="room">
 
-  <!-- TARJETAS -->
   <div class="players-bar">
     
-    <div class="player-card" id="player1">
+    <div class="player-card">
       <div class="avatar"></div>
       <div class="name">TÚ</div>
       <div class="level">Nivel 7</div>
     </div>
 
-    <div class="player-card" id="player2">
+    <div class="player-card">
       <div class="avatar"></div>
       <div class="name" id="enemyName">Esperando...</div>
       <div class="level" id="enemyLevel">-</div>
@@ -159,9 +168,8 @@ body {
 
   </div>
 
-  <!-- MESA -->
   <div class="table">
-    <div class="pot" id="potText">POTE: 0</div>
+    <div class="pot" id="potText">BOTE: 0</div>
   </div>
 
   <div class="status" id="statusText">Esperando jugador...</div>
@@ -174,25 +182,24 @@ body {
 let betPlayer1 = 1000;
 let betPlayer2 = 0;
 
-// actualizar pote
 function updatePot() {
-  document.getElementById("potText").innerText = "POTE: " + (betPlayer1 + betPlayer2);
+  document.getElementById("potText").innerText =
+    "BOTE: " + (betPlayer1 + betPlayer2);
 }
 
 updatePot();
 
-// Simulación de conexión
 setTimeout(() => {
   document.getElementById("enemyName").innerText = "Jugador 2";
   document.getElementById("enemyLevel").innerText = "Nivel 5";
-  
+
   betPlayer2 = 1000;
   updatePot();
 
-  document.getElementById("statusText").innerText = "Jugador encontrado. Esperando inicio...";
+  document.getElementById("statusText").innerText =
+    "Jugador encontrado. Esperando inicio...";
 }, 3000);
 
-// salir
 function exitRoom() {
   window.location.href = "index.html";
 }
