@@ -20,7 +20,6 @@ body {
   position: fixed;
   inset: 0;
   background: radial-gradient(circle at center, rgba(0,0,0,0.5), rgba(0,0,0,0.95));
-  backdrop-filter: blur(2px);
 }
 
 /* 👤 HUD */
@@ -29,82 +28,42 @@ body {
   top: 12px;
   left: 50%;
   transform: translateX(-50%);
-
   display: flex;
   align-items: center;
   gap: 14px;
-
   padding: 12px 20px;
-
-  background: linear-gradient(145deg, rgba(40,40,40,0.9), rgba(10,10,10,0.8));
-
+  background: rgba(20,20,20,0.85);
   border: 3px solid #f1c40f;
   border-radius: 18px;
-
-  box-shadow:
-    0 0 25px rgba(241,196,15,0.4),
-    inset 0 0 10px rgba(255,255,255,0.1);
 }
 
-/* AVATAR */
 .avatar {
   width: 65px;
   height: 65px;
   border-radius: 50%;
-  border: 3px solid #f1c40f;
   overflow: hidden;
-  box-shadow: 0 0 10px rgba(241,196,15,0.5);
 }
 
 .avatar img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
 }
 
-/* STATS */
-.stats {
-  display: flex;
-  flex-direction: column;
-  font-weight: 900;
-}
-
-.stat {
-  font-size: 13px;
-  opacity: 0;
-  animation: fadeUp 0.6s forwards;
-}
-
-.stat:nth-child(1){ animation-delay:0.1s; }
-.stat:nth-child(2){ animation-delay:0.2s; }
-.stat:nth-child(3){ animation-delay:0.3s; }
-
-@keyframes fadeUp {
-  from { transform: translateY(10px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
-}
-
-/* 🎰 MESAS (VERTICAL) */
+/* 🎰 MESAS EN VERTICAL */
 .tables {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 60px;
-  margin-top: 160px;
+  gap: 50px;
+  margin-top: 150px;
 }
 
-/* 🪵 MESAS MÁS PEQUEÑAS (2 ESCALAS MENOS) */
+/* 🪵 MESAS (MUCHO MÁS PEQUEÑAS - 5 ESCALAS MENOS) */
 .table {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  gap: 18px;
-
   position: relative;
 
-  width: 300px;   /* antes 420 */
-  height: 140px;  /* antes 200 */
+  width: 180px;   /* ↓↓↓ antes 300 */
+  height: 90px;   /* ↓↓↓ antes 140 */
 
   border-radius: 18px;
 
@@ -112,13 +71,9 @@ body {
     radial-gradient(circle at 50% 40%, rgba(255,255,255,0.15), transparent 60%),
     radial-gradient(circle, #0f7a35, #042610);
 
-  border: 14px solid #3b2314;
+  border: 10px solid #3b2314;
 
-  box-shadow:
-    inset 0 0 30px rgba(0,0,0,0.9),
-    inset 0 0 12px rgba(255,255,255,0.08),
-    0 25px 60px rgba(0,0,0,1);
-
+  box-shadow: inset 0 0 20px rgba(0,0,0,0.9);
   transition: transform 0.3s ease;
 }
 
@@ -126,97 +81,83 @@ body {
   transform: scale(1.05);
 }
 
-/* 🪑 SILLAS MISMO TAMAÑO (FIJO) */
+/* 🪑 SILLAS (POSICIONES REALES ALREDEDOR) */
 .seat {
-  width: 55px;
-  height: 55px;
+  position: absolute;
+
+  width: 40px;
+  height: 40px;
 
   background: linear-gradient(145deg, #ff2b2b, #8b0000);
-
-  border-radius: 10px;
-
-  box-shadow:
-    0 10px 18px rgba(0,0,0,0.8),
-    inset 0 2px 6px rgba(255,255,255,0.25);
-
+  border-radius: 8px;
   border: 2px solid rgba(255,255,255,0.15);
-
-  position: relative;
 }
 
 /* respaldo */
 .seat::before {
   content: "";
   position: absolute;
-  top: -18px;
+  top: -12px;
   left: 50%;
   transform: translateX(-50%);
+  width: 28px;
+  height: 12px;
+  background: #8b0000;
+  border-radius: 4px;
+}
 
-  width: 40px;
-  height: 18px;
+/* 🎯 POSICIONES TIPO PÓKER */
 
-  background: linear-gradient(145deg, #cc0000, #5a0000);
-  border-radius: 6px 6px 4px 4px;
+/* arriba */
+.seat:nth-child(1) {
+  top: -25px;
+  left: 50%;
+  transform: translateX(-50%);
+}
 
-  box-shadow: 0 5px 10px rgba(0,0,0,0.5);
+/* derecha */
+.seat:nth-child(2) {
+  top: 50%;
+  right: -25px;
+  transform: translateY(-50%);
+}
+
+/* abajo */
+.seat:nth-child(3) {
+  bottom: -25px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* izquierda */
+.seat:nth-child(4) {
+  top: 50%;
+  left: -25px;
+  transform: translateY(-50%);
 }
 
 /* 🎮 BOTÓN */
 .play-btn {
-  padding: 12px 18px;
-  font-weight: 900;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 
-  color: white;
-  background: linear-gradient(145deg,#2ecc71,#1b7f45);
+  padding: 8px 12px;
+  font-size: 10px;
 
+  background: #2ecc71;
   border: 2px solid #f1c40f;
-  border-radius: 14px;
-
-  cursor: pointer;
-
-  box-shadow:
-    0 0 10px rgba(46,204,113,0.6),
-    0 5px 15px rgba(0,0,0,0.7);
-
-  transition: all 0.2s ease;
-}
-
-.play-btn:hover {
-  transform: scale(1.1);
-  box-shadow:
-    0 0 20px rgba(46,204,113,1),
-    0 10px 25px rgba(0,0,0,0.9);
+  border-radius: 10px;
 }
 
 /* TEXTO */
-.label {
-  position: absolute;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%);
-  text-align:center;
-}
-
 .sub {
-  font-size:12px;
-  margin-top:6px;
-  opacity:0.9;
-}
-
-/* ✨ ANIMACIÓN */
-.table::after {
-  content:"";
-  position:absolute;
-  inset:0;
-  border-radius:18px;
-
-  background: linear-gradient(120deg, transparent, rgba(255,255,255,0.15), transparent);
-  opacity:0;
-  transition:0.5s;
-}
-
-.table:hover::after {
-  opacity:1;
+  position: absolute;
+  bottom: -22px;
+  width: 100%;
+  text-align: center;
+  font-size: 10px;
 }
 
 </style>
@@ -230,36 +171,28 @@ body {
   <div class="avatar">
     <img src="https://i.imgur.com/6VBx3io.png">
   </div>
-
-  <div class="stats">
-    <div class="stat">LEVEL 1</div>
-    <div class="stat">CREDITS 100</div>
-    <div class="stat">MATCHES 0</div>
-  </div>
 </div>
 
 <div class="tables">
 
+  <!-- 2 jugadores -->
   <div class="table">
     <div class="seat"></div>
     <div class="seat"></div>
 
-    <div class="label">
-      <button class="play-btn">2 PLAYERS</button>
-      <div class="sub">INDIVIDUAL</div>
-    </div>
+    <button class="play-btn">2P</button>
+    <div class="sub">INDIVIDUAL</div>
   </div>
 
+  <!-- 4 jugadores -->
   <div class="table">
     <div class="seat"></div>
     <div class="seat"></div>
     <div class="seat"></div>
     <div class="seat"></div>
 
-    <div class="label">
-      <button class="play-btn">4 PLAYERS</button>
-      <div class="sub">EN EQUIPO</div>
-    </div>
+    <button class="play-btn">4P</button>
+    <div class="sub">EQUIPO</div>
   </div>
 
 </div>
