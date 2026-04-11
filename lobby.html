@@ -81,35 +81,30 @@ body {
   to { transform: translateX(100%); }
 }
 
-/* MEDALLA USANDO PNG REAL */
+/* MEDALLA */
 .medal {
   width: 110px;
   height: 110px;
-
   background: url("medalla.png") center/contain no-repeat;
-
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-/* avatar dentro */
+/* avatar */
 .avatar {
   width: 60px;
   height: 60px;
   border-radius: 50%;
-
   background: url("https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png") center/cover no-repeat;
-
   z-index: 2;
 }
 
-/* número integrado */
+/* número */
 .level-number {
   position: absolute;
   bottom: 6px;
-
   font-size: 18px;
   font-weight: 900;
 
@@ -210,44 +205,44 @@ body {
     0 3px 6px rgba(0,0,0,0.45);
 }
 
-/* SILLAS MIRANDO AL CENTRO */
+/* SILLAS CORREGIDAS */
 .t2 .seat:nth-child(1) {
-  left: -50px;
+  left: -55px;
   top: 50%;
-  transform: translateY(-50%) rotate(0deg);
+  transform: translateY(-50%) rotate(90deg);
 }
 
 .t2 .seat:nth-child(2) {
-  right: -50px;
+  right: -55px;
   top: 50%;
-  transform: translateY(-50%) rotate(180deg);
+  transform: translateY(-50%) rotate(-90deg);
 }
 
 .t4 .seat:nth-child(1) {
-  top: -50px;
+  top: -55px;
   left: 50%;
   transform: translateX(-50%) rotate(180deg);
 }
 
 .t4 .seat:nth-child(2) {
-  right: -50px;
+  right: -55px;
   top: 50%;
   transform: translateY(-50%) rotate(-90deg);
 }
 
 .t4 .seat:nth-child(3) {
-  bottom: -50px;
+  bottom: -55px;
   left: 50%;
   transform: translateX(-50%) rotate(0deg);
 }
 
 .t4 .seat:nth-child(4) {
-  left: -50px;
+  left: -55px;
   top: 50%;
   transform: translateY(-50%) rotate(90deg);
 }
 
-/* BOTÓN PREMIUM */
+/* BOTÓN CORREGIDO (NEÓN BLANCO) */
 .play-btn {
   width: 120px;
   height: 42px;
@@ -259,18 +254,20 @@ body {
     linear-gradient(145deg,#ffe27a 0%,#ffb800 40%,#a66b00 100%);
 
   border-radius: 12px;
-  border: 2px solid #000;
+
+  border: 1px solid rgba(255,255,255,0.9);
 
   box-shadow:
+    0 0 0 1px rgba(255,255,255,0.8),
+    0 0 12px rgba(255,255,255,0.6),
     inset 0 2px 4px rgba(255,255,255,0.4),
-    inset 0 -4px 8px rgba(0,0,0,0.6),
-    0 0 12px rgba(255,215,0,0.6);
+    inset 0 -4px 8px rgba(0,0,0,0.6);
 
   text-shadow:
-    -2px -2px 0 #000,
-     2px -2px 0 #000,
-    -2px  2px 0 #000,
-     2px  2px 0 #000;
+    -1px -1px 0 rgba(0,0,0,0.9),
+     1px -1px 0 rgba(0,0,0,0.9),
+    -1px  1px 0 rgba(0,0,0,0.9),
+     1px  1px 0 rgba(0,0,0,0.9);
 }
 
 .mode-label {
