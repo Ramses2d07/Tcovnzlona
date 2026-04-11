@@ -32,7 +32,7 @@ body {
   background: rgba(0,0,0,0.75);
 }
 
-/* CONTENEDOR PRINCIPAL */
+/* UI */
 .game-ui {
   position: relative;
   z-index: 2;
@@ -51,6 +51,7 @@ body {
   border: 3px solid #f1c40f;
   border-radius: 18px;
   background: rgba(20,20,20,0.92);
+
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -111,7 +112,6 @@ body {
   border-radius: 10px;
 }
 
-/* 2 jugadores */
 .t2 .seat:nth-child(1) {
   left: -40px;
   top: 50%;
@@ -124,7 +124,6 @@ body {
   transform: translateY(-50%);
 }
 
-/* 4 jugadores */
 .t4 .seat:nth-child(1) {
   top: -40px;
   left: 50%;
@@ -149,20 +148,26 @@ body {
   transform: translateY(-50%);
 }
 
-/* BOTÓN */
+/* BOTÓN (CORREGIDO PARA EVITAR 404) */
 .play-btn {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+
   padding: 8px 14px;
   background: #ffcc00;
   border: 3px solid #fff;
   border-radius: 10px;
+
   font-weight: bold;
   color: #000;
   font-size: 13px;
+
   cursor: pointer;
+}
+.play-btn:active {
+  transform: translate(-50%, -50%) scale(0.95);
 }
 
 /* TEXTO */
@@ -184,20 +189,18 @@ body {
 
 <div class="game-ui">
 
-  <!-- PROFILE -->
   <div class="profile">
     <div class="avatar"></div>
     <div class="name">Jugador 01</div>
     <div class="stats">Nivel 7 | Créditos 12,500 | Partidas 128</div>
   </div>
 
-  <!-- MESAS -->
   <div class="tables">
 
     <div class="table t2">
       <div class="seat"></div>
       <div class="seat"></div>
-      <button class="play-btn">PLAY</button>
+      <button class="play-btn" type="button" onclick="alert('Sala 2 jugadores')">PLAY</button>
       <div class="labels">2 PLAYERS<br>INDIVIDUAL</div>
     </div>
 
@@ -206,7 +209,7 @@ body {
       <div class="seat"></div>
       <div class="seat"></div>
       <div class="seat"></div>
-      <button class="play-btn">PLAY</button>
+      <button class="play-btn" type="button" onclick="alert('Sala 4 jugadores')">PLAY</button>
       <div class="labels">4 PLAYERS<br>TEAM MODE</div>
     </div>
 
@@ -215,4 +218,4 @@ body {
 </div>
 
 </body>
-  </html>
+</html>
