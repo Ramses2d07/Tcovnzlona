@@ -51,7 +51,6 @@ body {
   margin-bottom: -25px;
 }
 
-/* PNG */
 .profile::before {
   content: "";
   position: absolute;
@@ -132,14 +131,17 @@ body {
 
 .t4 { margin-top: 35px; }
 
-/* SILLAS (CUERO + RESPALDO CON BORDADO ROMBO) */
+/* ========================= */
+/* ASIENTO = BORDADO ROMBO   */
+/* ========================= */
 .seat {
   position: absolute;
   width: 46px;
   height: 36px;
   border-radius: 10px;
 
-  background: linear-gradient(145deg,#ff3f3f 0%,#7a0000 55%,#3a0000 100%);
+  background:
+    linear-gradient(145deg,#ff3f3f 0%,#7a0000 55%,#3a0000 100%);
 
   box-shadow:
     inset 0 -5px 10px rgba(0,0,0,0.7),
@@ -149,16 +151,32 @@ body {
   overflow: hidden;
 }
 
-/* brillo asiento */
+/* bordado rombo en asiento */
 .seat::after {
   content: "";
   position: absolute;
   inset: 0;
   border-radius: 10px;
-  background: linear-gradient(120deg, rgba(255,255,255,0.22), transparent 45%);
+
+  background:
+    linear-gradient(120deg, rgba(255,255,255,0.18), transparent 45%),
+    repeating-linear-gradient(45deg,
+      rgba(255,255,255,0.18) 0px,
+      rgba(255,255,255,0.18) 1px,
+      transparent 1px,
+      transparent 10px
+    ),
+    repeating-linear-gradient(-45deg,
+      rgba(255,255,255,0.18) 0px,
+      rgba(255,255,255,0.18) 1px,
+      transparent 1px,
+      transparent 10px
+    );
 }
 
-/* respaldo + bordado rombo */
+/* ========================= */
+/* RESPALDO = ROJO LISO      */
+/* ========================= */
 .seat::before {
   content: "";
   position: absolute;
@@ -169,22 +187,7 @@ body {
   height: 20px;
   border-radius: 6px;
 
-  background:
-    linear-gradient(145deg,#a80000,#2a0000),
-    repeating-linear-gradient(45deg,
-      rgba(255,255,255,0.20) 0px,
-      rgba(255,255,255,0.20) 1px,
-      transparent 1px,
-      transparent 10px
-    ),
-    repeating-linear-gradient(-45deg,
-      rgba(255,255,255,0.20) 0px,
-      rgba(255,255,255,0.20) 1px,
-      transparent 1px,
-      transparent 10px
-    );
-
-  background-blend-mode: overlay;
+  background: linear-gradient(145deg,#a80000,#2a0000);
 
   box-shadow:
     inset 0 -4px 8px rgba(0,0,0,0.7),
