@@ -34,7 +34,7 @@ body {
   z-index: 2;
 }
 
-/* PROFILE tipo tarjeta vertical */
+/* PROFILE PANEL */
 .profile {
   position: fixed;
   top: 18px;
@@ -42,28 +42,51 @@ body {
   transform: translateX(-50%);
 
   width: 280px;
-  height: 110px;
+  height: 170px;
 
   border: 3px solid #f1c40f;
   border-radius: 18px;
-
   background: rgba(20,20,20,0.92);
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  padding: 12px;
 
-  font-weight: bold;
-  text-align: center;
+  box-sizing: border-box;
 }
 
-/* MESAS MÁS ABAJO */
+/* FOTO + NOMBRE */
+.profile-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: url("avatar.png") center/cover no-repeat;
+  border: 2px solid #f1c40f;
+}
+
+.name {
+  font-weight: bold;
+  font-size: 14px;
+}
+
+/* INFO */
+.profile-info {
+  margin-top: 12px;
+  font-size: 12px;
+  line-height: 18px;
+}
+
+/* MESAS */
 .tables {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 50px;
-  margin-top: 200px;
+  margin-top: 240px;
 }
 
 /* Mesa */
@@ -170,7 +193,21 @@ body {
 
 <div class="game-ui">
 
-  <div class="profile">PROFILE</div>
+  <!-- PROFILE -->
+  <div class="profile">
+
+    <div class="profile-top">
+      <div class="avatar"></div>
+      <div class="name">Jugador 01</div>
+    </div>
+
+    <div class="profile-info">
+      Créditos: 12,500<br>
+      Nivel: 7<br>
+      Partidas jugadas: 128
+    </div>
+
+  </div>
 
   <div class="tables">
 
