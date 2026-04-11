@@ -30,7 +30,7 @@ body {
   background: rgba(0,0,0,0.75);
 }
 
-/* UI */
+/* 🔥 SOLO POSICIONAMIENTO HACIA ARRIBA */
 .game-ui {
   position: relative;
   z-index: 2;
@@ -38,7 +38,8 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
+  padding-top: 20px;
   gap: 60px;
 }
 
@@ -71,7 +72,7 @@ body {
   to { transform: translateX(100%); }
 }
 
-/* 🔥 MEDALLA REAL (marco) */
+/* MEDALLA */
 .medal {
   width: 120px;
   height: 120px;
@@ -82,7 +83,6 @@ body {
   justify-content: center;
 }
 
-/* avatar dentro */
 .avatar {
   width: 58px;
   height: 58px;
@@ -91,21 +91,16 @@ body {
   z-index: 2;
 }
 
-/* número abajo integrado */
 .level-number {
   position: absolute;
   bottom: 2px;
-
   font-size: 20px;
   font-weight: 900;
   letter-spacing: 1px;
-
   font-family: Impact, Arial Black, sans-serif;
-
   background: linear-gradient(#fff,#ffd84d,#b8860b);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-
   text-shadow:
     0 2px 4px rgba(0,0,0,0.8),
     0 0 6px rgba(255,215,0,0.6);
@@ -188,7 +183,7 @@ body {
   border-radius: 6px;
 }
 
-/* posiciones correctas */
+/* posiciones */
 .t2 .seat:nth-child(1) {
   left: -55px;
   top: 50%;
@@ -231,18 +226,14 @@ body {
   height: 42px;
   font-weight: 900;
   color: #fff;
-
   background: linear-gradient(145deg,#ffe27a 0%,#ffb800 40%,#a66b00 100%);
   border-radius: 12px;
-
   border: 1px solid rgba(255,255,255,0.9);
-
   box-shadow:
     0 0 0 1px rgba(255,255,255,0.8),
     0 0 12px rgba(255,255,255,0.6),
     inset 0 2px 4px rgba(255,255,255,0.4),
     inset 0 -4px 8px rgba(0,0,0,0.6);
-
   text-shadow:
     -1px -1px 0 rgba(0,0,0,0.9),
      1px -1px 0 rgba(0,0,0,0.9),
@@ -266,8 +257,6 @@ body {
 <div class="game-ui">
 
   <div class="profile">
-
-    <!-- 🔥 PARCHE APLICADO -->
     <div class="medal">
       <div class="avatar"></div>
       <div class="level-number">7</div>
@@ -278,7 +267,6 @@ body {
       <div class="stat-row"><span>🪙</span><span>COINS 12,500</span></div>
       <div class="stat-row"><span>🎮</span><span>GAMES 128</span></div>
     </div>
-
   </div>
 
   <div class="tables">
