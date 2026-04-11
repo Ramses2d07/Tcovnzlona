@@ -179,34 +179,28 @@ body {
     0 0 6px rgba(255,255,255,0.5);
 }
 
-/* LABELS DEBAJO DEL BOTÓN */
+/* LABELS CERCANOS AL BOTÓN */
 .mode-label {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  bottom: -30px;
+  top: 100%;
+  margin-top: 6px; /* separación mínima tipo línea */
 
   font-size: 11px;
   font-weight: 700;
-  color: #ffffff;
+  color: #fff;
   opacity: 0.9;
   letter-spacing: 0.5px;
 }
 
-/* línea debajo del texto */
-.mode-label::after {
-  content: "";
-  display: block;
-  width: 60px;
-  height: 2px;
-  margin: 4px auto 0;
-  background: rgba(255,255,255,0.7);
-  border-radius: 2px;
-}
-
-/* cada botón necesita su label */
-.table {
-  position: relative;
+/* SILLAS */
+.seat {
+  position: absolute;
+  width: 42px;
+  height: 42px;
+  background: linear-gradient(145deg, #ff2b2b, #8b0000);
+  border-radius: 10px;
 }
 </style>
 </head>
