@@ -7,31 +7,27 @@
 <title>Casino Lobby</title>
 
 <style>
-html, body {
+body {
   margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 100%;
   font-family: Arial, sans-serif;
+  overflow-x: hidden;
+  overflow-y: hidden; /* 🔥 evita sensación de zoom/scroll raro */
+  color: #fff;
   background: #000;
-  overflow: hidden;
 }
 
-/* 🟦 FONDO (SIN ESCALA NI TRANSFORM) */
+/* 🟦 FONDO SIN ZOOM */
 .background {
   position: fixed;
   inset: 0;
-  background-image: url("inicio11.png");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  background: url("inicio11.png") center/cover no-repeat;
 }
 
-/* 🌑 OVERLAY FIJO */
+/* 🌑 OVERLAY */
 .overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.78);
+  background: rgba(0,0,0,0.75);
 }
 
 /* UI */
@@ -49,19 +45,19 @@ html, body {
   padding: 10px 18px;
   border: 3px solid #f1c40f;
   border-radius: 16px;
-  background: rgba(20,20,20,0.9);
+  background: rgba(20,20,20,0.85);
 }
 
-/* CONTENEDOR MESAS */
+/* CONTENEDOR */
 .tables {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 40px;
-  margin-top: 100px; /* 🔥 reducido para evitar sensación de zoom */
+  gap: 45px;
+  margin-top: 110px;
 }
 
-/* 🪵 MESA BASE REAL */
+/* 🪵 MESA REAL */
 .table {
   position: relative;
   width: 320px;
@@ -77,9 +73,9 @@ html, body {
 
   box-shadow:
     inset 0 0 25px rgba(0,0,0,0.9),
-    0 15px 30px rgba(0,0,0,0.7);
+    0 15px 35px rgba(0,0,0,0.7);
 
-  overflow: visible;
+  overflow: visible; /* 🔥 clave para que no se corten sillas */
 }
 
 /* 🪑 SILLAS */
@@ -89,27 +85,27 @@ html, body {
   height: 42px;
   background: linear-gradient(145deg, #ff2b2b, #8b0000);
   border-radius: 10px;
-  box-shadow: 0 10px 18px rgba(0,0,0,0.8);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.8);
 }
 
 /* 2 PLAYERS */
 .table.t2 .seat:nth-child(1){
-  left: -60px;
+  left: -50px;
   top: 50%;
   transform: translateY(-50%);
 }
 
 .table.t2 .seat:nth-child(2){
-  right: -60px;
+  right: -50px;
   top: 50%;
   transform: translateY(-50%);
 }
 
 /* 4 PLAYERS */
-.table.t4 .seat:nth-child(1){ top:-60px; left:50%; transform:translateX(-50%); }
-.table.t4 .seat:nth-child(2){ right:-60px; top:50%; transform:translateY(-50%); }
-.table.t4 .seat:nth-child(3){ bottom:-60px; left:50%; transform:translateX(-50%); }
-.table.t4 .seat:nth-child(4){ left:-60px; top:50%; transform:translateY(-50%); }
+.table.t4 .seat:nth-child(1){ top:-50px; left:50%; transform:translateX(-50%); }
+.table.t4 .seat:nth-child(2){ right:-50px; top:50%; transform:translateY(-50%); }
+.table.t4 .seat:nth-child(3){ bottom:-50px; left:50%; transform:translateX(-50%); }
+.table.t4 .seat:nth-child(4){ left:-50px; top:50%; transform:translateY(-50%); }
 
 /* BOTÓN */
 .play-btn {
@@ -147,24 +143,32 @@ html, body {
 
 <div class="game-ui">
 
-  <div class="profile">PROFILE</div>
+  <div class="profile">
+    PROFILE
+  </div>
 
   <div class="tables">
 
+    <!-- 2 PLAYERS -->
     <div class="table t2">
       <div class="seat"></div>
       <div class="seat"></div>
+
       <button class="play-btn">PLAY</button>
+
       <div class="sub">2 PLAYERS</div>
       <div class="sub">INDIVIDUAL</div>
     </div>
 
+    <!-- 4 PLAYERS -->
     <div class="table t4">
       <div class="seat"></div>
       <div class="seat"></div>
       <div class="seat"></div>
       <div class="seat"></div>
+
       <button class="play-btn">PLAY</button>
+
       <div class="sub">4 PLAYERS</div>
       <div class="sub">TEAM MODE</div>
     </div>
