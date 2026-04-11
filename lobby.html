@@ -179,13 +179,12 @@ body {
     0 0 6px rgba(255,255,255,0.5);
 }
 
-/* LABELS CERCANOS AL BOTÓN */
+/* LABEL EXACTO DEBAJO DEL BOTÓN */
 .mode-label {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  top: 100%;
-  margin-top: 6px; /* separación mínima tipo línea */
+  top: calc(100% + 4px); /* pegado justo debajo */
 
   font-size: 11px;
   font-weight: 700;
