@@ -34,74 +34,60 @@ body {
   z-index: 2;
 }
 
-/* PROFILE PANEL */
+/* PROFILE COMPACTO CENTRADO */
 .profile {
   position: fixed;
-  top: 18px;
+  top: 30px;
   left: 50%;
   transform: translateX(-50%);
 
   width: 280px;
-  height: 200px;
+  height: 120px;
 
   border: 3px solid #f1c40f;
   border-radius: 18px;
   background: rgba(20,20,20,0.92);
 
-  padding: 12px;
-  box-sizing: border-box;
-}
-
-/* TOP */
-.profile-top {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 10px;
+  justify-content: center;
+
+  gap: 6px;
 }
 
+/* AVATAR */
 .avatar {
-  width: 52px;
-  height: 52px;
+  width: 42px;
+  height: 42px;
   border-radius: 50%;
   background: url("avatar.png") center/cover no-repeat;
   border: 2px solid #f1c40f;
 }
 
+/* TEXTO */
 .name {
   font-weight: bold;
   font-size: 14px;
 }
 
-/* INFO */
-.profile-info {
-  margin-top: 10px;
-  font-size: 12px;
-  line-height: 18px;
+/* INFO EN UNA LÍNEA */
+.stats {
+  font-size: 11px;
+  opacity: 0.9;
 }
 
-/* LEVEL BAR */
-.level-bar {
-  margin-top: 10px;
-  width: 100%;
-  height: 8px;
-  background: rgba(255,255,255,0.15);
-  border-radius: 10px;
-  overflow: hidden;
-}
-
-.level-bar-fill {
-  width: 60%;
-  height: 100%;
-  background: linear-gradient(90deg, #f1c40f, #ffcc00);
-}
-
-/* MESAS MÁS ABAJO */
+/* MESAS CENTRADAS */
 .tables {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 50px;
-  margin-top: 260px;
+
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 /* Mesa */
@@ -188,7 +174,7 @@ body {
   cursor: pointer;
 }
 
-/* Textos */
+/* Texto inferior */
 .labels {
   position: absolute;
   bottom: -45px;
@@ -208,24 +194,11 @@ body {
 
 <div class="game-ui">
 
-  <!-- PROFILE COMPLETO -->
+  <!-- PROFILE COMPACTO -->
   <div class="profile">
-
-    <div class="profile-top">
-      <div class="avatar"></div>
-      <div class="name">Jugador 01</div>
-    </div>
-
-    <div class="profile-info">
-      Créditos: 12,500<br>
-      Nivel: 7<br>
-      Partidas jugadas: 128
-    </div>
-
-    <div class="level-bar">
-      <div class="level-bar-fill"></div>
-    </div>
-
+    <div class="avatar"></div>
+    <div class="name">Jugador 01</div>
+    <div class="stats">Nivel 7 | Créditos 12,500 | Partidas 128</div>
   </div>
 
   <div class="tables">
