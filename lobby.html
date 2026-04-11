@@ -43,7 +43,7 @@ body {
   gap: 40px;
 }
 
-/* ================= PERFIL ================= */
+/* PERFIL */
 .profile {
   width: 340px;
   padding: 18px 14px;
@@ -72,7 +72,7 @@ body {
   gap: 10px;
 }
 
-/* brillo metálico */
+/* BRILLO */
 .profile::before {
   content: "";
   position: absolute;
@@ -94,7 +94,7 @@ body {
   100% { transform: translateX(100%); }
 }
 
-/* avatar */
+/* AVATAR */
 .avatar {
   width: 50px;
   height: 50px;
@@ -103,7 +103,7 @@ body {
   background: url("https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png") center/cover no-repeat;
 }
 
-/* stats */
+/* STATS */
 .stats {
   display: flex;
   flex-direction: row;
@@ -112,22 +112,25 @@ body {
   gap: 10px;
 }
 
-/* texto metálico */
+/* TEXTO METÁLICO */
 .stat-row {
   display: flex;
   align-items: center;
   gap: 6px;
 
   font-size: 11px;
-  font-weight: 700;
+  font-weight: 800;
 
-  color: #eaeaea;
+  background: linear-gradient(180deg, #ffffff 0%, #cfcfcf 35%, #8f8f8f 70%, #ffffff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 
   text-shadow:
     0 1px 0 #000,
-    0 0 6px rgba(255,255,255,0.12);
+    0 0 6px rgba(255,255,255,0.15);
 }
 
+/* ICONOS */
 .icon {
   width: 18px;
   height: 18px;
@@ -135,7 +138,7 @@ body {
   filter: drop-shadow(0 0 4px rgba(255,255,255,0.25));
 }
 
-/* ================= MESAS ================= */
+/* MESAS */
 .tables {
   display: flex;
   flex-direction: column;
@@ -167,7 +170,7 @@ body {
   flex-direction: column;
 }
 
-/* ================= SILLAS ================= */
+/* SILLAS */
 .seat {
   position: absolute;
   width: 42px;
@@ -176,17 +179,15 @@ body {
   border-radius: 10px;
 }
 
-/* 2 players */
 .t2 .seat:nth-child(1) { left: -48px; top: 50%; transform: translateY(-50%); }
 .t2 .seat:nth-child(2) { right: -48px; top: 50%; transform: translateY(-50%); }
 
-/* 4 players */
 .t4 .seat:nth-child(1) { top: -48px; left: 50%; transform: translateX(-50%); }
 .t4 .seat:nth-child(2) { right: -48px; top: 50%; transform: translateY(-50%); }
 .t4 .seat:nth-child(3) { bottom: -48px; left: 50%; transform: translateX(-50%); }
 .t4 .seat:nth-child(4) { left: -48px; top: 50%; transform: translateY(-50%); }
 
-/* ================= BOTÓN ================= */
+/* BOTÓN */
 .play-btn {
   width: 110px;
   height: 40px;
@@ -217,7 +218,6 @@ body {
 
 <div class="game-ui">
 
-  <!-- PERFIL -->
   <div class="profile">
 
     <div class="avatar"></div>
@@ -226,24 +226,23 @@ body {
 
       <div class="stat-row">
         <span class="icon">🎖️</span>
-        <span>Nivel 7</span>
+        <span>LEVEL 7</span>
       </div>
 
       <div class="stat-row">
         <span class="icon">🪙</span>
-        <span>12,500</span>
+        <span>COINS 12,500</span>
       </div>
 
       <div class="stat-row">
         <span class="icon">🎮</span>
-        <span>128</span>
+        <span>GAMES 128</span>
       </div>
 
     </div>
 
   </div>
 
-  <!-- MESAS -->
   <div class="tables">
 
     <div class="table t2">
