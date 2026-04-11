@@ -77,22 +77,22 @@ body {
   z-index: 2;
 }
 
-/* 🔥 NUEVO SISTEMA PRECISO */
+/* 🔥 POSICIÓN CORREGIDA (DEBAJO DEL TEXTO DEL PNG) */
 .stats {
   position: absolute;
-  bottom: 30px;
+  bottom: 14px; /* 🔥 BAJADO CORRECTAMENTE */
   width: 100%;
   height: 40px;
   z-index: 3;
 }
 
-/* BASE NÚMEROS */
+/* NÚMEROS */
 .stat {
   position: absolute;
   transform: translateX(-50%);
   text-align: center;
 
-  font-size: clamp(11px, 3vw, 15px);
+  font-size: clamp(13px, 3.8vw, 18px); /* 🔥 tamaño acorde al PNG */
   font-weight: 900;
   color: #ffd700;
 
@@ -100,10 +100,10 @@ body {
 
   text-shadow:
     0 2px 4px rgba(0,0,0,0.9),
-    0 0 4px rgba(255,215,0,0.6);
+    0 0 6px rgba(255,215,0,0.7);
 }
 
-/* 🔥 POSICIONES CALIBRADAS */
+/* 🔥 ALINEACIÓN EXACTA */
 .stat:nth-child(1) { left: 21%; } /* LEVEL */
 .stat:nth-child(2) { left: 50%; } /* COINS */
 .stat:nth-child(3) { left: 79%; } /* GAMES */
