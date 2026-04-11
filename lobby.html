@@ -132,7 +132,7 @@ body {
 
 .t4 { margin-top: 35px; }
 
-/* SILLAS (CUERO MEJORADO) */
+/* SILLAS (CUERO + BORDADO ROMBO BLANCO) */
 .seat {
   position: absolute;
   width: 46px;
@@ -140,18 +140,17 @@ body {
   border-radius: 10px;
 
   background:
-    radial-gradient(circle at 30% 25%, rgba(255,255,255,0.25), transparent 40%),
-    radial-gradient(circle at 70% 80%, rgba(0,0,0,0.35), transparent 55%),
-    linear-gradient(145deg,#7a1a1a 0%, #3a0000 60%, #1a0000 100%);
-
-  border: 1px solid rgba(255,255,255,0.08);
+    linear-gradient(145deg,#ff3f3f 0%,#7a0000 55%,#3a0000 100%);
 
   box-shadow:
-    inset 0 -6px 10px rgba(0,0,0,0.8),
-    inset 0 2px 4px rgba(255,255,255,0.12),
+    inset 0 -5px 10px rgba(0,0,0,0.7),
+    inset 0 2px 3px rgba(255,255,255,0.14),
     0 6px 12px rgba(0,0,0,0.6);
+
+  overflow: hidden;
 }
 
+/* brillo cuero */
 .seat::after {
   content: "";
   position: absolute;
@@ -160,35 +159,39 @@ body {
   right: 6px;
   height: 45%;
   border-radius: 8px;
-
-  background: linear-gradient(
-    120deg,
-    rgba(255,255,255,0.18),
-    rgba(255,255,255,0.05),
-    transparent
-  );
+  background: linear-gradient(120deg, rgba(255,255,255,0.22), transparent);
 }
 
+/* respaldo */
 .seat::before {
   content: "";
   position: absolute;
-  top: -18px;
+  top: -16px;
   left: 50%;
   transform: translateX(-50%);
   width: 38px;
-  height: 22px;
+  height: 20px;
   border-radius: 6px;
+  background: linear-gradient(145deg,#a80000,#2a0000);
+}
 
-  background:
-    radial-gradient(circle at 30% 30%, rgba(255,255,255,0.18), transparent 45%),
-    linear-gradient(145deg,#5a0f0f 0%, #2a0000 70%, #120000 100%);
+/* BORDADO ROMBO BLANCO */
+.seat {
+  background-image:
+    linear-gradient(145deg,#ff3f3f 0%,#7a0000 55%,#3a0000 100%),
+    repeating-linear-gradient(45deg,
+      rgba(255,255,255,0.18) 0px,
+      rgba(255,255,255,0.18) 1px,
+      transparent 1px,
+      transparent 10px),
+    repeating-linear-gradient(-45deg,
+      rgba(255,255,255,0.18) 0px,
+      rgba(255,255,255,0.18) 1px,
+      transparent 1px,
+      transparent 10px
+    );
 
-  border: 1px solid rgba(255,255,255,0.06);
-
-  box-shadow:
-    inset 0 -4px 8px rgba(0,0,0,0.7),
-    inset 0 2px 3px rgba(255,255,255,0.1),
-    0 4px 8px rgba(0,0,0,0.5);
+  background-blend-mode: overlay, normal, normal;
 }
 
 /* POSICIONES */
