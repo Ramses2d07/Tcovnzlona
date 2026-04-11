@@ -47,24 +47,58 @@ body {
   margin-bottom: 10px;
 }
 
-/* TARJETA PEQUEÑA */
+/* TARJETAS PREMIUM MODIFICADAS */
 .player {
-  width: 75px;
-  padding: 6px;
-  border-radius: 10px;
-  background: rgba(255,255,255,0.08);
+  width: 80px;
+  padding: 8px;
+  border-radius: 12px;
   text-align: center;
   font-size: 10px;
+  color: #fff;
+
+  /* gris premium */
+  background: linear-gradient(145deg, #2a2a2a, #3a3a3a);
+  box-shadow: 
+    inset 0 1px 1px rgba(255,255,255,0.1),
+    0 4px 10px rgba(0,0,0,0.6);
+
+  position: relative;
+  overflow: hidden;
 }
 
-/* AVATAR PEQUEÑO */
+/* ✨ BRILLO ANIMADO */
+.player::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -150%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255,255,255,0.25),
+    transparent
+  );
+  transform: skewX(-20deg);
+  animation: shine 2.5s infinite;
+}
+
+@keyframes shine {
+  0% { left: -150%; }
+  50% { left: 150%; }
+  100% { left: 150%; }
+}
+
+/* AVATAR PREMIUM */
 .avatar {
-  width: 35px;
-  height: 35px;
+  width: 38px;
+  height: 38px;
   border-radius: 50%;
-  background: #ccc;
+  background: radial-gradient(circle, #666, #222);
   margin: auto;
   margin-bottom: 4px;
+  box-shadow: inset 0 2px 4px rgba(255,255,255,0.15);
 }
 
 /* MESA */
