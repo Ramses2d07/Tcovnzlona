@@ -10,72 +10,54 @@
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  overflow: hidden;
+  overflow-x: hidden;
   color: #fff;
+  background: #000;
 }
 
-/* 🟦 FONDO */
+/* 🟦 FONDO SIN ZOOM */
 .background {
   position: fixed;
   inset: 0;
   background: url("inicio11.png") center/cover no-repeat;
+  transform: none;
 }
 
-/* 🌑 OVERLAY */
+/* 🌑 OVERLAY SIMPLE */
 .overlay {
   position: fixed;
   inset: 0;
-  background: radial-gradient(circle at center,
-    rgba(0,0,0,0.25),
-    rgba(0,0,0,0.85)
-  );
+  background: rgba(0,0,0,0.75);
 }
 
-/* 🟩 UI */
+/* UI */
 .game-ui {
   position: relative;
   z-index: 2;
 }
 
-/* 👤 HUD */
+/* HUD */
 .profile {
   position: fixed;
-  top: 12px;
+  top: 10px;
   left: 50%;
   transform: translateX(-50%);
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 12px 20px;
-  background: rgba(20,20,20,0.85);
+  padding: 10px 18px;
   border: 3px solid #f1c40f;
-  border-radius: 18px;
-  box-shadow: 0 0 20px rgba(241,196,15,0.3);
+  border-radius: 16px;
+  background: rgba(20,20,20,0.85);
 }
 
-.avatar {
-  width: 65px;
-  height: 65px;
-  border-radius: 50%;
-  overflow: hidden;
-}
-
-.avatar img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-/* 🎰 CONTENEDOR */
+/* CONTENEDOR */
 .tables {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 60px;
-  margin-top: 150px;
+  gap: 45px;
+  margin-top: 110px;
 }
 
-/* 🪵 MESA BASE (RESTAURADA) */
+/* 🪵 MESA REAL */
 .table {
   position: relative;
   width: 320px;
@@ -90,8 +72,10 @@ body {
   border: 14px solid #3b2314;
 
   box-shadow:
-    inset 0 0 30px rgba(0,0,0,0.9),
-    0 20px 50px rgba(0,0,0,0.8);
+    inset 0 0 25px rgba(0,0,0,0.9),
+    0 15px 35px rgba(0,0,0,0.7);
+
+  overflow: visible; /* 🔥 CLAVE: evita corte de sillas */
 }
 
 /* 🪑 SILLAS */
@@ -99,97 +83,42 @@ body {
   position: absolute;
   width: 42px;
   height: 42px;
-
   background: linear-gradient(145deg, #ff2b2b, #8b0000);
   border-radius: 10px;
-
-  border: 2px solid rgba(255,255,255,0.18);
-
-  box-shadow:
-    0 12px 22px rgba(0,0,0,0.85),
-    inset 0 3px 6px rgba(255,255,255,0.25);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.8);
 }
 
-.seat::before {
-  content: "";
-  position: absolute;
-  top: -18px;
-  left: 50%;
-  transform: translateX(-50%);
-
-  width: 36px;
-  height: 18px;
-
-  background: linear-gradient(145deg, #cc0000, #5a0000);
-  border-radius: 6px;
-  box-shadow: 0 6px 12px rgba(0,0,0,0.5);
-}
-
-/* =========================
-   🎯 2 PLAYERS (BASE CORRECTO)
-========================= */
-
+/* 2 PLAYERS */
 .table.t2 .seat:nth-child(1){
-  left: -55px;
+  left: -60px;
   top: 50%;
   transform: translateY(-50%);
 }
 
 .table.t2 .seat:nth-child(2){
-  right: -55px;
+  right: -60px;
   top: 50%;
   transform: translateY(-50%);
 }
 
-/* =========================
-   🎯 4 PLAYERS
-========================= */
+/* 4 PLAYERS */
+.table.t4 .seat:nth-child(1){ top:-60px; left:50%; transform:translateX(-50%); }
+.table.t4 .seat:nth-child(2){ right:-60px; top:50%; transform:translateY(-50%); }
+.table.t4 .seat:nth-child(3){ bottom:-60px; left:50%; transform:translateX(-50%); }
+.table.t4 .seat:nth-child(4){ left:-60px; top:50%; transform:translateY(-50%); }
 
-.table.t4 .seat:nth-child(1){ top:-55px; left:50%; transform:translateX(-50%); }
-.table.t4 .seat:nth-child(2){ right:-55px; top:50%; transform:translateY(-50%); }
-.table.t4 .seat:nth-child(3){ bottom:-55px; left:50%; transform:translateX(-50%); }
-.table.t4 .seat:nth-child(4){ left:-55px; top:50%; transform:translateY(-50%); }
-
-/* 🎮 BOTÓN */
+/* BOTÓN */
 .play-btn {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-
-  width: 110px;
-  height: 38px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  font-size: 14px;
-  font-weight: 900;
-  letter-spacing: 1px;
-
-  color: #fff;
-  text-transform: uppercase;
-
-  background: linear-gradient(145deg, #ffcc00, #e6a800);
-
-  border: 4px solid #ffffff;
-
-  border-radius: 12px;
-
-  cursor: pointer;
-
-  box-shadow:
-    0 6px 0 #a87400,
-    0 10px 18px rgba(0,0,0,0.6);
-}
-
-.play-btn:hover {
-  transform: translate(-50%, -50%) scale(1.05);
-}
-
-.play-btn:active {
-  transform: translate(-50%, -48%) scale(0.98);
+  padding: 10px 18px;
+  background: #ffcc00;
+  border: 4px solid #fff;
+  border-radius: 10px;
+  font-weight: bold;
+  color: #000;
 }
 
 /* TEXTO */
@@ -197,19 +126,12 @@ body {
   position: absolute;
   width: 100%;
   text-align: center;
-
   font-size: 11px;
-  font-weight: 900;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-
-  color: #fff;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.8);
-  opacity: 0.95;
+  font-weight: bold;
 }
 
-.sub:nth-of-type(1){ bottom:-24px; }
-.sub:nth-of-type(2){ bottom:-40px; }
+.sub:nth-of-type(1){ bottom:-22px; }
+.sub:nth-of-type(2){ bottom:-38px; }
 
 </style>
 </head>
@@ -222,9 +144,7 @@ body {
 <div class="game-ui">
 
   <div class="profile">
-    <div class="avatar">
-      <img src="https://i.imgur.com/6VBx3io.png">
-    </div>
+    PROFILE
   </div>
 
   <div class="tables">
