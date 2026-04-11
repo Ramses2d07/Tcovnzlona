@@ -110,12 +110,11 @@ body {
   overflow: hidden;
 }
 
-/* IMAGEN MEDALLA CORREGIDA */
+/* SVG EMBEBIDO (MEDALLA SIN ARCHIVO) */
 .badge-img {
   position: absolute;
   width: 100%;
   height: 100%;
-  object-fit: contain;
   top: 0;
   left: 0;
   z-index: 0;
@@ -177,7 +176,7 @@ body {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-translate(-50%, -50%));
 
   width: 140px;
   padding: 10px;
@@ -231,7 +230,13 @@ body {
       <div class="level-text">Nivel</div>
 
       <div class="level-badge" id="myLevel">
-        <img src="mdlla.svg" class="badge-img" alt="medalla">
+
+        <!-- 🔥 MEDALLA EMBEBIDA -->
+        <svg class="badge-img" viewBox="0 0 100 100">
+          <circle cx="50" cy="50" r="40" fill="gold" stroke="#8b6508" stroke-width="5"/>
+          <text x="50" y="58" text-anchor="middle" font-size="35" fill="black">★</text>
+        </svg>
+
         <span class="badge-text">7</span>
       </div>
     </div>
@@ -242,7 +247,12 @@ body {
       <div class="level-text">Nivel</div>
 
       <div class="level-badge" id="enemyLevel">
-        <img src="mdlla.svg" class="badge-img" alt="medalla">
+
+        <svg class="badge-img" viewBox="0 0 100 100">
+          <circle cx="50" cy="50" r="40" fill="gold" stroke="#8b6508" stroke-width="5"/>
+          <text x="50" y="58" text-anchor="middle" font-size="35" fill="black">★</text>
+        </svg>
+
         <span class="badge-text">-</span>
       </div>
     </div>
@@ -302,4 +312,4 @@ function exitRoom() {
 </script>
 
 </body>
-</html>
+</html> 
