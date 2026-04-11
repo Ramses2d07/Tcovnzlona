@@ -1,6 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Truco Venezolano</title>
 
   <style>
@@ -104,7 +106,7 @@
 
   <div class="container">
 
-    <button id="btn-jugar" onclick="jugar()">JUGAR</button>
+    <button id="btn-jugar" onclick="goLobby()">JUGAR</button>
 
     <select id="lang" onchange="cambiarIdioma()">
       <option value="es">Español</option>
@@ -122,8 +124,8 @@
       }
     }
 
-    // 🪵 SONIDO MADERA REAL (TOC)
-    function woodKnock(volume = 0.6) {
+    // 🪵 SONIDO MADERA (TOC REAL)
+    function woodKnock(volume = 0.7) {
       initAudio();
 
       const duration = 0.12;
@@ -155,12 +157,16 @@
       noise.stop(audioCtx.currentTime + duration);
     }
 
-    function jugar() {
-      woodKnock(0.7); // 🪵 botón JUGAR
+    function goLobby() {
+      woodKnock(0.8);
+
+      setTimeout(() => {
+        window.location.href = "lobby.html";
+      }, 120);
     }
 
     function cambiarIdioma() {
-      woodKnock(0.5); // 🪵 selector
+      woodKnock(0.5);
 
       const lang = document.getElementById("lang").value;
       const btn = document.getElementById("btn-jugar");
