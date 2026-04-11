@@ -39,7 +39,6 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding-top: 0;
   gap: 60px;
 }
 
@@ -48,15 +47,11 @@ body {
   width: 340px;
   padding: 18px 14px;
   border-radius: 18px;
-
   background: linear-gradient(145deg,#3a3f46,#1e2228);
   border: 1px solid rgba(255,255,255,0.15);
-
   box-shadow: 0 10px 25px rgba(0,0,0,0.6);
-
   position: relative;
   overflow: hidden;
-
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -68,20 +63,12 @@ body {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    120deg,
-    transparent 0%,
-    rgba(255,255,255,0.08) 30%,
-    rgba(255,255,255,0.18) 50%,
-    rgba(255,255,255,0.08) 70%,
-    transparent 100%
-  );
+  background: linear-gradient(120deg,transparent,rgba(255,255,255,0.15),transparent);
   transform: translateX(-100%);
   animation: shine 6s linear infinite;
 }
 
 @keyframes shine {
-  0% { transform: translateX(-100%); }
   100% { transform: translateX(100%); }
 }
 
@@ -90,15 +77,20 @@ body {
   content: "";
   position: absolute;
   inset: 0;
-
   background-image:
     linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px);
-
   background-size: 18px 18px;
   opacity: 0.25;
+}
 
-  pointer-events: none;
+/* CONTENEDOR AVATAR + MEDALLA */
+.profile-top {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  z-index: 2;
 }
 
 /* avatar */
@@ -106,11 +98,71 @@ body {
   width: 52px;
   height: 52px;
   border-radius: 50%;
-  background: url("https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png") center/cover no-repeat;
+  background: url("https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png") center/cover;
   border: 2px solid #f1c40f;
-  position: relative;
-  z-index: 2;
 }
+
+/* MEDALLA */
+.level-badge {
+  width: 70px;
+  height: 70px;
+  position: relative;
+}
+
+.badge-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.badge-color {
+  position: absolute;
+  top: 24%;
+  left: 24%;
+  width: 52%;
+  height: 52%;
+  border-radius: 50%;
+  mix-blend-mode: color;
+  opacity: 0.9;
+}
+
+.bronze { background: #cd7f32; }
+.silver { background: #c0c0c0; }
+.gold { background: #ffd700; }
+.diamond { background: #6fe7ff; }
+
+/* NÚMERO */
+.badge-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  font-size: 20px;
+  font-weight: 900;
+  color: #fff;
+  text-shadow:
+    0 2px 0 #000,
+    0 3px 6px rgba(0,0,0,0.9),
+    0 0 4px rgba(255,255,255,0.3);
+}
+
+/* PLACA */
+.rank-label {
+  position: absolute;
+  bottom: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 9px;
+  font-weight: 900;
+  padding: 2px 8px;
+  border-radius: 6px;
+  text-transform: uppercase;
+}
+
+.rank-bronze { background: linear-gradient(#cd7f32,#5a2e0f); }
+.rank-silver { background: linear-gradient(#e0e0e0,#6b6b6b); }
+.rank-gold { background: linear-gradient(#ffd700,#7a5c00); }
+.rank-diamond { background: linear-gradient(#6fe7ff,#005a6b); }
 
 /* stats */
 .stats {
@@ -118,21 +170,12 @@ body {
   display: flex;
   justify-content: space-between;
   gap: 10px;
-  position: relative;
   z-index: 2;
 }
 
 .stat-row {
-  display: flex;
-  align-items: center;
-  gap: 6px;
   font-size: 11px;
   font-weight: 700;
-  color: #eaeaea;
-}
-
-.icon {
-  font-size: 14px;
 }
 
 /* MESAS */
@@ -141,109 +184,21 @@ body {
   flex-direction: column;
   align-items: center;
   gap: 55px;
-  margin-top: 0;
 }
 
 .table {
   width: 280px;
   height: 150px;
   border-radius: 18px;
-
   background:
     radial-gradient(circle at 50% 40%, rgba(255,255,255,0.12), transparent 60%),
     radial-gradient(circle, #0f7a35, #042610);
-
   border: 10px solid #3b2314;
-
-  box-shadow:
-    inset 0 0 25px rgba(0,0,0,0.9);
-
   position: relative;
-
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-}
-
-/* SILLAS */
-.seat {
-  position: absolute;
-  width: 46px;
-  height: 36px;
-
-  background: linear-gradient(145deg,#ff3f3f 0%,#7a0000 55%,#3a0000 100%);
-  border-radius: 10px;
-
-  box-shadow:
-    inset 0 -5px 10px rgba(0,0,0,0.7),
-    inset 0 2px 3px rgba(255,255,255,0.14),
-    0 6px 12px rgba(0,0,0,0.6);
-}
-
-.seat::after {
-  content: "";
-  position: absolute;
-  top: 5px;
-  left: 6px;
-  right: 6px;
-  height: 45%;
-  background: linear-gradient(120deg, rgba(255,255,255,0.22), transparent);
-  border-radius: 8px;
-}
-
-.seat::before {
-  content: "";
-  position: absolute;
-  top: -16px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 38px;
-  height: 20px;
-
-  background: linear-gradient(145deg,#a80000,#2a0000);
-  border-radius: 6px;
-
-  box-shadow:
-    inset 0 -3px 5px rgba(0,0,0,0.7),
-    0 3px 6px rgba(0,0,0,0.45);
-}
-
-/* posiciones */
-.t2 .seat:nth-child(1) {
-  left: -48px;
-  top: 50%;
-  transform: translateY(-50%) rotate(90deg);
-}
-
-.t2 .seat:nth-child(2) {
-  right: -48px;
-  top: 50%;
-  transform: translateY(-50%) rotate(-90deg);
-}
-
-.t4 .seat:nth-child(1) {
-  top: -48px;
-  left: 50%;
-  transform: translateX(-50%) rotate(180deg);
-}
-
-.t4 .seat:nth-child(2) {
-  right: -48px;
-  top: 50%;
-  transform: translateY(-50%) rotate(-90deg);
-}
-
-.t4 .seat:nth-child(3) {
-  bottom: -48px;
-  left: 50%;
-  transform: translateX(-50%) rotate(0deg);
-}
-
-.t4 .seat:nth-child(4) {
-  left: -48px;
-  top: 50%;
-  transform: translateY(-50%) rotate(90deg);
 }
 
 /* BOTÓN */
@@ -252,31 +207,10 @@ body {
   height: 40px;
   font-weight: 900;
   color: #fff;
-
   background: linear-gradient(145deg,#ffd84d,#ffb800);
   border-radius: 10px;
   border: 1px solid #000;
-
-  box-shadow:
-    0 0 0 1px rgba(255,255,255,0.7),
-    0 0 10px rgba(255,255,255,0.35);
-
-  text-shadow:
-    -1px -1px 0 rgba(0,0,0,0.9),
-     1px -1px 0 rgba(0,0,0,0.9),
-    -1px  1px 0 rgba(0,0,0,0.9),
-     1px  1px 0 rgba(0,0,0,0.9),
-     0px  2px 2px rgba(0,0,0,0.6);
-
-  transition: all 0.2s ease;
   cursor: pointer;
-}
-
-.play-btn:hover {
-  transform: translateY(-2px);
-  box-shadow:
-    0 0 0 1px rgba(255,255,255,0.9),
-    0 0 18px rgba(255,255,255,0.6);
 }
 
 /* LABEL */
@@ -284,7 +218,6 @@ body {
   margin-top: 6px;
   font-size: 10px;
   font-weight: 700;
-  color: #eaeaea;
 }
 </style>
 </head>
@@ -297,30 +230,36 @@ body {
 <div class="game-ui">
 
   <div class="profile">
-    <div class="avatar"></div>
+
+    <!-- AVATAR + MEDALLA -->
+    <div class="profile-top">
+      <div class="avatar"></div>
+
+      <div class="level-badge" id="levelBadge">
+        <img src="mdlla.png" class="badge-img">
+        <div class="badge-color"></div>
+        <div class="badge-text">7</div>
+        <div class="rank-label">ORO</div>
+      </div>
+    </div>
 
     <div class="stats">
-      <div class="stat-row"><span class="icon">🎖️</span><span>LEVEL 7</span></div>
-      <div class="stat-row"><span class="icon">🪙</span><span>COINS 12,500</span></div>
-      <div class="stat-row"><span class="icon">🎮</span><span>GAMES 128</span></div>
+      <div class="stat-row">🎖️ LEVEL 7</div>
+      <div class="stat-row">🪙 COINS 12,500</div>
+      <div class="stat-row">🎮 GAMES 128</div>
     </div>
+
   </div>
 
   <div class="tables">
 
-    <div class="table t2">
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <button class="play-btn" onclick="joinGame(2,'INDIVIDUAL')">2 PLAYERS</button>
+    <div class="table">
+      <button class="play-btn" onclick="joinGame(2)">2 PLAYERS</button>
       <div class="mode-label">INDIVIDUAL</div>
     </div>
 
-    <div class="table t4">
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <button class="play-btn" onclick="joinGame(4,'EQUIPO')">4 PLAYERS</button>
+    <div class="table">
+      <button class="play-btn" onclick="joinGame(4)">4 PLAYERS</button>
       <div class="mode-label">EQUIPO</div>
     </div>
 
@@ -329,16 +268,31 @@ body {
 </div>
 
 <script>
-function joinGame(players, mode) {
+function setLevel(level){
+  const badge = document.getElementById("levelBadge");
+  const color = badge.querySelector(".badge-color");
+  const text = badge.querySelector(".badge-text");
+  const label = badge.querySelector(".rank-label");
 
-  if (players === 2) {
-    window.location.href = "game2players.html";
-  }
+  color.className = "badge-color";
+  label.className = "rank-label";
 
-  if (players === 4) {
-    window.location.href = "gamer4player.html";
-  }
+  let rank="";
 
+  if(level<5){ color.classList.add("bronze"); label.classList.add("rank-bronze"); rank="BRONCE"; }
+  else if(level<10){ color.classList.add("silver"); label.classList.add("rank-silver"); rank="PLATA"; }
+  else if(level<20){ color.classList.add("gold"); label.classList.add("rank-gold"); rank="ORO"; }
+  else{ color.classList.add("diamond"); label.classList.add("rank-diamond"); rank="DIAMANTE"; }
+
+  text.innerText = level;
+  label.innerText = rank;
+}
+
+setLevel(7);
+
+function joinGame(players){
+  if(players===2) window.location.href="game2players.html";
+  if(players===4) window.location.href="gamer4player.html";
 }
 </script>
 
