@@ -43,7 +43,7 @@ body {
   gap: 40px;
 }
 
-/* PERFIL */
+/* PERFIL (SIN CAMBIOS ESTRUCTURALES) */
 .profile {
   width: 320px;
   padding: 18px 12px;
@@ -69,7 +69,8 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
+
+  gap: 8px; /* más compacto real */
 }
 
 /* GRID + BRILLO (igual) */
@@ -114,20 +115,20 @@ body {
   background: url("https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png") center/cover no-repeat;
 }
 
-/* 🔧 CAMBIO PRINCIPAL: menos separación */
+/* 🔧 CAMBIO REAL: no distribuir espacio, solo compactar */
 .stats {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: flex-start; /* clave */
   width: 100%;
-  gap: 5px; /* antes era mayor */
+  gap: 14px; /* separación real visible pero menor */
 }
 
-/* filas compactas */
+/* bloque */
 .stat-row {
   display: flex;
   align-items: center;
-  gap: 4px; /* reducido */
+  gap: 4px;
   font-size: 10px;
   font-weight: 600;
   white-space: nowrap;
@@ -141,7 +142,7 @@ body {
   filter: drop-shadow(0 0 3px rgba(255,255,255,0.25));
 }
 
-/* MESAS (sin cambios) */
+/* MESAS (SIN TOCAR) */
 .tables {
   display: flex;
   flex-direction: column;
@@ -171,7 +172,7 @@ body {
   flex-direction: column;
 }
 
-/* SILLAS (NO TOCADO) */
+/* SILLAS EXACTAMENTE IGUAL */
 .seat {
   position: absolute;
   width: 42px;
@@ -216,7 +217,7 @@ body {
   transform: translateY(-50%);
 }
 
-/* BOTÓN (igual) */
+/* BOTÓN (SIN CAMBIOS) */
 .play-btn {
   width: 100px;
   height: 38px;
