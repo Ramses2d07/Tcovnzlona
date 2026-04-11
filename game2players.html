@@ -116,7 +116,7 @@ body {
 .gold { background: #ffd700; }
 .diamond { background: #6fe7ff; }
 
-/* TEXTO NIVEL (CORREGIDO) */
+/* TEXTO NIVEL */
 .badge-text {
   position: absolute;
   top: 50%;
@@ -136,34 +136,69 @@ body {
   isolation: isolate;
 }
 
-/* COLOR DEL TEXTO SEGÚN NIVEL */
+/* COLOR TEXTO */
 .text-bronze { color: #cd7f32; }
 .text-silver { color: #e0e0e0; }
 .text-gold { color: #ffd700; }
 .text-diamond { color: #6fe7ff; }
 
-/* COLORES NIVEL (ORIGINALES SE CONSERVAN) */
-.level-bronze { filter: hue-rotate(20deg) brightness(0.8); }
-.level-silver { filter: grayscale(1) brightness(1.2); }
-.level-gold { filter: saturate(1.2); }
-.level-diamond { filter: hue-rotate(180deg) brightness(1.3); }
+/* ===== NUEVO: PLACA METAL ===== */
+.rank-label {
+  position: absolute;
+  bottom: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+
+  padding: 3px 10px;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 1px;
+
+  border-radius: 6px;
+
+  background: linear-gradient(145deg, #444, #111);
+  border: 1px solid rgba(255,255,255,0.25);
+
+  box-shadow:
+    inset 0 1px 2px rgba(255,255,255,0.2),
+    inset 0 -2px 4px rgba(0,0,0,0.8),
+    0 2px 6px rgba(0,0,0,0.6);
+
+  text-transform: uppercase;
+}
+
+.rank-bronze {
+  background: linear-gradient(145deg, #cd7f32, #5a2e0f);
+  color: #ffd2a6;
+}
+
+.rank-silver {
+  background: linear-gradient(145deg, #e0e0e0, #6b6b6b);
+  color: #ffffff;
+}
+
+.rank-gold {
+  background: linear-gradient(145deg, #ffd700, #7a5c00);
+  color: #fff6b0;
+}
+
+.rank-diamond {
+  background: linear-gradient(145deg, #6fe7ff, #005a6b);
+  color: #dfffff;
+}
 
 /* MESA */
 .table {
   width: 320px;
   height: 180px;
   border-radius: 20px;
-
   background:
     radial-gradient(circle at 50% 40%, rgba(255,255,255,0.15), transparent 60%),
     radial-gradient(circle, #0f7a35, #042610);
-
   border: 12px solid #3b2314;
-
   box-shadow:
     inset 0 0 30px rgba(0,0,0,0.9),
     0 0 20px rgba(0,0,0,0.7);
-
   position: relative;
 }
 
@@ -173,27 +208,20 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-
   width: 140px;
   padding: 10px;
-
   border-radius: 12px;
   background: linear-gradient(145deg,#2c3138,#14171b);
   border: 1px solid rgba(255,255,255,0.2);
-
   box-shadow: 0 6px 15px rgba(0,0,0,0.6);
-
   text-align: center;
-
   font-weight: bold;
   font-size: 14px;
-  color: #eaeaea;
 }
 
 .status {
   font-size: 14px;
   font-weight: bold;
-  opacity: 0.9;
 }
 
 .exit-btn {
@@ -202,10 +230,8 @@ body {
   font-weight: bold;
   border: none;
   border-radius: 10px;
-
   background: linear-gradient(145deg,#ff4d4d,#b30000);
   color: #fff;
-
   cursor: pointer;
 }
 </style>
@@ -229,6 +255,7 @@ body {
         <img src="mdlla.png" class="badge-img">
         <div class="badge-color"></div>
         <span class="badge-text">7</span>
+        <div class="rank-label">ORO</div>
       </div>
     </div>
 
@@ -241,6 +268,7 @@ body {
         <img src="mdlla.png" class="badge-img">
         <div class="badge-color"></div>
         <span class="badge-text">-</span>
+        <div class="rank-label">-</div>
       </div>
     </div>
 
@@ -269,28 +297,41 @@ function setLevelStyle(elementId, level) {
   const el = document.getElementById(elementId);
   const colorLayer = el.querySelector(".badge-color");
   const text = el.querySelector(".badge-text");
+  const label = el.querySelector(".rank-label");
 
   colorLayer.className = "badge-color";
   text.className = "badge-text";
+  label.className = "rank-label";
+
+  let rankName = "";
 
   if (level < 5) {
     colorLayer.classList.add("bronze");
     text.classList.add("text-bronze");
+    label.classList.add("rank-bronze");
+    rankName = "BRONCE";
   }
   else if (level < 10) {
     colorLayer.classList.add("silver");
     text.classList.add("text-silver");
+    label.classList.add("rank-silver");
+    rankName = "PLATA";
   }
   else if (level < 20) {
     colorLayer.classList.add("gold");
     text.classList.add("text-gold");
+    label.classList.add("rank-gold");
+    rankName = "ORO";
   }
   else {
     colorLayer.classList.add("diamond");
     text.classList.add("text-diamond");
+    label.classList.add("rank-diamond");
+    rankName = "DIAMANTE";
   }
 
   text.innerText = level;
+  label.innerText = rankName;
 }
 
 updatePot();
@@ -298,7 +339,6 @@ setLevelStyle("myLevel", 7);
 
 setTimeout(() => {
   document.getElementById("enemyName").innerText = "Jugador 2";
-
   setLevelStyle("enemyLevel", 5);
 
   betPlayer2 = 1000;
