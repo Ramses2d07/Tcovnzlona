@@ -39,7 +39,6 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding-top: 0;
   gap: 60px;
 }
 
@@ -48,69 +47,64 @@ body {
   width: 340px;
   padding: 18px 14px;
   border-radius: 18px;
-
   background: linear-gradient(145deg,#3a3f46,#1e2228);
   border: 1px solid rgba(255,255,255,0.15);
-
   box-shadow: 0 10px 25px rgba(0,0,0,0.6);
-
   position: relative;
   overflow: hidden;
-
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 12px;
 }
 
-/* brillo animado */
+/* ===== PARCHE MARCO MEDALLA ===== */
 .profile::before {
   content: "";
   position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    120deg,
-    transparent 0%,
-    rgba(255,255,255,0.08) 30%,
-    rgba(255,255,255,0.18) 50%,
-    rgba(255,255,255,0.08) 70%,
-    transparent 100%
-  );
-  transform: translateX(-100%);
-  animation: shine 6s linear infinite;
+  inset: -6px;
+  border-radius: 22px;
+  padding: 2px;
+  background: linear-gradient(145deg,#ffd700,#ffb800);
+
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+
+  pointer-events: none;
+  z-index: 1;
 }
 
-@keyframes shine {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
-}
-
-/* CUADRÍCULA */
 .profile::after {
   content: "";
   position: absolute;
-  inset: 0;
-
-  background-image:
-    linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px);
-
-  background-size: 18px 18px;
-  opacity: 0.25;
-
+  inset: -10px;
+  border-radius: 24px;
+  filter: blur(12px);
+  opacity: 0.35;
   pointer-events: none;
+  z-index: 0;
 }
 
-/* ===== PARCHE MEDALLA ===== */
+.profile.bronze::before { background: linear-gradient(145deg,#cd7f32,#8c4a1f); }
+.profile.silver::before { background: linear-gradient(145deg,#e0e0e0,#9e9e9e); }
+.profile.gold::before   { background: linear-gradient(145deg,#ffd700,#ffb800); }
+.profile.diamond::before{ background: linear-gradient(145deg,#6fe7ff,#00bcd4); }
+
+.profile.bronze::after { background:#cd7f32; }
+.profile.silver::after { background:#c0c0c0; }
+.profile.gold::after   { background:#ffd700; }
+.profile.diamond::after{ background:#6fe7ff; }
+
+/* ===== MEDALLA AVATAR ===== */
 .avatar {
   width: 90px;
   height: 90px;
-  border-radius: 50%;
-  background: none;
   position: relative;
 }
 
-/* medalla */
 .avatar::before {
   content: "";
   position: absolute;
@@ -118,7 +112,6 @@ body {
   background: url("mdlla.png") center/contain no-repeat;
 }
 
-/* color dinámico */
 .avatar::after {
   content: "";
   position: absolute;
@@ -128,8 +121,7 @@ body {
   opacity: 0.85;
 }
 
-/* foto dentro */
-.avatar .inner-avatar {
+.inner-avatar {
   position: absolute;
   top: 22%;
   left: 22%;
@@ -139,7 +131,6 @@ body {
   background: url("https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png") center/cover no-repeat;
 }
 
-/* nivel abajo */
 .level-number {
   position: absolute;
   bottom: 4px;
@@ -147,7 +138,6 @@ body {
   transform: translateX(-50%);
   font-size: 16px;
   font-weight: 900;
-
   text-shadow:
     0 2px 0 #000,
     0 3px 6px rgba(0,0,0,0.9),
@@ -171,24 +161,19 @@ body {
   display: flex;
   justify-content: space-between;
   gap: 10px;
-  position: relative;
-  z-index: 2;
 }
 
 .stat-row {
   display: flex;
-  align-items: center;
   gap: 6px;
   font-size: 11px;
   font-weight: 700;
-  color: #eaeaea;
 }
 
-/* MESAS (SIN CAMBIOS) */
+/* MESAS */
 .tables {
   display: flex;
   flex-direction: column;
-  align-items: center;
   gap: 55px;
 }
 
@@ -196,9 +181,7 @@ body {
   width: 280px;
   height: 150px;
   border-radius: 18px;
-  background:
-    radial-gradient(circle at 50% 40%, rgba(255,255,255,0.12), transparent 60%),
-    radial-gradient(circle, #0f7a35, #042610);
+  background: radial-gradient(circle,#0f7a35,#042610);
   border: 10px solid #3b2314;
   display: flex;
   justify-content: center;
@@ -210,17 +193,14 @@ body {
   width: 110px;
   height: 40px;
   font-weight: 900;
-  color: #fff;
   background: linear-gradient(145deg,#ffd84d,#ffb800);
   border-radius: 10px;
   border: 1px solid #000;
-  cursor: pointer;
 }
 
 .mode-label {
   margin-top: 6px;
   font-size: 10px;
-  font-weight: 700;
 }
 </style>
 </head>
@@ -234,32 +214,29 @@ body {
 
   <div class="profile">
 
-    <!-- MEDALLA COMO AVATAR -->
     <div class="avatar" id="avatarBadge">
       <div class="inner-avatar"></div>
       <div class="level-number">7</div>
     </div>
 
     <div class="stats">
-      <div class="stat-row"><span class="icon">🎖️</span><span>LEVEL 7</span></div>
-      <div class="stat-row"><span class="icon">🪙</span><span>COINS 12,500</span></div>
-      <div class="stat-row"><span class="icon">🎮</span><span>GAMES 128</span></div>
+      <div class="stat-row">🎖️ LEVEL 7</div>
+      <div class="stat-row">🪙 12,500</div>
+      <div class="stat-row">🎮 128</div>
     </div>
 
   </div>
 
   <div class="tables">
-
     <div class="table">
-      <button class="play-btn" onclick="joinGame(2)">2 PLAYERS</button>
+      <button class="play-btn">2 PLAYERS</button>
       <div class="mode-label">INDIVIDUAL</div>
     </div>
 
     <div class="table">
-      <button class="play-btn" onclick="joinGame(4)">4 PLAYERS</button>
+      <button class="play-btn">4 PLAYERS</button>
       <div class="mode-label">EQUIPO</div>
     </div>
-
   </div>
 
 </div>
@@ -267,25 +244,31 @@ body {
 <script>
 function setLevel(level){
   const avatar = document.getElementById("avatarBadge");
+  const profile = document.querySelector(".profile");
   const levelText = avatar.querySelector(".level-number");
 
   avatar.classList.remove("bronze","silver","gold","diamond");
+  profile.classList.remove("bronze","silver","gold","diamond");
   levelText.classList.remove("text-bronze","text-silver","text-gold","text-diamond");
 
   if(level<5){
     avatar.classList.add("bronze");
+    profile.classList.add("bronze");
     levelText.classList.add("text-bronze");
   }
   else if(level<10){
     avatar.classList.add("silver");
+    profile.classList.add("silver");
     levelText.classList.add("text-silver");
   }
   else if(level<20){
     avatar.classList.add("gold");
+    profile.classList.add("gold");
     levelText.classList.add("text-gold");
   }
   else{
     avatar.classList.add("diamond");
+    profile.classList.add("diamond");
     levelText.classList.add("text-diamond");
   }
 
@@ -293,11 +276,6 @@ function setLevel(level){
 }
 
 setLevel(7);
-
-function joinGame(players){
-  if(players===2) window.location.href="game2players.html";
-  if(players===4) window.location.href="gamer4player.html";
-}
 </script>
 
 </body>
