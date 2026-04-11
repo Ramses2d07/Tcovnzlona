@@ -45,10 +45,10 @@ body {
   gap: 40px;
 }
 
-/* PERFIL (MÁS ALTO + GRID METÁLICO) */
+/* PERFIL */
 .profile {
   width: 280px;
-  padding: 18px 12px; /* MÁS ALTO */
+  padding: 18px 12px;
   min-height: 140px;
 
   border-radius: 18px;
@@ -76,23 +76,20 @@ body {
   gap: 8px;
 }
 
-/* 🔳 CUADRÍCULA METÁLICA */
+/* GRID */
 .profile::after {
   content: "";
   position: absolute;
   inset: 0;
-
   background:
     linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
-
   background-size: 18px 18px;
-
   opacity: 0.35;
   pointer-events: none;
 }
 
-/* 🔥 BRILLO SUAVE */
+/* BRILLO */
 .profile::before {
   content: "";
   position: absolute;
@@ -105,7 +102,6 @@ body {
     rgba(255,255,255,0.08) 70%,
     transparent 100%
   );
-
   transform: translateX(-100%);
   animation: shine 6s linear infinite;
   pointer-events: none;
@@ -147,7 +143,9 @@ body {
   flex-direction: column;
   align-items: center;
   gap: 55px;
-  margin-top: 120px;
+
+  /* 🔼 SUBIDAS UN POCO */
+  margin-top: 85px;
 }
 
 /* MESA */
@@ -174,7 +172,7 @@ body {
   gap: 4px;
 }
 
-/* SILLAS (SIN CAMBIOS) */
+/* SILLAS */
 .seat {
   position: absolute;
   width: 42px;
@@ -246,7 +244,7 @@ body {
     0 0 5px rgba(255,255,255,0.45);
 }
 
-/* TEXTO METAL */
+/* TEXTO */
 .mode-label {
   font-size: 10px;
   font-weight: 300;
@@ -299,6 +297,7 @@ body {
     <div class="table t2">
       <div class="seat"></div>
       <div class="seat"></div>
+
       <button class="play-btn">2 PLAYERS</button>
       <div class="mode-label">INDIVIDUAL</div>
     </div>
@@ -308,6 +307,7 @@ body {
       <div class="seat"></div>
       <div class="seat"></div>
       <div class="seat"></div>
+
       <button class="play-btn">4 PLAYERS</button>
       <div class="mode-label">TEAM MODE</div>
     </div>
