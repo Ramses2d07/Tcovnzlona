@@ -114,127 +114,44 @@ body {
     radial-gradient(circle, #0f7a35, #042610);
   border: 10px solid #3b2314;
   box-shadow: inset 0 0 25px rgba(0,0,0,0.9);
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
-
-.t4 { margin-top: 35px; }
-
-/* ========================= */
-/* ASIENTO = BORDADO ROMBO   */
-/* ========================= */
-.seat {
-  position: absolute;
-  width: 46px;
-  height: 36px;
-  border-radius: 10px;
-
-  background:
-    linear-gradient(145deg,#b30000 0%,#7a0000 60%,#3a0000 100%);
-
-  box-shadow:
-    inset 0 -6px 10px rgba(0,0,0,0.75),
-    inset 0 2px 3px rgba(255,255,255,0.10),
-    0 6px 12px rgba(0,0,0,0.6);
-
-  overflow: hidden;
-}
-
-/* bordado rombo blanco SOLO en asiento */
-.seat::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 10px;
-
-  background:
-    repeating-linear-gradient(45deg,
-      rgba(255,255,255,0.18) 0px,
-      rgba(255,255,255,0.18) 1px,
-      transparent 1px,
-      transparent 10px
-    ),
-    repeating-linear-gradient(-45deg,
-      rgba(255,255,255,0.18) 0px,
-      rgba(255,255,255,0.18) 1px,
-      transparent 1px,
-      transparent 10px
-    );
 }
 
 /* ========================= */
-/* RESPALDO = ROJO SÓLIDO    */
+/* BOTÓN RESTAURADO          */
 /* ========================= */
-.seat::before {
-  content: "";
-  position: absolute;
-  top: -16px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 38px;
-  height: 20px;
-  border-radius: 6px;
-
-  background: linear-gradient(145deg,#a80000,#2a0000);
-
-  box-shadow:
-    inset 0 -4px 8px rgba(0,0,0,0.7),
-    inset 0 2px 3px rgba(255,255,255,0.1),
-    0 4px 8px rgba(0,0,0,0.5);
-
-  opacity: 1; /* FIX transparencia */
-}
-
-/* POSICIONES */
-.t2 .seat:nth-child(1) {
-  left: -55px;
-  top: 50%;
-  transform: translateY(-50%) rotate(90deg);
-}
-
-.t2 .seat:nth-child(2) {
-  right: -55px;
-  top: 50%;
-  transform: translateY(-50%) rotate(-90deg);
-}
-
-.t4 .seat:nth-child(1) {
-  top: -55px;
-  left: 50%;
-  transform: translateX(-50%) rotate(180deg);
-}
-
-.t4 .seat:nth-child(2) {
-  right: -55px;
-  top: 50%;
-  transform: translateY(-50%) rotate(-90deg);
-}
-
-.t4 .seat:nth-child(3) {
-  bottom: -55px;
-  left: 50%;
-  transform: translateX(-50%) rotate(0deg);
-}
-
-.t4 .seat:nth-child(4) {
-  left: -55px;
-  top: 50%;
-  transform: translateY(-50%) rotate(90deg);
-}
-
-/* BOTÓN */
 .play-btn {
   width: 120px;
   height: 42px;
   font-weight: 900;
   color: #fff;
+
   background: linear-gradient(145deg,#ffe27a 0%,#ffb800 40%,#a66b00 100%);
+
   border-radius: 12px;
-  border: 1px solid rgba(255,255,255,0.9);
+
+  /* borde negro + blanco restaurado */
+  border: 2px solid #ffffff;
+  outline: 2px solid #000;
+
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.8),
+    0 0 14px rgba(255,215,0,0.6),
+    inset 0 2px 4px rgba(255,255,255,0.4),
+    inset 0 -4px 8px rgba(0,0,0,0.6);
+  
+  text-shadow:
+    -2px -2px 0 #000,
+     2px -2px 0 #000,
+    -2px  2px 0 #000,
+     2px  2px 0 #000;
 }
+
+.mode-label {
+  margin-top: 6px;
+  font-size: 10px;
+  font-weight: 700;
+}
+
 </style>
 </head>
 
@@ -261,6 +178,7 @@ body {
       <div class="seat"></div>
       <div class="seat"></div>
       <button class="play-btn" onclick="joinGame(2)">2 PLAYERS</button>
+      <div class="mode-label">INDIVIDUAL</div>
     </div>
 
     <div class="table t4">
@@ -269,6 +187,7 @@ body {
       <div class="seat"></div>
       <div class="seat"></div>
       <button class="play-btn" onclick="joinGame(4)">4 PLAYERS</button>
+      <div class="mode-label">EQUIPO</div>
     </div>
 
   </div>
