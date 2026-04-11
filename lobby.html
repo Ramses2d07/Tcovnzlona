@@ -169,7 +169,8 @@ body {
   font-family: Arial, sans-serif;
   color: #ffffff;
 
-  border: 3px solid #000; /* CAMBIO A NEGRO */
+  border: 3px solid #fff; /* borde interno blanco */
+
   border-radius: 12px;
   cursor: pointer;
 
@@ -177,6 +178,7 @@ body {
     linear-gradient(145deg, #ffd84d 0%, #ffb800 35%, #e09a00 70%, #ffd84d 100%);
 
   box-shadow:
+    0 0 0 1px #000, /* borde externo negro fino */
     inset 0 2px 0 rgba(255,255,255,0.4),
     inset 0 -3px 8px rgba(0,0,0,0.25),
     0 10px 20px rgba(0,0,0,0.5);
