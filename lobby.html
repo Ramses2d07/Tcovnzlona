@@ -88,17 +88,26 @@ body {
 
 /* MESA */
 .table {
-  position: relative;
   width: 280px;
-  height: 130px;
+  height: 150px;
+  position: relative;
   border-radius: 18px;
+
   background:
     radial-gradient(circle at 50% 40%, rgba(255,255,255,0.12), transparent 60%),
     radial-gradient(circle, #0f7a35, #042610);
+
   border: 10px solid #3b2314;
+
   box-shadow:
     inset 0 0 25px rgba(0,0,0,0.9),
     0 15px 35px rgba(0,0,0,0.7);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 6px;
 }
 
 /* SILLAS */
@@ -110,7 +119,6 @@ body {
   border-radius: 10px;
 }
 
-/* POSICIONES */
 .t2 .seat:nth-child(1) {
   left: -40px;
   top: 50%;
@@ -149,11 +157,6 @@ body {
 
 /* BOTÓN */
 .play-btn {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-
   width: 140px;
   height: 55px;
 
@@ -163,6 +166,7 @@ body {
 
   color: #fff;
   background: linear-gradient(145deg, #ffd84d, #ffb800);
+
   border-radius: 12px;
   border: 0;
   cursor: pointer;
@@ -179,18 +183,13 @@ body {
     0 0 6px rgba(255,255,255,0.5);
 }
 
-/* LABEL MUY PEGADO AL BOTÓN */
+/* TEXTO ABAJO REAL (NO ABSOLUTO) */
 .mode-label {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  top: calc(100% + 2px); /* casi pegado al borde del botón */
-
   font-size: 11px;
   font-weight: 700;
   color: #fff;
   opacity: 0.9;
-  letter-spacing: 0.5px;
+  margin-top: 2px; /* separación mínima real */
 }
 
 /* SILLAS */
