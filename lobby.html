@@ -89,7 +89,7 @@ body {
   pointer-events: none;
 }
 
-/* BRILLO SUAVE */
+/* BRILLO */
 .profile::before {
   content: "";
   position: absolute;
@@ -112,54 +112,66 @@ body {
   100% { transform: translateX(100%); }
 }
 
-/* AVATAR CIRCULAR */
-.avatar-wrapper {
-  position: relative;
-  width: 48px;
-  height: 48px;
-}
-
-/* imagen avatar */
 .avatar {
   width: 48px;
   height: 48px;
   border-radius: 50%;
   border: 2px solid #f1c40f;
   background: url("https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png") center/cover no-repeat;
-  cursor: pointer;
-  position: relative;
-  z-index: 2;
 }
 
-/* input oculto */
-.avatar-input {
-  display: none;
-}
-
-/* brillo casino */
-.avatar::after {
-  content: "";
-  position: absolute;
-  inset: -3px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(255,255,255,0.25), transparent 60%);
-  opacity: 0.6;
-  pointer-events: none;
-}
-
-.name {
-  font-weight: 700;
-  font-size: 11px;
-  position: relative;
-  z-index: 2;
-}
-
+/* TEXTO INFO */
 .stats {
   font-size: 9px;
-  opacity: 0.85;
+  opacity: 0.9;
   text-align: center;
-  position: relative;
-  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* FILA DE ESTADÍSTICAS */
+.stat-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 9px;
+}
+
+/* ICONOS */
+.icon {
+  width: 12px;
+  height: 12px;
+  display: inline-block;
+}
+
+/* MEDALLA NIVEL */
+.medal {
+  background: radial-gradient(circle at 30% 30%, #fff3a0, #d4af37 60%, #7a5a00);
+  border-radius: 50%;
+  box-shadow:
+    inset 0 1px 2px rgba(255,255,255,0.6),
+    0 0 6px rgba(255,215,0,0.4);
+}
+
+/* COIN */
+.coin {
+  background: radial-gradient(circle at 30% 30%, #ffeaa7, #f1c40f 60%, #b8860b);
+  border-radius: 50%;
+  box-shadow:
+    inset 0 1px 2px rgba(255,255,255,0.5),
+    0 0 6px rgba(255,215,0,0.4);
+}
+
+/* TROFEO */
+.trophy {
+  background: radial-gradient(circle at 30% 30%, #ffffff, #c0c0c0 60%, #666);
+  border-radius: 3px;
+  clip-path: polygon(20% 0%, 80% 0%, 80% 50%, 60% 70%, 60% 100%, 40% 100%, 40% 70%, 20% 50%);
+  box-shadow:
+    inset 0 1px 2px rgba(255,255,255,0.6),
+    0 0 6px rgba(255,255,255,0.2);
 }
 
 /* MESAS */
@@ -266,39 +278,6 @@ body {
     0 1px 0 #000,
     0 0 5px rgba(255,255,255,0.45);
 }
-
-/* TEXTO */
-.mode-label {
-  font-size: 10px;
-  font-weight: 300;
-
-  background: linear-gradient(
-    120deg,
-    #ffffff 0%,
-    #d0d0d0 25%,
-    #ffffff 50%,
-    #b0b0b0 75%,
-    #ffffff 100%
-  );
-
-  background-size: 200% 100%;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-
-  margin-top: 1px;
-  letter-spacing: 0.8px;
-
-  text-shadow:
-    0 1px 1px rgba(0,0,0,0.5),
-    0 0 5px rgba(255,255,255,0.12);
-
-  animation: shineText 3.5s linear infinite;
-}
-
-@keyframes shineText {
-  0% { background-position: 0% 50%; }
-  100% { background-position: 200% 50%; }
-}
 </style>
 </head>
 
@@ -311,15 +290,26 @@ body {
 
   <div class="profile">
 
-    <div class="avatar-wrapper">
-      <label for="avatarInput">
-        <div class="avatar" id="avatarPreview"></div>
-      </label>
-      <input class="avatar-input" type="file" id="avatarInput" accept="image/*">
-    </div>
+    <div class="avatar"></div>
 
-    <div class="name">Jugador 1</div>
-    <div class="stats">Nivel 7 | Créditos 12,500 | Partidas 128</div>
+    <div class="stats">
+
+      <div class="stat-row">
+        <span class="icon medal"></span>
+        <span>Nivel 7</span>
+      </div>
+
+      <div class="stat-row">
+        <span class="icon coin"></span>
+        <span>Créditos 12,500</span>
+      </div>
+
+      <div class="stat-row">
+        <span class="icon trophy"></span>
+        <span>Partidas 128</span>
+      </div>
+
+    </div>
 
   </div>
 
@@ -328,9 +318,7 @@ body {
     <div class="table t2">
       <div class="seat"></div>
       <div class="seat"></div>
-
       <button class="play-btn">2 PLAYERS</button>
-      <div class="mode-label">INDIVIDUAL</div>
     </div>
 
     <div class="table t4">
@@ -338,30 +326,12 @@ body {
       <div class="seat"></div>
       <div class="seat"></div>
       <div class="seat"></div>
-
       <button class="play-btn">4 PLAYERS</button>
-      <div class="mode-label">TEAM MODE</div>
     </div>
 
   </div>
 
 </div>
-
-<script>
-const input = document.getElementById("avatarInput");
-const preview = document.getElementById("avatarPreview");
-
-input.addEventListener("change", function () {
-  const file = this.files[0];
-  if (!file) return;
-
-  const reader = new FileReader();
-  reader.onload = function (e) {
-    preview.style.background = `url('${e.target.result}') center/cover no-repeat`;
-  };
-  reader.readAsDataURL(file);
-});
-</script>
 
 </body>
 </html>
