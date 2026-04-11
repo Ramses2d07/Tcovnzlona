@@ -32,7 +32,7 @@ body {
   background: rgba(0,0,0,0.75);
 }
 
-/* CONTENEDOR GENERAL */
+/* CONTENEDOR */
 .game-ui {
   position: relative;
   z-index: 2;
@@ -154,18 +154,20 @@ body {
   transform: translateY(-50%);
 }
 
-/* BOTONES MEJORADOS */
+/* BOTONES */
 .play-btn {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
 
-  padding: 12px 22px;
-  font-size: 15px;
-  font-weight: bold;
+  width: 140px;
+  height: 70px;
 
+  font-size: 13px;
+  font-weight: bold;
   color: #1a1a1a;
+  text-align: center;
 
   border: 3px solid rgba(255,255,255,0.9);
   border-radius: 12px;
@@ -182,30 +184,24 @@ body {
 
   text-shadow: 0 1px 0 rgba(255,255,255,0.4);
 
-  transition: transform 0.15s ease, filter 0.15s ease, box-shadow 0.15s ease;
+  transition: transform 0.15s ease, filter 0.15s ease;
 }
 
 .play-btn:hover {
   filter: brightness(1.05);
-  box-shadow:
-    inset 0 2px 0 rgba(255,255,255,0.5),
-    inset 0 -3px 8px rgba(0,0,0,0.25),
-    0 14px 28px rgba(0,0,0,0.6);
 }
 
 .play-btn:active {
   transform: translate(-50%, -50%) scale(0.95);
-  filter: brightness(0.95);
 }
 
-/* TEXTO */
-.labels {
-  position: absolute;
-  bottom: -45px;
-  width: 100%;
-  text-align: center;
-  font-size: 11px;
-  font-weight: bold;
+/* TEXTO EN BOTÓN */
+.btn-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  line-height: 1.1;
 }
 </style>
 </head>
@@ -228,8 +224,12 @@ body {
     <div class="table t2">
       <div class="seat"></div>
       <div class="seat"></div>
-      <button class="play-btn">PLAY</button>
-      <div class="labels">2 PLAYERS<br>INDIVIDUAL</div>
+
+      <button class="play-btn">
+        <div class="btn-text">
+          2 PLAYERS<br>INDIVIDUAL
+        </div>
+      </button>
     </div>
 
     <div class="table t4">
@@ -237,8 +237,12 @@ body {
       <div class="seat"></div>
       <div class="seat"></div>
       <div class="seat"></div>
-      <button class="play-btn">PLAY</button>
-      <div class="labels">4 PLAYERS<br>TEAM MODE</div>
+
+      <button class="play-btn">
+        <div class="btn-text">
+          4 PLAYERS<br>TEAM MODE
+        </div>
+      </button>
     </div>
 
   </div>
