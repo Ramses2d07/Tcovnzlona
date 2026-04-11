@@ -43,14 +43,51 @@ body {
   gap: 40px;
 }
 
-/* PERFIL */
+/* PERFIL RESTAURADO */
 .profile {
   width: 340px;
   padding: 18px 14px;
   border-radius: 18px;
+
   background: linear-gradient(145deg,#3a3f46,#1e2228);
   border: 1px solid rgba(255,255,255,0.15);
+
   box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+/* avatar */
+.avatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: url("https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png") center/cover no-repeat;
+  border: 2px solid #f1c40f;
+}
+
+/* stats */
+.stats {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.stat-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #eaeaea;
+}
+
+.icon {
+  font-size: 14px;
 }
 
 /* MESAS */
@@ -66,8 +103,9 @@ body {
   width: 280px;
   height: 150px;
   border-radius: 18px;
-  background: radial-gradient(circle at 50% 40%, rgba(255,255,255,0.12), transparent 60%),
-              radial-gradient(circle, #0f7a35, #042610);
+  background:
+    radial-gradient(circle at 50% 40%, rgba(255,255,255,0.12), transparent 60%),
+    radial-gradient(circle, #0f7a35, #042610);
   border: 10px solid #3b2314;
   box-shadow: inset 0 0 25px rgba(0,0,0,0.9);
   position: relative;
@@ -92,7 +130,7 @@ body {
     0 6px 12px rgba(0,0,0,0.6);
 }
 
-/* brillo cuero */
+/* brillo */
 .seat::after {
   content: "";
   position: absolute;
@@ -104,7 +142,7 @@ body {
   border-radius: 8px;
 }
 
-/* respaldo integrado */
+/* respaldo */
 .seat::before {
   content: "";
   position: absolute;
@@ -122,7 +160,7 @@ body {
     0 3px 6px rgba(0,0,0,0.45);
 }
 
-/* posiciones con orientación al centro */
+/* posiciones */
 .t2 .seat:nth-child(1) {
   left: -48px;
   top: 50%;
@@ -189,7 +227,15 @@ body {
 
 <div class="game-ui">
 
-  <div class="profile"></div>
+  <div class="profile">
+    <div class="avatar"></div>
+
+    <div class="stats">
+      <div class="stat-row"><span class="icon">🎖️</span><span>LEVEL 7</span></div>
+      <div class="stat-row"><span class="icon">🪙</span><span>COINS 12,500</span></div>
+      <div class="stat-row"><span class="icon">🎮</span><span>GAMES 128</span></div>
+    </div>
+  </div>
 
   <div class="tables">
 
