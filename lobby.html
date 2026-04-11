@@ -45,13 +45,14 @@ body {
   gap: 40px;
 }
 
-/* PERFIL (METAL PREMIUM) */
+/* PERFIL (MÁS ALTO + GRID METÁLICO) */
 .profile {
   width: 280px;
-  padding: 12px;
+  padding: 18px 12px; /* MÁS ALTO */
+  min-height: 140px;
+
   border-radius: 18px;
 
-  /* base gris metálica */
   background: linear-gradient(145deg,
     #3a3f46 0%,
     #2b2f36 35%,
@@ -72,10 +73,26 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
 }
 
-/* brillo metálico animado suave */
+/* 🔳 CUADRÍCULA METÁLICA */
+.profile::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background:
+    linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+
+  background-size: 18px 18px;
+
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+/* 🔥 BRILLO SUAVE */
 .profile::before {
   content: "";
   position: absolute;
@@ -83,13 +100,15 @@ body {
   background: linear-gradient(
     120deg,
     transparent 0%,
-    rgba(255,255,255,0.08) 25%,
+    rgba(255,255,255,0.08) 30%,
     rgba(255,255,255,0.15) 50%,
-    rgba(255,255,255,0.08) 75%,
+    rgba(255,255,255,0.08) 70%,
     transparent 100%
   );
+
   transform: translateX(-100%);
-  animation: shine 5s linear infinite;
+  animation: shine 6s linear infinite;
+  pointer-events: none;
 }
 
 @keyframes shine {
@@ -155,7 +174,7 @@ body {
   gap: 4px;
 }
 
-/* SILLAS */
+/* SILLAS (SIN CAMBIOS) */
 .seat {
   position: absolute;
   width: 42px;
@@ -227,7 +246,7 @@ body {
     0 0 5px rgba(255,255,255,0.45);
 }
 
-/* TEXTO METAL SUAVE */
+/* TEXTO METAL */
 .mode-label {
   font-size: 10px;
   font-weight: 300;
@@ -280,7 +299,6 @@ body {
     <div class="table t2">
       <div class="seat"></div>
       <div class="seat"></div>
-
       <button class="play-btn">2 PLAYERS</button>
       <div class="mode-label">INDIVIDUAL</div>
     </div>
@@ -290,7 +308,6 @@ body {
       <div class="seat"></div>
       <div class="seat"></div>
       <div class="seat"></div>
-
       <button class="play-btn">4 PLAYERS</button>
       <div class="mode-label">TEAM MODE</div>
     </div>
