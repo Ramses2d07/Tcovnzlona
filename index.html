@@ -21,13 +21,14 @@
     }
 
     button {
-      padding: 20px 40px;
-      font-size: 20px;
+      padding: 25px 50px;
+      font-size: 22px;
       border: none;
       border-radius: 12px;
       cursor: pointer;
       margin: 10px;
       transition: 0.2s;
+      color: white;
     }
 
     button:hover {
@@ -36,17 +37,19 @@
 
     .soft {
       background: #4caf50;
-      color: white;
     }
 
     .heavy {
-      background: #d32f2f;
-      color: white;
+      background: #6d4c41;
     }
 
     input {
       margin-top: 20px;
       width: 200px;
+    }
+
+    h2 {
+      color: white;
     }
   </style>
 </head>
@@ -55,10 +58,10 @@
 
   <div class="container">
 
-    <h2 style="color:white;">Selector de Sonido</h2>
+    <h2>Selector de Sonido</h2>
 
     <button class="soft" onclick="playSound('soft')">Soft</button>
-    <button class="heavy" onclick="playSound('heavy')">Heavy</button>
+    <button class="heavy" onclick="playSound('heavy')">Heavy 🪵</button>
 
     <br>
 
@@ -69,29 +72,57 @@
   <script>
     let audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
-    function playSound(type) {
-      let osc = audioCtx.createOscillator();
-      let gain = audioCtx.createGain();
+    function woodKnock(volumeValue) {
+      const duration = 0.12;
 
+      const bufferSize = audioCtx.sampleRate * duration;
+      const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+      const output = buffer.getChannelData(0);
+
+      for (let i = 0; i < bufferSize; i++) {
+        output[i] = (Math.random() * 2 - 1) * Math.exp(-i / (bufferSize / 5));
+      }
+
+      const noise = audioCtx.createBufferSource();
+      noise.buffer = buffer;
+
+      const filter = audioCtx.createBiquadFilter();
+      filter.type = "lowpass";
+      filter.frequency.value = 800;
+
+      const gain = audioCtx.createGain();
+      gain.gain.setValueAtTime(0.8 * volumeValue, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + duration);
+
+      noise.connect(filter);
+      filter.connect(gain);
+      gain.connect(audioCtx.destination);
+
+      noise.start();
+      noise.stop(audioCtx.currentTime + duration);
+    }
+
+    function playSound(type) {
       let volume = document.getElementById("volume").value;
 
       if (type === "soft") {
-        osc.frequency.value = 220; // tono suave
+        let osc = audioCtx.createOscillator();
+        let gain = audioCtx.createGain();
+
         gain.gain.value = 0.2 * volume;
+        osc.frequency.value = 220;
+        osc.type = "sine";
+
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.3);
       }
 
       if (type === "heavy") {
-        osc.frequency.value = 80; // más grave y fuerte
-        gain.gain.value = 0.6 * volume;
+        woodKnock(volume);
       }
-
-      osc.type = "sine";
-
-      osc.connect(gain);
-      gain.connect(audioCtx.destination);
-
-      osc.start();
-      osc.stop(audioCtx.currentTime + 0.3);
     }
   </script>
 
