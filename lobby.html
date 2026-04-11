@@ -51,22 +51,22 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 70px;
-  margin-top: 120px;
+  gap: 50px;
+  margin-top: 90px;
 }
 
 /* Mesa */
 .table {
   position: relative;
   width: 280px;
-  height: 170px;
+  height: 150px;
   border-radius: 18px;
 
   background:
     radial-gradient(circle at 50% 40%, rgba(255,255,255,0.12), transparent 60%),
     radial-gradient(circle, #0f7a35, #042610);
 
-  border: 14px solid #3b2314;
+  border: 10px solid #3b2314;
 
   box-shadow:
     inset 0 0 25px rgba(0,0,0,0.9),
@@ -87,38 +87,38 @@ body {
 
 /* 2 jugadores */
 .table.t2 .seat:nth-child(1){
-  left: -45px;
+  left: -40px;
   top: 50%;
   transform: translateY(-50%);
 }
 
 .table.t2 .seat:nth-child(2){
-  right: -45px;
+  right: -40px;
   top: 50%;
   transform: translateY(-50%);
 }
 
 /* 4 jugadores */
 .table.t4 .seat:nth-child(1){
-  top: -45px;
+  top: -40px;
   left: 50%;
   transform: translateX(-50%);
 }
 
 .table.t4 .seat:nth-child(2){
-  right: -45px;
+  right: -40px;
   top: 50%;
   transform: translateY(-50%);
 }
 
 .table.t4 .seat:nth-child(3){
-  bottom: -45px;
+  bottom: -40px;
   left: 50%;
   transform: translateX(-50%);
 }
 
 .table.t4 .seat:nth-child(4){
-  left: -45px;
+  left: -40px;
   top: 50%;
   transform: translateY(-50%);
 }
@@ -129,19 +129,20 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  padding: 10px 18px;
+  padding: 8px 14px;
   background: #ffcc00;
   border: 4px solid #fff;
   border-radius: 10px;
   font-weight: bold;
   color: #000;
+  font-size: 13px;
   cursor: pointer;
 }
 
 /* Textos */
 .labels {
   position: absolute;
-  bottom: -50px;
+  bottom: -45px;
   width: 100%;
   text-align: center;
   font-size: 11px;
