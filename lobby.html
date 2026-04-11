@@ -42,18 +42,17 @@ body {
   transform: translateX(-50%);
 
   width: 280px;
-  height: 170px;
+  height: 200px;
 
   border: 3px solid #f1c40f;
   border-radius: 18px;
   background: rgba(20,20,20,0.92);
 
   padding: 12px;
-
   box-sizing: border-box;
 }
 
-/* FOTO + NOMBRE */
+/* TOP */
 .profile-top {
   display: flex;
   align-items: center;
@@ -61,8 +60,8 @@ body {
 }
 
 .avatar {
-  width: 50px;
-  height: 50px;
+  width: 52px;
+  height: 52px;
   border-radius: 50%;
   background: url("avatar.png") center/cover no-repeat;
   border: 2px solid #f1c40f;
@@ -75,18 +74,34 @@ body {
 
 /* INFO */
 .profile-info {
-  margin-top: 12px;
+  margin-top: 10px;
   font-size: 12px;
   line-height: 18px;
 }
 
-/* MESAS */
+/* LEVEL BAR */
+.level-bar {
+  margin-top: 10px;
+  width: 100%;
+  height: 8px;
+  background: rgba(255,255,255,0.15);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.level-bar-fill {
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(90deg, #f1c40f, #ffcc00);
+}
+
+/* MESAS MÁS ABAJO */
 .tables {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 50px;
-  margin-top: 240px;
+  margin-top: 260px;
 }
 
 /* Mesa */
@@ -193,7 +208,7 @@ body {
 
 <div class="game-ui">
 
-  <!-- PROFILE -->
+  <!-- PROFILE COMPLETO -->
   <div class="profile">
 
     <div class="profile-top">
@@ -205,6 +220,10 @@ body {
       Créditos: 12,500<br>
       Nivel: 7<br>
       Partidas jugadas: 128
+    </div>
+
+    <div class="level-bar">
+      <div class="level-bar-fill"></div>
     </div>
 
   </div>
