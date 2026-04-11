@@ -56,7 +56,6 @@ body {
   position: absolute;
   inset: 0;
   background: url("mdlla.png") center/contain no-repeat;
-  pointer-events: none;
 }
 
 /* AVATAR */
@@ -70,10 +69,6 @@ body {
   border-radius: 50%;
   background: url("https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png") center/cover no-repeat;
   border: 2px solid rgba(255,255,255,0.2);
-  box-shadow:
-    inset 0 0 6px rgba(0,0,0,0.8),
-    0 0 8px rgba(0,0,0,0.6);
-  z-index: 2;
 }
 
 /* STATS */
@@ -82,33 +77,26 @@ body {
   bottom: -2px;
   width: 100%;
   height: 40px;
-  z-index: 3;
 }
 
 .stat {
   position: absolute;
   transform: translateX(-50%);
-  text-align: center;
-  font-size: clamp(13px, 3.8vw, 18px);
   font-weight: 900;
   color: #ffd700;
   font-family: Impact, Arial Black, sans-serif;
-  text-shadow:
-    0 2px 4px rgba(0,0,0,0.9),
-    0 0 6px rgba(255,215,0,0.7);
 }
 
 .stat:nth-child(1) { left: 29%; }
 .stat:nth-child(2) { left: 50%; }
 .stat:nth-child(3) { left: 71%; }
 
-/* MESAS */
+/* MESA UNICA */
 .tables {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 25px;
-  margin-top: 15px;
+  margin-top: 40px;
 }
 
 .table {
@@ -123,65 +111,26 @@ body {
     inset 0 0 25px rgba(0,0,0,0.9),
     0 0 10px rgba(0,0,0,0.7);
   position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
 }
 
+/* SILLAS */
 .seat {
   position: absolute;
   width: 46px;
   height: 36px;
   border-radius: 10px;
-  background: linear-gradient(145deg,#ff3f3f 0%,#7a0000 55%,#3a0000 100%);
-  box-shadow:
-    inset 0 -5px 10px rgba(0,0,0,0.7),
-    inset 0 2px 3px rgba(255,255,255,0.14),
-    0 6px 12px rgba(0,0,0,0.6);
-  overflow: hidden;
+  background: linear-gradient(145deg,#ff3f3f,#3a0000);
 }
 
-.seat::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(120deg, rgba(255,255,255,0.22), transparent 45%),
-    repeating-linear-gradient(45deg,
-      rgba(255,255,255,0.16) 0px,
-      rgba(255,255,255,0.16) 1px,
-      transparent 1px,
-      transparent 10px
-    ),
-    repeating-linear-gradient(-45deg,
-      rgba(255,255,255,0.16) 0px,
-      rgba(255,255,255,0.16) 1px,
-      transparent 1px,
-      transparent 10px
-    );
-  border-radius: 10px;
+/* POSICIONES DINÁMICAS */
+.seat:nth-child(1) { top: -55px; left: 50%; transform: translateX(-50%); }
+.seat:nth-child(2) { right: -55px; top: 50%; transform: translateY(-50%); }
+.seat:nth-child(3) { bottom: -55px; left: 50%; transform: translateX(-50%); }
+.seat:nth-child(4) { left: -55px; top: 50%; transform: translateY(-50%); }
+.seat:nth-child(5),
+.seat:nth-child(6) {
+  display: none;
 }
-
-.seat::before {
-  content: "";
-  position: absolute;
-  top: -16px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 38px;
-  height: 20px;
-  border-radius: 6px;
-  background: linear-gradient(145deg,#a80000,#2a0000);
-}
-
-/* POSICIONES 6 JUGADORES */
-.t6 .seat:nth-child(1) { top: -55px; left: 50%; transform: translateX(-50%) rotate(180deg); }
-.t6 .seat:nth-child(2) { top: 10px; right: -55px; }
-.t6 .seat:nth-child(3) { bottom: -55px; left: 50%; transform: translateX(-50%) rotate(0deg); }
-.t6 .seat:nth-child(4) { top: 10px; left: -55px; }
-.t6 .seat:nth-child(5) { top: -30px; left: 15%; }
-.t6 .seat:nth-child(6) { top: -30px; right: 15%; }
 
 /* BOTÓN */
 .play-btn {
@@ -189,19 +138,8 @@ body {
   height: 42px;
   font-weight: 900;
   color: #fff;
-  background: linear-gradient(145deg,#ffe27a 0%,#ffb800 40%,#a66b00 100%);
+  background: linear-gradient(145deg,#ffe27a,#ffb800,#a66b00);
   border-radius: 12px;
-  border: 1px solid rgba(255,255,255,0.9);
-  box-shadow:
-    0 0 0 1px rgba(255,255,255,0.8),
-    0 0 14px rgba(255,255,255,0.7),
-    inset 0 2px 4px rgba(255,255,255,0.4),
-    inset 0 -4px 8px rgba(0,0,0,0.6);
-  text-shadow:
-    -1px -1px 0 rgba(0,0,0,0.9),
-     1px -1px 0 rgba(0,0,0,0.9),
-    -1px 1px 0 rgba(0,0,0,0.9),
-     1px 1px 0 rgba(0,0,0,0.9);
 }
 
 .mode-label {
@@ -221,7 +159,6 @@ body {
 
   <div class="profile">
     <div class="avatar"></div>
-
     <div class="stats">
       <div class="stat">7</div>
       <div class="stat">12500</div>
@@ -230,8 +167,8 @@ body {
   </div>
 
   <div class="tables">
+    <div class="table" id="gameTable">
 
-    <div class="table t6">
       <div class="seat"></div>
       <div class="seat"></div>
       <div class="seat"></div>
@@ -239,13 +176,23 @@ body {
       <div class="seat"></div>
       <div class="seat"></div>
 
-      <button class="play-btn">6 PLAYERS</button>
-      <div class="mode-label">EQUIPO</div>
+      <button class="play-btn" onclick="joinGame()">PLAY</button>
+      <div class="mode-label" id="modeLabel">LOADING</div>
+
     </div>
-
   </div>
 
 </div>
+
+<script>
+function joinGame() {
+  const params = new URLSearchParams(window.location.search);
+  const players = params.get("players");
+
+  if (players == 2) window.location.href = "game2players.html";
+  if (players == 4) window.location.href = "game4players.html";
+}
+</script>
 
 </body>
 </html>
