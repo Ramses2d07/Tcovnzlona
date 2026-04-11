@@ -38,9 +38,9 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center; /* centrado mejorado */
+  justify-content: center;
   padding-top: 0;
-  gap: 60px; /* mejor separación */
+  gap: 60px;
 }
 
 /* PERFIL */
@@ -141,7 +141,7 @@ body {
   flex-direction: column;
   align-items: center;
   gap: 55px;
-  margin-top: 0; /* corregido */
+  margin-top: 0;
 }
 
 .table {
@@ -269,6 +269,7 @@ body {
      0px  2px 2px rgba(0,0,0,0.6);
 
   transition: all 0.2s ease;
+  cursor: pointer;
 }
 
 .play-btn:hover {
@@ -310,7 +311,7 @@ body {
     <div class="table t2">
       <div class="seat"></div>
       <div class="seat"></div>
-      <button class="play-btn">2 PLAYERS</button>
+      <button class="play-btn" onclick="joinGame(2,'INDIVIDUAL')">2 PLAYERS</button>
       <div class="mode-label">INDIVIDUAL</div>
     </div>
 
@@ -319,13 +320,25 @@ body {
       <div class="seat"></div>
       <div class="seat"></div>
       <div class="seat"></div>
-      <button class="play-btn">4 PLAYERS</button>
+      <button class="play-btn" onclick="joinGame(4,'EQUIPO')">4 PLAYERS</button>
       <div class="mode-label">EQUIPO</div>
     </div>
 
   </div>
 
 </div>
+
+<script>
+function joinGame(players, mode) {
+  console.log("Entrando:", players, mode);
+
+  // Aquí puedes cambiar por navegación real
+  alert("Entrando a mesa de " + players + " jugadores - " + mode);
+
+  // Ejemplo futuro:
+  // window.location.href = "sala.html?players=" + players + "&mode=" + mode;
+}
+</script>
 
 </body>
 </html>
