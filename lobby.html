@@ -60,23 +60,20 @@ body {
   pointer-events: none;
 }
 
-/* 🔥 AVATAR PERFECTAMENTE ENCAJADO */
+/* 🔥 AVATAR CORREGIDO */
 .avatar {
   position: absolute;
-  top: 29%; /* 🔥 ajuste fino al círculo real */
+  top: 29%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 62px; /* 🔥 ajustado al borde del marco */
+  width: 62px;
   height: 62px;
   border-radius: 50%;
   background: url("https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png") center/cover no-repeat;
-  
-  /* 🔥 EFECTO PARA INTEGRARSE CON EL PNG */
   border: 2px solid rgba(255,255,255,0.15);
   box-shadow:
     inset 0 0 6px rgba(0,0,0,0.8),
     0 0 6px rgba(0,0,0,0.6);
-
   z-index: 2;
 }
 
@@ -97,20 +94,9 @@ body {
   z-index: 3;
 }
 
-.level-value {
-  left: 22%;
-  transform: translateX(-50%);
-}
-
-.coins-value {
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.games-value {
-  left: 78%;
-  transform: translateX(-50%);
-}
+.level-value { left: 22%; transform: translateX(-50%); }
+.coins-value { left: 50%; transform: translateX(-50%); }
+.games-value { left: 78%; transform: translateX(-50%); }
 
 /* MESAS */
 .tables {
@@ -137,9 +123,9 @@ body {
   flex-direction: column;
 }
 
-/* 🔥 PARCHE SOLO MESA DE ABAJO */
+/* 🔥 BAJAR SOLO LA MESA DE ABAJO */
 .t4 {
-  margin-top: 20px;
+  margin-top: 35px;
 }
 
 /* SILLAS */
@@ -224,5 +210,62 @@ body {
   background: linear-gradient(145deg,#ffe27a 0%,#ffb800 40%,#a66b00 100%);
   border-radius: 12px;
 }
+
+.mode-label {
+  margin-top: 6px;
+  font-size: 10px;
+  font-weight: 700;
+}
 </style>
 </head>
+
+<body>
+
+<div class="background"></div>
+<div class="overlay"></div>
+
+<div class="game-ui">
+
+  <div class="profile">
+    <div class="avatar"></div>
+
+    <div class="level-value">7</div>
+    <div class="coins-value">12500</div>
+    <div class="games-value">128</div>
+  </div>
+
+  <div class="tables">
+
+    <div class="table t2">
+      <div class="seat"></div>
+      <div class="seat"></div>
+      <button class="play-btn" onclick="joinGame(2,'INDIVIDUAL')">2 PLAYERS</button>
+      <div class="mode-label">INDIVIDUAL</div>
+    </div>
+
+    <div class="table t4">
+      <div class="seat"></div>
+      <div class="seat"></div>
+      <div class="seat"></div>
+      <div class="seat"></div>
+      <button class="play-btn" onclick="joinGame(4,'EQUIPO')">4 PLAYERS</button>
+      <div class="mode-label">EQUIPO</div>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+function joinGame(players, mode) {
+  if (players === 2) {
+    window.location.href = "game2players.html";
+  }
+  if (players === 4) {
+    window.location.href = "gamer4player.html";
+  }
+}
+</script>
+
+</body>
+</html> 
