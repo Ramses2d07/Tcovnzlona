@@ -37,40 +37,39 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 20px;
+  gap: 25px;
 }
 
 /* PLAYERS */
 .players {
   display: flex;
-  gap: 14px;
+  gap: 16px;
 }
 
-/* 🔥 TARJETA MUY ESTRUCTURADA */
+/* 🔥 TARJETA AJUSTADA AL ESTILO DE LA IMAGEN */
 .player {
-  width: 95px;
-  height: 160px;
-  border-radius: 16px;
-  background: linear-gradient(145deg, #2a2a2a, #3a3a3a);
-  box-shadow: 0 5px 15px rgba(0,0,0,0.7);
+  width: 110px;
+  height: 190px;
+  border-radius: 18px;
+  background: linear-gradient(145deg, #2f2f2f, #3d3d3d);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.8);
 
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
 
-  padding: 10px 5px;
+  padding: 10px 6px;
+  position: relative;
 }
 
-/* 👤 AVATAR ARRIBA (DESTACADO) */
+/* 👤 AVATAR SUPERIOR */
 .avatar {
-  width: 50px;
-  height: 50px;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
   overflow: hidden;
-  border: 3px solid #888;
+  border: 4px solid #d4af37;
   margin-top: 5px;
-  flex-shrink: 0;
 }
 
 .avatar img {
@@ -81,31 +80,42 @@ body {
 
 /* NOMBRE */
 .name {
-  font-size: 11px;
-  margin-top: 5px;
+  font-size: 13px;
+  margin-top: 6px;
+  font-weight: bold;
 }
 
-/* 🏅 MEDALLA ABAJO */
+/* TEXTO NIVEL */
+.label {
+  font-size: 10px;
+  opacity: 0.7;
+}
+
+/* 🏅 MEDALLA GRANDE TIPO MARCO (como imagen) */
 .medal {
-  width: 42px;
-  height: 42px;
+  width: 70px;
+  height: 70px;
+  position: absolute;
+  bottom: 8px;
+
   display: flex;
   align-items: center;
   justify-content: center;
-  background-size: cover;
+
+  background-size: contain;
+  background-repeat: no-repeat;
   background-position: center;
-  margin-bottom: 8px;
 }
 
-/* NIVEL CENTRO */
+/* NIVEL CENTRADO EN LA MEDALLA */
 .level {
-  font-size: 12px;
+  font-size: 18px;
   font-weight: bold;
   color: #fff;
-  text-shadow: 0 1px 2px #000;
+  text-shadow: 0 2px 4px #000;
 }
 
-/* TIPOS DE MEDALLA */
+/* MEDALLAS */
 .bronze { background-image: url("mdlla_bronce.png"); }
 .silver { background-image: url("mdlla_plata.png"); }
 .gold { background-image: url("mdlla_oro.png"); }
@@ -113,33 +123,37 @@ body {
 
 /* MESA */
 .table {
-  width: 280px;
-  height: 150px;
-  border-radius: 20px;
+  width: 300px;
+  height: 160px;
+  border-radius: 25px;
   background: radial-gradient(circle, #0f7a35, #042610);
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 10px solid #3b2314;
+  border: 12px solid #3b2314;
 }
 
 .pot {
-  background: rgba(0,0,0,0.5);
-  padding: 8px 16px;
-  border-radius: 10px;
+  background: rgba(0,0,0,0.6);
+  padding: 10px 20px;
+  border-radius: 12px;
   font-weight: bold;
+  font-size: 16px;
 }
 
+/* TEXTO */
 .waiting {
-  font-size: 14px;
+  font-size: 15px;
 }
 
+/* BOTÓN */
 .exit {
-  padding: 8px 18px;
+  padding: 10px 20px;
   background: red;
   border: none;
-  border-radius: 10px;
+  border-radius: 12px;
   color: #fff;
+  font-weight: bold;
 }
 </style>
 </head>
@@ -157,9 +171,8 @@ body {
       <div class="avatar">
         <img src="user1.png">
       </div>
-
       <div class="name">TÚ</div>
-
+      <div class="label">Nivel</div>
       <div class="medal gold">
         <div class="level">7</div>
       </div>
@@ -169,11 +182,10 @@ body {
       <div class="avatar">
         <img src="user2.png">
       </div>
-
-      <div class="name">Espera</div>
-
+      <div class="name">Esperando</div>
+      <div class="label">Nivel</div>
       <div class="medal silver">
-        <div class="level">3</div>
+        <div class="level">-</div>
       </div>
     </div>
 
@@ -181,11 +193,10 @@ body {
       <div class="avatar">
         <img src="user3.png">
       </div>
-
-      <div class="name">Espera</div>
-
+      <div class="name">Esperando</div>
+      <div class="label">Nivel</div>
       <div class="medal bronze">
-        <div class="level">1</div>
+        <div class="level">-</div>
       </div>
     </div>
 
@@ -193,11 +204,10 @@ body {
       <div class="avatar">
         <img src="user4.png">
       </div>
-
-      <div class="name">Espera</div>
-
+      <div class="name">Esperando</div>
+      <div class="label">Nivel</div>
       <div class="medal diamond">
-        <div class="level">10</div>
+        <div class="level">-</div>
       </div>
     </div>
 
