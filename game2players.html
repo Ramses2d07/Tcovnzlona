@@ -74,14 +74,14 @@ body {
   font-weight: bold;
 }
 
-/* 🔥 TEXTO NIVEL */
+/* TEXTO NIVEL */
 .level-text {
   font-size: 10px;
   opacity: 0.8;
   margin-top: 6px;
 }
 
-/* 🔥 MEDALLA BASE */
+/* 🔥 TU MEDALLA ORIGINAL (SOLO SE LE AGREGA LA IMAGEN) */
 .level-badge {
   width: 60px;
   height: 34px;
@@ -97,7 +97,9 @@ body {
 
   border-radius: 10px 4px 10px 4px;
 
+  /* 👇 AQUÍ SE AGREGA TU IMAGEN */
   background:
+    url("medalla.svg") center/contain no-repeat,
     linear-gradient(145deg, #ffd700, #b8860b, #8b6508);
 
   border: 1px solid rgba(255,255,255,0.35);
@@ -131,24 +133,21 @@ body {
   100% { transform: translateX(100%); }
 }
 
-/* 🔥 NUEVOS NIVELES DINÁMICOS */
+/* 🔥 COLORES POR NIVEL (NO CAMBIA DISEÑO, SOLO TONO) */
 .level-bronze {
-  background: linear-gradient(145deg, #cd7f32, #8b4513);
+  filter: hue-rotate(20deg) brightness(0.8);
 }
 
 .level-silver {
-  background: linear-gradient(145deg, #c0c0c0, #7a7a7a);
+  filter: grayscale(1) brightness(1.2);
 }
 
 .level-gold {
-  background: linear-gradient(145deg, #ffd700, #b8860b);
+  filter: saturate(1.2);
 }
 
 .level-diamond {
-  background: linear-gradient(145deg, #00eaff, #006d77);
-  box-shadow:
-    inset 0 2px 4px rgba(255,255,255,0.6),
-    0 0 12px rgba(0,255,255,0.8);
+  filter: hue-rotate(180deg) brightness(1.3);
 }
 
 /* MESA */
@@ -260,28 +259,22 @@ function updatePot() {
     "BOTE: " + (betPlayer1 + betPlayer2);
 }
 
-/* 🔥 FUNCIÓN NUEVA PARA NIVELES */
+/* 🔥 SOLO AGREGA CLASES (NO ROMPE NADA) */
 function setLevelStyle(elementId, level) {
   const el = document.getElementById(elementId);
 
   el.classList.remove("level-bronze", "level-silver", "level-gold", "level-diamond");
 
-  if (level < 5) {
-    el.classList.add("level-bronze");
-  } else if (level < 10) {
-    el.classList.add("level-silver");
-  } else if (level < 20) {
-    el.classList.add("level-gold");
-  } else {
-    el.classList.add("level-diamond");
-  }
+  if (level < 5) el.classList.add("level-bronze");
+  else if (level < 10) el.classList.add("level-silver");
+  else if (level < 20) el.classList.add("level-gold");
+  else el.classList.add("level-diamond");
 
   el.innerText = level;
 }
 
 updatePot();
 
-/* 🔥 APLICAR NIVEL JUGADOR */
 setLevelStyle("myLevel", 7);
 
 setTimeout(() => {
