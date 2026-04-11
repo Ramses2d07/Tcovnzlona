@@ -330,13 +330,15 @@ body {
 
 <script>
 function joinGame(players, mode) {
-  console.log("Entrando:", players, mode);
 
-  // Aquí puedes cambiar por navegación real
-  alert("Entrando a mesa de " + players + " jugadores - " + mode);
+  if (players === 2) {
+    window.location.href = "game2players.html";
+  }
 
-  // Ejemplo futuro:
-  // window.location.href = "sala.html?players=" + players + "&mode=" + mode;
+  if (players === 4) {
+    window.location.href = "gamer4player.html";
+  }
+
 }
 </script>
 
