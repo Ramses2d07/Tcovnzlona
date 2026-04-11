@@ -14,7 +14,6 @@ body {
   color: white;
 }
 
-/* 🔥 OSCURECIDO GENERAL */
 .overlay {
   position: fixed;
   inset: 0;
@@ -22,7 +21,7 @@ body {
   backdrop-filter: blur(6px);
 }
 
-/* 👤 PERFIL HUD ARRIBA */
+/* 👤 PERFIL (MISMA POSICIÓN HUD) */
 .profile {
   position: fixed;
   top: 10px;
@@ -58,94 +57,89 @@ body {
 
 .badge {
   font-size: 12px;
-  margin-top: 3px;
   padding: 3px 8px;
+  margin-top: 3px;
   border-radius: 8px;
   background: rgba(255,255,255,0.08);
 }
 
-/* 🎰 MESAS */
+/* 🎰 MESAS (VOLVEMOS A TAMAÑO MEDIO) */
 .tables {
   display: flex;
   justify-content: center;
-  gap: 50px;
+  gap: 70px;
   margin-top: 140px;
   flex-wrap: wrap;
 }
 
-/* 🪵 MESA CASINO REAL */
+/* 🪵 MESA MÁS GRANDE (AJUSTE IMPORTANTE) */
 .table {
   position: relative;
-  width: 230px;
-  height: 150px;
+  width: 320px;   /* 🔥 VOLVIMOS A TAMAÑO VISUAL */
+  height: 200px;
 
-  border-radius: 14px;
+  border-radius: 16px;
 
-  /* 🟢 PAÑO VERDE */
   background:
-    radial-gradient(circle at center, #0e6b2f 0%, #06401c 80%);
+    radial-gradient(circle at center, #0f6b30 0%, #06401c 80%);
 
-  /* 🟤 BORDE MADERA GRUESO */
   border: 14px solid #5a3b1e;
 
-  /* 🔥 RELIEVE REAL */
   box-shadow:
     inset 0 0 20px rgba(0,0,0,0.6),
     inset 0 0 10px rgba(255,255,255,0.08),
-    0 20px 40px rgba(0,0,0,0.85);
+    0 25px 50px rgba(0,0,0,0.85);
 }
 
-/* 🪑 SILLAS CASINO (PERSONAS REPRESENTADAS BIEN) */
+/* 👤 ICONOS PERSONA */
 .seat {
   position: absolute;
-  width: 42px;
-  height: 42px;
+  width: 52px;
+  height: 52px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 26px;
+
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.4);
 
   border-radius: 10px;
 
-  /* silla con volumen */
-  background:
-    radial-gradient(circle at top left, #ffffff, #666);
-
-  border: 2px solid rgba(255,255,255,0.6);
-
   box-shadow:
-    0 0 10px rgba(255,255,255,0.25),
-    inset 0 -4px 6px rgba(0,0,0,0.4);
+    0 0 12px rgba(255,255,255,0.2),
+    inset 0 0 8px rgba(0,0,0,0.4);
 }
 
-/* 🪑 2 jugadores */
-.t2 .s1 { top: -22px; left: 50%; transform: translateX(-50%); }
-.t2 .s2 { bottom: -22px; left: 50%; transform: translateX(-50%); }
+/* 🧍 2 jugadores */
+.t2 .s1 { top: -25px; left: 50%; transform: translateX(-50%); }
+.t2 .s2 { bottom: -25px; left: 50%; transform: translateX(-50%); }
 
-/* 🪑 4 jugadores */
-.t4 .s1 { top: -22px; left: 50%; transform: translateX(-50%); }
-.t4 .s2 { right: -22px; top: 50%; transform: translateY(-50%); }
-.t4 .s3 { bottom: -22px; left: 50%; transform: translateX(-50%); }
-.t4 .s4 { left: -22px; top: 50%; transform: translateY(-50%); }
+/* 👥 4 jugadores */
+.t4 .s1 { top: -25px; left: 50%; transform: translateX(-50%); }
+.t4 .s2 { right: -25px; top: 50%; transform: translateY(-50%); }
+.t4 .s3 { bottom: -25px; left: 50%; transform: translateX(-50%); }
+.t4 .s4 { left: -25px; top: 50%; transform: translateY(-50%); }
 
-/* 🎮 BOTÓN CASINO */
+/* 🎮 BOTÓN */
 .play-btn {
-  padding: 9px 14px;
+  padding: 10px 16px;
 
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 900;
 
   color: white;
 
   background: linear-gradient(145deg, #2ecc71, #1e8f4f);
 
-  border: 2px solid #f1c40f; /* amarillo casino */
+  border: 2px solid #f1c40f;
   border-radius: 10px;
 
   cursor: pointer;
-
-  box-shadow:
-    0 0 10px rgba(0,0,0,0.6),
-    0 0 8px rgba(241,196,15,0.4);
 }
 
-/* 📌 TEXTO CENTRAL */
 .label {
   position: absolute;
   top: 50%;
@@ -155,8 +149,8 @@ body {
 }
 
 .sub {
-  font-size: 11px;
-  margin-top: 5px;
+  font-size: 12px;
+  margin-top: 6px;
   opacity: 0.85;
 }
 
@@ -167,7 +161,7 @@ body {
 
 <div class="overlay"></div>
 
-<!-- 👤 PERFIL HUD -->
+<!-- 👤 PERFIL -->
 <div class="profile">
 
   <div class="avatar">
@@ -186,11 +180,11 @@ body {
 <!-- 🎰 MESAS -->
 <div class="tables">
 
-  <!-- 2 PLAYERS -->
+  <!-- 2P -->
   <div class="table t2">
 
-    <div class="seat s1"></div>
-    <div class="seat s2"></div>
+    <div class="seat">🧍</div>
+    <div class="seat">🧍</div>
 
     <div class="label">
       <button class="play-btn">2 PLAYERS</button>
@@ -199,13 +193,13 @@ body {
 
   </div>
 
-  <!-- 4 PLAYERS -->
+  <!-- 4P -->
   <div class="table t4">
 
-    <div class="seat s1"></div>
-    <div class="seat s2"></div>
-    <div class="seat s3"></div>
-    <div class="seat s4"></div>
+    <div class="seat">🧍</div>
+    <div class="seat">🧍</div>
+    <div class="seat">🧍</div>
+    <div class="seat">🧍</div>
 
     <div class="label">
       <button class="play-btn">4 PLAYERS</button>
