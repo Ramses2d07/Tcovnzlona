@@ -69,11 +69,10 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-
   gap: 8px;
 }
 
-/* GRID + BRILLO */
+/* GRID */
 .profile::after {
   content: "";
   position: absolute;
@@ -85,6 +84,7 @@ body {
   opacity: 0.35;
 }
 
+/* BRILLO ANIMADO */
 .profile::before {
   content: "";
   position: absolute;
@@ -93,7 +93,7 @@ body {
     120deg,
     transparent 0%,
     rgba(255,255,255,0.08) 30%,
-    rgba(255,255,255,0.15) 50%,
+    rgba(255,255,255,0.18) 50%,
     rgba(255,255,255,0.08) 70%,
     transparent 100%
   );
@@ -124,13 +124,19 @@ body {
   gap: 14px;
 }
 
+/* TEXTO METÁLICO RESTAURADO */
 .stat-row {
   display: flex;
   align-items: center;
   gap: 4px;
   font-size: 10px;
-  font-weight: 600;
+  font-weight: 700;
   white-space: nowrap;
+
+  color: #e6e6e6;
+  text-shadow:
+    0 1px 0 #000,
+    0 0 6px rgba(255,255,255,0.15);
 }
 
 /* ICONOS */
@@ -173,7 +179,7 @@ body {
   flex-direction: column;
 }
 
-/* 🔴 SILLAS FUERA DE LA MESA (CORRECTO) */
+/* SILLAS (PEGADAS PERO SIN TOCAR) */
 .seat {
   position: absolute;
   width: 42px;
@@ -183,42 +189,14 @@ body {
 }
 
 /* 2 players */
-.t2 .seat:nth-child(1) {
-  left: -34px;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-.t2 .seat:nth-child(2) {
-  right: -34px;
-  top: 50%;
-  transform: translateY(-50%);
-}
+.t2 .seat:nth-child(1) { left: -48px; top: 50%; transform: translateY(-50%); }
+.t2 .seat:nth-child(2) { right: -48px; top: 50%; transform: translateY(-50%); }
 
 /* 4 players */
-.t4 .seat:nth-child(1) {
-  top: -34px;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.t4 .seat:nth-child(2) {
-  right: -34px;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-.t4 .seat:nth-child(3) {
-  bottom: -34px;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.t4 .seat:nth-child(4) {
-  left: -34px;
-  top: 50%;
-  transform: translateY(-50%);
-}
+.t4 .seat:nth-child(1) { top: -48px; left: 50%; transform: translateX(-50%); }
+.t4 .seat:nth-child(2) { right: -48px; top: 50%; transform: translateY(-50%); }
+.t4 .seat:nth-child(3) { bottom: -48px; left: 50%; transform: translateX(-50%); }
+.t4 .seat:nth-child(4) { left: -48px; top: 50%; transform: translateY(-50%); }
 
 /* BOTÓN */
 .play-btn {
