@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sala 4 Jugadores</title>
+<title>Sala de Juego</title>
 
 <style>
 body {
@@ -18,12 +18,14 @@ body {
   position: fixed;
   inset: 0;
   background: url("inicio11.png") center/cover no-repeat;
+  z-index: 0;
 }
 
 .overlay {
   position: fixed;
   inset: 0;
   background: rgba(0,0,0,0.75);
+  z-index: 1;
 }
 
 /* CONTENEDOR */
@@ -43,10 +45,10 @@ body {
   transform: translate(-50%, -50%);
   border-radius: 20px;
   background: radial-gradient(circle, #0f7a35, #042610);
-  border: 10px solid #3b2314;
   display: flex;
   align-items: center;
   justify-content: center;
+  border: 10px solid #3b2314;
 }
 
 /* BOTE */
@@ -61,10 +63,10 @@ body {
 .player {
   position: absolute;
   width: 120px;
-  text-align: center;
-  background: rgba(255,255,255,0.1);
   padding: 8px;
   border-radius: 12px;
+  background: rgba(255,255,255,0.1);
+  text-align: center;
 }
 
 /* AVATAR */
@@ -76,11 +78,30 @@ body {
   margin: auto;
 }
 
-/* POSICIONES (4 SLOTS) */
-.player.top    { top: 10%; left: 50%; transform: translateX(-50%); }
-.player.right  { top: 50%; right: 5%; transform: translateY(-50%); }
-.player.bottom { bottom: 10%; left: 50%; transform: translateX(-50%); }
-.player.left   { top: 50%; left: 5%; transform: translateY(-50%); }
+/* POSICIONES 4 SLOTS */
+.player.top {
+  top: 8%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.player.right {
+  top: 50%;
+  right: 5%;
+  transform: translateY(-50%);
+}
+
+.player.bottom {
+  bottom: 8%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.player.left {
+  top: 50%;
+  left: 5%;
+  transform: translateY(-50%);
+}
 
 /* TEXTO */
 .waiting {
@@ -113,4 +134,46 @@ body {
 
 <div class="room">
 
-  <!-- JUGADORES
+  <!-- JUGADOR ARRIBA -->
+  <div class="player top">
+    <div class="avatar"></div>
+    <div>Jugador</div>
+    <div>-</div>
+  </div>
+
+  <!-- JUGADOR DERECHA -->
+  <div class="player right">
+    <div class="avatar"></div>
+    <div>Esperando...</div>
+    <div>-</div>
+  </div>
+
+  <!-- JUGADOR ABAJO (TÚ) -->
+  <div class="player bottom">
+    <div class="avatar"></div>
+    <div>TÚ</div>
+    <div>Nivel 7</div>
+  </div>
+
+  <!-- JUGADOR IZQUIERDA -->
+  <div class="player left">
+    <div class="avatar"></div>
+    <div>Esperando...</div>
+    <div>-</div>
+  </div>
+
+  <!-- MESA -->
+  <div class="table">
+    <div class="pot">BOTE: 1000</div>
+  </div>
+
+  <!-- ESTADO -->
+  <div class="waiting">Esperando jugadores...</div>
+
+  <!-- SALIR -->
+  <button class="exit" onclick="history.back()">SALIR</button>
+
+</div>
+
+</body>
+</html>
