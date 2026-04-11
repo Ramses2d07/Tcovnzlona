@@ -148,7 +148,7 @@ body {
 }
 
 /* =========================
-   BOTÓN (BLANCO → NEGRO → AMARILLO)
+   BOTÓN NEÓN (BLANCO → NEGRO → AMARILLO)
 ========================= */
 
 .play-btn {
@@ -166,25 +166,42 @@ body {
   color: #fff;
 
   background: linear-gradient(145deg, #ffd84d, #ffb800);
-  border: none;
   border-radius: 12px;
+  border: 0;
   cursor: pointer;
-}
 
-/* NEGRO (más delgado) - capa interna */
-.play-btn {
+  position: relative;
+  z-index: 2;
+
+  /* NEGRO pegado + BLANCO neón externo */
   box-shadow:
-    0 0 0 1px #000; /* negro fino */
+    /* negro pegado */
+    0 0 0 1px #000,
+
+    /* blanco neón externo (difuso) */
+    0 0 6px 1px rgba(255,255,255,0.9),
+    0 0 14px 3px rgba(255,255,255,0.35),
+
+    /* profundidad */
+    0 8px 18px rgba(0,0,0,0.45),
+
+    inset 0 2px 0 rgba(255,255,255,0.4),
+    inset 0 -3px 6px rgba(0,0,0,0.2);
 }
 
-/* BLANCO (externo) - rodea al negro */
-.play-btn::before {
-  content: "";
+.play-btn:active {
+  transform: translate(-50%, -50%) scale(0.95);
+}
+
+/* LABELS */
+.labels {
   position: absolute;
-  inset: -3px;
-  border-radius: 14px;
-  border: 1px solid #fff;
-  pointer-events: none;
+  bottom: -38px;
+  width: 100%;
+  text-align: center;
+  font-size: 10px;
+  font-weight: 600;
+  opacity: 0.9;
 }
 </style>
 </head>
