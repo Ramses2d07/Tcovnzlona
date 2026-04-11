@@ -12,15 +12,18 @@ body {
   font-family: Arial, sans-serif;
   background: url("inicio11.png") center/cover no-repeat;
   color: white;
+  overflow: hidden;
 }
 
+/* 🌑 OVERLAY */
 .overlay {
   position: fixed;
   inset: 0;
-  background: radial-gradient(circle, rgba(0,0,0,0.6), rgba(0,0,0,0.9));
+  background: radial-gradient(circle at center, rgba(0,0,0,0.5), rgba(0,0,0,0.95));
+  backdrop-filter: blur(2px);
 }
 
-/* 👤 HUD FORTNITE REAL */
+/* 👤 HUD */
 .profile {
   position: fixed;
   top: 12px;
@@ -31,35 +34,38 @@ body {
   align-items: center;
   gap: 14px;
 
-  padding: 12px 18px;
+  padding: 12px 20px;
 
-  background: rgba(25,25,25,0.75);
+  background: linear-gradient(145deg, rgba(40,40,40,0.9), rgba(10,10,10,0.8));
 
-  border: 4px solid #f1c40f;
-  border-radius: 16px;
+  border: 3px solid #f1c40f;
+  border-radius: 18px;
 
-  box-shadow: 0 0 25px rgba(241,196,15,0.3);
+  box-shadow:
+    0 0 25px rgba(241,196,15,0.4),
+    inset 0 0 10px rgba(255,255,255,0.1);
 }
 
-/* avatar */
+/* AVATAR */
 .avatar {
-  width: 60px;
-  height: 60px;
+  width: 65px;
+  height: 65px;
   border-radius: 50%;
   border: 3px solid #f1c40f;
   overflow: hidden;
+  box-shadow: 0 0 10px rgba(241,196,15,0.5);
 }
 
 .avatar img {
   width: 100%;
   height: 100%;
+  object-fit: cover;
 }
 
-/* HUD stats animados */
+/* STATS */
 .stats {
   display: flex;
   flex-direction: column;
-  gap: 3px;
   font-weight: 900;
 }
 
@@ -82,63 +88,91 @@ body {
 .tables {
   display: flex;
   justify-content: center;
-  gap: 70px;
-  margin-top: 140px;
+  gap: 90px;
+  margin-top: 160px;
 }
 
-/* mesa */
+/* 🪵 MESA PRO */
 .table {
   position: relative;
-  width: 300px;
-  height: 190px;
+  width: 320px;
+  height: 200px;
+
+  border-radius: 18px;
+
+  background:
+    radial-gradient(circle at 50% 40%, rgba(255,255,255,0.15), transparent 60%),
+    radial-gradient(circle, #0f7a35, #042610);
+
+  border: 20px solid #3b2314;
+
+  box-shadow:
+    inset 0 0 35px rgba(0,0,0,0.9),
+    inset 0 0 15px rgba(255,255,255,0.08),
+    0 30px 70px rgba(0,0,0,1);
+
+  transition: transform 0.3s ease;
+}
+
+.table:hover {
+  transform: scale(1.05);
+}
+
+/* 🪑 SILLAS */
+.seat {
+  position: absolute;
+  width: 60px;
+  height: 60px;
 
   border-radius: 14px;
 
-  background: radial-gradient(circle, #0f7a35, #053018);
+  background: linear-gradient(145deg, #ffffff, #555);
 
-  border: 16px solid #4a2d16;
+  border: 2px solid rgba(255,255,255,0.5);
 
   box-shadow:
-    0 0 0 4px #f1c40f,
-    inset 0 0 20px rgba(0,0,0,0.7),
-    0 25px 60px rgba(0,0,0,0.9);
-}
-
-/* 🪑 silla visible */
-.seat {
-  position: absolute;
-  width: 58px;
-  height: 58px;
-
-  border-radius: 12px;
-
-  background: linear-gradient(145deg, #fff, #666);
-
-  border: 3px solid #f1c40f;
-
-  box-shadow: 0 0 15px rgba(241,196,15,0.3);
+    0 10px 20px rgba(0,0,0,0.8),
+    inset 0 2px 6px rgba(255,255,255,0.6);
 }
 
 /* posiciones */
-.t2 .s1 { top:-30px; left:50%; transform:translateX(-50%); }
-.t2 .s2 { bottom:-30px; left:50%; transform:translateX(-50%); }
+.t2 .seat:nth-child(1){ top:-35px; left:50%; transform:translateX(-50%);}
+.t2 .seat:nth-child(2){ bottom:-35px; left:50%; transform:translateX(-50%);}
 
-.t4 .s1 { top:-30px; left:50%; transform:translateX(-50%); }
-.t4 .s2 { right:-30px; top:50%; transform:translateY(-50%); }
-.t4 .s3 { bottom:-30px; left:50%; transform:translateX(-50%); }
-.t4 .s4 { left:-30px; top:50%; transform:translateY(-50%); }
+.t4 .seat:nth-child(1){ top:-35px; left:50%; transform:translateX(-50%);}
+.t4 .seat:nth-child(2){ right:-35px; top:50%; transform:translateY(-50%);}
+.t4 .seat:nth-child(3){ bottom:-35px; left:50%; transform:translateX(-50%);}
+.t4 .seat:nth-child(4){ left:-35px; top:50%; transform:translateY(-50%);}
 
-/* botón */
+/* 🎮 BOTÓN PRO */
 .play-btn {
-  padding: 10px 16px;
+  padding: 12px 18px;
   font-weight: 900;
+  letter-spacing: 1px;
+
   color: white;
-  background: linear-gradient(145deg,#2ecc71,#1e8f4f);
-  border: 3px solid #f1c40f;
-  border-radius: 12px;
+  background: linear-gradient(145deg,#2ecc71,#1b7f45);
+
+  border: 2px solid #f1c40f;
+  border-radius: 14px;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 0 10px rgba(46,204,113,0.6),
+    0 5px 15px rgba(0,0,0,0.7);
+
+  transition: all 0.2s ease;
 }
 
-/* label mesa */
+.play-btn:hover {
+  transform: scale(1.1);
+  box-shadow:
+    0 0 20px rgba(46,204,113,1),
+    0 10px 25px rgba(0,0,0,0.9);
+}
+
+/* TEXTO */
 .label {
   position: absolute;
   top:50%;
@@ -153,6 +187,22 @@ body {
   opacity:0.9;
 }
 
+/* ✨ ANIMACIÓN SUTIL */
+.table::after {
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:18px;
+
+  background: linear-gradient(120deg, transparent, rgba(255,255,255,0.15), transparent);
+  opacity:0;
+  transition:0.5s;
+}
+
+.table:hover::after {
+  opacity:1;
+}
+
 </style>
 </head>
 
@@ -160,9 +210,7 @@ body {
 
 <div class="overlay"></div>
 
-<!-- 👤 HUD REAL -->
 <div class="profile">
-
   <div class="avatar">
     <img src="https://i.imgur.com/6VBx3io.png">
   </div>
@@ -172,24 +220,20 @@ body {
     <div class="stat">CREDITS 100</div>
     <div class="stat">MATCHES 0</div>
   </div>
-
 </div>
 
-<!-- 🎰 MESAS -->
 <div class="tables">
 
-  <!-- 2 PLAYERS -->
   <div class="table t2">
     <div class="seat"></div>
     <div class="seat"></div>
 
     <div class="label">
-      <button class="play-btn">2 PLAYERS (2/2)</button>
+      <button class="play-btn">2 PLAYERS</button>
       <div class="sub">INDIVIDUAL</div>
     </div>
   </div>
 
-  <!-- 4 PLAYERS -->
   <div class="table t4">
     <div class="seat"></div>
     <div class="seat"></div>
@@ -197,7 +241,7 @@ body {
     <div class="seat"></div>
 
     <div class="label">
-      <button class="play-btn">4 PLAYERS (1/4)</button>
+      <button class="play-btn">4 PLAYERS</button>
       <div class="sub">EN EQUIPO</div>
     </div>
   </div>
