@@ -77,10 +77,10 @@ body {
   z-index: 2;
 }
 
-/* 🔥 POSICIÓN CORREGIDA (DEBAJO DEL TEXTO DEL PNG) */
+/* 🔥 PARCHE APLICADO */
 .stats {
   position: absolute;
-  bottom: 14px; /* 🔥 BAJADO CORRECTAMENTE */
+  bottom: 6px; /* 🔥 DOS ESCALAS MÁS ABAJO */
   width: 100%;
   height: 40px;
   z-index: 3;
@@ -92,7 +92,7 @@ body {
   transform: translateX(-50%);
   text-align: center;
 
-  font-size: clamp(13px, 3.8vw, 18px); /* 🔥 tamaño acorde al PNG */
+  font-size: clamp(13px, 3.8vw, 18px);
   font-weight: 900;
   color: #ffd700;
 
@@ -103,11 +103,10 @@ body {
     0 0 6px rgba(255,215,0,0.7);
 }
 
-/* 🔥 ALINEACIÓN EXACTA */
-.stat:nth-child(1) { left: 21%; } /* LEVEL */
-.stat:nth-child(2) { left: 50%; } /* COINS */
-.stat:nth-child(3) { left: 79%; } /* GAMES */
-
+/* POSICIONES */
+.stat:nth-child(1) { left: 21%; }
+.stat:nth-child(2) { left: 50%; }
+.stat:nth-child(3) { left: 79%; }
 
 /* MESAS */
 .tables {
