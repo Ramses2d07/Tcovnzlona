@@ -73,7 +73,6 @@ body {
   box-shadow:
     inset 0 0 6px rgba(0,0,0,0.8),
     0 0 8px rgba(0,0,0,0.6);
-  z-index: 2;
 }
 
 /* STATS */
@@ -82,20 +81,15 @@ body {
   bottom: -2px;
   width: 100%;
   height: 40px;
-  z-index: 3;
 }
 
 .stat {
   position: absolute;
   transform: translateX(-50%);
-  text-align: center;
-  font-size: clamp(13px, 3.8vw, 18px);
   font-weight: 900;
   color: #ffd700;
   font-family: Impact, Arial Black, sans-serif;
-  text-shadow:
-    0 2px 4px rgba(0,0,0,0.9),
-    0 0 6px rgba(255,215,0,0.7);
+  text-shadow: 0 2px 4px rgba(0,0,0,0.9);
 }
 
 .stat:nth-child(1) { left: 29%; }
@@ -119,9 +113,7 @@ body {
     radial-gradient(circle at 50% 40%, rgba(255,255,255,0.12), transparent 60%),
     radial-gradient(circle, #0f7a35, #042610);
   border: 10px solid #3b2314;
-  box-shadow:
-    inset 0 0 25px rgba(0,0,0,0.9),
-    0 0 10px rgba(0,0,0,0.7);
+  box-shadow: inset 0 0 25px rgba(0,0,0,0.9);
   position: relative;
   display: flex;
   justify-content: center;
@@ -141,17 +133,17 @@ body {
   border-radius: 10px;
 
   background:
-    linear-gradient(145deg,#ff3f3f 0%,#7a0000 55%,#3a0000 100%);
+    linear-gradient(145deg,#b30000 0%,#7a0000 60%,#3a0000 100%);
 
   box-shadow:
-    inset 0 -5px 10px rgba(0,0,0,0.7),
-    inset 0 2px 3px rgba(255,255,255,0.14),
+    inset 0 -6px 10px rgba(0,0,0,0.75),
+    inset 0 2px 3px rgba(255,255,255,0.10),
     0 6px 12px rgba(0,0,0,0.6);
 
   overflow: hidden;
 }
 
-/* bordado rombo en asiento */
+/* bordado rombo blanco SOLO en asiento */
 .seat::after {
   content: "";
   position: absolute;
@@ -159,7 +151,6 @@ body {
   border-radius: 10px;
 
   background:
-    linear-gradient(120deg, rgba(255,255,255,0.18), transparent 45%),
     repeating-linear-gradient(45deg,
       rgba(255,255,255,0.18) 0px,
       rgba(255,255,255,0.18) 1px,
@@ -175,7 +166,7 @@ body {
 }
 
 /* ========================= */
-/* RESPALDO = ROJO LISO      */
+/* RESPALDO = ROJO SÓLIDO    */
 /* ========================= */
 .seat::before {
   content: "";
@@ -193,6 +184,8 @@ body {
     inset 0 -4px 8px rgba(0,0,0,0.7),
     inset 0 2px 3px rgba(255,255,255,0.1),
     0 4px 8px rgba(0,0,0,0.5);
+
+  opacity: 1; /* FIX transparencia */
 }
 
 /* POSICIONES */
@@ -241,22 +234,6 @@ body {
   background: linear-gradient(145deg,#ffe27a 0%,#ffb800 40%,#a66b00 100%);
   border-radius: 12px;
   border: 1px solid rgba(255,255,255,0.9);
-  box-shadow:
-    0 0 0 1px rgba(255,255,255,0.8),
-    0 0 14px rgba(255,255,255,0.7),
-    inset 0 2px 4px rgba(255,255,255,0.4),
-    inset 0 -4px 8px rgba(0,0,0,0.6);
-  text-shadow:
-    -1px -1px 0 rgba(0,0,0,0.9),
-     1px -1px 0 rgba(0,0,0,0.9),
-    -1px 1px 0 rgba(0,0,0,0.9),
-     1px 1px 0 rgba(0,0,0,0.9);
-}
-
-.mode-label {
-  margin-top: 6px;
-  font-size: 10px;
-  font-weight: 700;
 }
 </style>
 </head>
@@ -284,7 +261,6 @@ body {
       <div class="seat"></div>
       <div class="seat"></div>
       <button class="play-btn" onclick="joinGame(2)">2 PLAYERS</button>
-      <div class="mode-label">INDIVIDUAL</div>
     </div>
 
     <div class="table t4">
@@ -293,7 +269,6 @@ body {
       <div class="seat"></div>
       <div class="seat"></div>
       <button class="play-btn" onclick="joinGame(4)">4 PLAYERS</button>
-      <div class="mode-label">EQUIPO</div>
     </div>
 
   </div>
