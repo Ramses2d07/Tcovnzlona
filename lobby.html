@@ -107,7 +107,7 @@ body {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  gap: 4px; /* más compacto */
+  gap: 4px;
 }
 
 /* SILLAS */
@@ -155,27 +155,28 @@ body {
   transform: translateY(-50%);
 }
 
-/* BOTÓN */
+/* BOTÓN MÁS PEQUEÑO (ALTO REDUCIDO) */
 .play-btn {
   width: 140px;
-  height: 55px;
+  height: 38px; /* ↓ más pequeño en alto */
 
-  font-size: 14px;
+  font-size: 14px; /* misma letra */
   font-weight: 900;
-  font-family: Arial, sans-serif;
 
+  font-family: Arial, sans-serif;
   color: #fff;
+
   background: linear-gradient(145deg, #ffd84d, #ffb800);
 
-  border-radius: 12px;
+  border-radius: 10px;
   border: 0;
   cursor: pointer;
 
   box-shadow:
     0 0 0 1px #000,
-    0 0 10px 2px rgba(255,255,255,0.35),
-    0 8px 18px rgba(0,0,0,0.45),
-    inset 0 2px 0 rgba(255,255,255,0.4),
+    0 0 10px 2px rgba(255,255,255,0.25),
+    0 6px 14px rgba(0,0,0,0.45),
+    inset 0 2px 0 rgba(255,255,255,0.35),
     inset 0 -3px 6px rgba(0,0,0,0.2);
 
   text-shadow:
@@ -185,7 +186,7 @@ body {
 
 /* TEXTO MÁS DELGADO + MÁS PEGADO */
 .mode-label {
-  font-size: 10px;        /* más pequeño */
+  font-size: 10px;
   font-weight: 300;
 
   background: linear-gradient(
@@ -201,7 +202,7 @@ body {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 
-  margin-top: 1px; /* más pegado */
+  margin-top: 1px;
   letter-spacing: 0.8px;
 
   text-shadow:
@@ -214,15 +215,6 @@ body {
 @keyframes shineText {
   0% { background-position: 0% 50%; }
   100% { background-position: 200% 50%; }
-}
-
-/* SILLAS */
-.seat {
-  position: absolute;
-  width: 42px;
-  height: 42px;
-  background: linear-gradient(145deg, #ff2b2b, #8b0000);
-  border-radius: 10px;
 }
 </style>
 </head>
@@ -246,7 +238,7 @@ body {
       <div class="seat"></div>
       <div class="seat"></div>
 
-      <button class="play-btn">PLAY</button>
+      <button class="play-btn">2 PLAYERS</button>
       <div class="mode-label">INDIVIDUAL</div>
     </div>
 
@@ -256,7 +248,7 @@ body {
       <div class="seat"></div>
       <div class="seat"></div>
 
-      <button class="play-btn">PLAY</button>
+      <button class="play-btn">4 PLAYERS</button>
       <div class="mode-label">TEAM MODE</div>
     </div>
 
