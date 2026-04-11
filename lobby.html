@@ -38,81 +38,80 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  padding-top: 20px;
-  gap: 60px;
+  padding-top: 10px;
+  gap: 20px;
 }
 
-/* 🔥 PERFIL AJUSTADO AL PNG (HORIZONTAL) */
+/* PERFIL */
 .profile {
-  width: 360px;
-  height: 260px; /* 🔥 más ancho que alto */
+  width: 92vw;
+  max-width: 400px;
+  aspect-ratio: 16/11;
   position: relative;
+  margin-bottom: -10px;
 }
 
-/* 🔥 PNG PERFECTAMENTE ADAPTADO */
+/* PNG */
 .profile::before {
   content: "";
   position: absolute;
   inset: 0;
-  background: url("mdlla.png") center/100% 100% no-repeat;
+  background: url("mdlla.png") center/contain no-repeat;
   pointer-events: none;
 }
 
 /* AVATAR */
 .avatar {
   position: absolute;
-  top: 60px;
+  top: 33%;
   left: 50%;
-  transform: translateX(-50%);
-  width: 90px;
-  height: 90px;
+  transform: translate(-50%, -50%);
+  width: 70px;
+  height: 70px;
   border-radius: 50%;
   background: url("https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png") center/cover no-repeat;
   z-index: 2;
 }
 
-/* TEXTOS */
-.level-text,
-.coins-text,
-.games-text {
-  position: absolute;
-  font-size: 11px;
-  font-weight: 900;
-  color: #ffffff;
-  letter-spacing: 1px;
-  bottom: 50px;
-}
-
-.level-text { left: 40px; }
-.coins-text { left: 50%; transform: translateX(-50%); }
-.games-text { right: 40px; }
-
-/* VALORES */
+/* VALORES (AJUSTADOS AL PNG) */
 .level-value,
 .coins-value,
 .games-value {
   position: absolute;
-  bottom: 25px;
-  font-size: 16px;
+  bottom: 18px;
+  font-size: 18px;
   font-weight: 900;
   color: #ffd700;
   letter-spacing: 2px;
   font-family: Impact, Arial Black, sans-serif;
   text-shadow:
-    0 2px 4px rgba(0,0,0,0.8),
-    0 0 6px rgba(255,215,0,0.6);
+    0 2px 4px rgba(0,0,0,0.9),
+    0 0 8px rgba(255,215,0,0.8);
+  z-index: 3;
 }
 
-.level-value { left: 40px; }
-.coins-value { left: 50%; transform: translateX(-50%); }
-.games-value { right: 40px; }
+.level-value {
+  left: 70px;
+  transform: translateX(-50%);
+}
+
+.coins-value {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.games-value {
+  right: 70px;
+  transform: translateX(50%);
+}
 
 /* MESAS */
 .tables {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 55px;
+  gap: 35px;
+  margin-top: -20px;
 }
 
 .table {
@@ -242,10 +241,6 @@ body {
 
   <div class="profile">
     <div class="avatar"></div>
-
-    <div class="level-text">LEVEL</div>
-    <div class="coins-text">COINS</div>
-    <div class="games-text">GAMES</div>
 
     <div class="level-value">7</div>
     <div class="coins-value">12500</div>
