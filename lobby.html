@@ -43,12 +43,12 @@ body {
   gap: 40px;
 }
 
-/* PERFIL (SIN CAMBIOS ESTRUCTURALES) */
+/* PERFIL */
 .profile {
   width: 320px;
   padding: 18px 12px;
-
   border-radius: 18px;
+
   background: linear-gradient(145deg,
     #3a3f46 0%,
     #2b2f36 35%,
@@ -69,62 +69,18 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-
-  gap: 8px; /* más compacto real */
+  gap: 8px;
 }
 
-/* GRID + BRILLO (igual) */
-.profile::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
-  background-size: 18px 18px;
-  opacity: 0.35;
-}
-
-.profile::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    120deg,
-    transparent 0%,
-    rgba(255,255,255,0.08) 30%,
-    rgba(255,255,255,0.15) 50%,
-    rgba(255,255,255,0.08) 70%,
-    transparent 100%
-  );
-  transform: translateX(-100%);
-  animation: shine 6s linear infinite;
-}
-
-@keyframes shine {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
-}
-
-/* AVATAR */
-.avatar {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  border: 2px solid #f1c40f;
-  background: url("https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png") center/cover no-repeat;
-}
-
-/* 🔧 CAMBIO REAL: no distribuir espacio, solo compactar */
+/* STATS */
 .stats {
   display: flex;
   flex-direction: row;
-  justify-content: flex-start; /* clave */
+  justify-content: flex-start;
   width: 100%;
-  gap: 14px; /* separación real visible pero menor */
+  gap: 14px;
 }
 
-/* bloque */
 .stat-row {
   display: flex;
   align-items: center;
@@ -139,10 +95,9 @@ body {
   width: 16px;
   height: 16px;
   display: inline-flex;
-  filter: drop-shadow(0 0 3px rgba(255,255,255,0.25));
 }
 
-/* MESAS (SIN TOCAR) */
+/* MESAS */
 .tables {
   display: flex;
   flex-direction: column;
@@ -166,13 +121,14 @@ body {
     inset 0 0 25px rgba(0,0,0,0.9),
     0 15px 35px rgba(0,0,0,0.7);
 
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
 }
 
-/* SILLAS EXACTAMENTE IGUAL */
+/* 🔧 SILLAS PEGADAS AL BORDE (AJUSTE REAL) */
 .seat {
   position: absolute;
   width: 42px;
@@ -181,43 +137,45 @@ body {
   border-radius: 10px;
 }
 
+/* 2 jugadores */
 .t2 .seat:nth-child(1) {
-  left: -40px;
+  left: -21px;
   top: 50%;
   transform: translateY(-50%);
 }
 
 .t2 .seat:nth-child(2) {
-  right: -40px;
+  right: -21px;
   top: 50%;
   transform: translateY(-50%);
 }
 
+/* 4 jugadores */
 .t4 .seat:nth-child(1) {
-  top: -40px;
+  top: -21px;
   left: 50%;
   transform: translateX(-50%);
 }
 
 .t4 .seat:nth-child(2) {
-  right: -40px;
+  right: -21px;
   top: 50%;
   transform: translateY(-50%);
 }
 
 .t4 .seat:nth-child(3) {
-  bottom: -40px;
+  bottom: -21px;
   left: 50%;
   transform: translateX(-50%);
 }
 
 .t4 .seat:nth-child(4) {
-  left: -40px;
+  left: -21px;
   top: 50%;
   transform: translateY(-50%);
 }
 
-/* BOTÓN (SIN CAMBIOS) */
+/* BOTÓN */
 .play-btn {
   width: 100px;
   height: 38px;
@@ -248,43 +206,24 @@ body {
 <div class="game-ui">
 
   <div class="profile">
-
     <div class="avatar"></div>
 
     <div class="stats">
-
       <div class="stat-row">
-        <span class="icon medal">
-          <svg viewBox="0 0 64 64">
-            <circle cx="32" cy="22" r="14" fill="#d4af37"/>
-            <path d="M24 34 L20 60 L32 52 L44 60 L40 34 Z" fill="#8a6a00"/>
-          </svg>
-        </span>
+        <span class="icon medal"></span>
         <span>Nivel 7</span>
       </div>
 
       <div class="stat-row">
-        <span class="icon coin">
-          <svg viewBox="0 0 64 64">
-            <circle cx="32" cy="32" r="26" fill="#f1c40f"/>
-            <circle cx="32" cy="32" r="14" fill="#ffd84d"/>
-          </svg>
-        </span>
+        <span class="icon coin"></span>
         <span>12,500</span>
       </div>
 
       <div class="stat-row">
-        <span class="icon trophy">
-          <svg viewBox="0 0 64 64">
-            <path d="M20 10 H44 V20 C44 30 38 36 32 36 C26 36 20 30 20 20 Z" fill="#c0c0c0"/>
-            <rect x="26" y="36" width="12" height="14" fill="#9a9a9a"/>
-          </svg>
-        </span>
+        <span class="icon trophy"></span>
         <span>128</span>
       </div>
-
     </div>
-
   </div>
 
   <div class="tables">
