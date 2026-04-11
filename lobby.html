@@ -81,7 +81,7 @@ body {
   to { transform: translateX(100%); }
 }
 
-/* avatar dentro de medalla */
+/* MEDALLA */
 .medal {
   width: 90px;
   height: 110px;
@@ -91,7 +91,6 @@ body {
   justify-content: center;
 }
 
-/* aro de medalla */
 .medal::before {
   content: "";
   position: absolute;
@@ -108,12 +107,12 @@ body {
     0 4px 12px rgba(0,0,0,0.8);
 }
 
-/* hueco interno (marco real) */
+/* AJUSTE CLAVE (marco visible) */
 .medal::after {
   content: "";
   position: absolute;
-  width: 64px;
-  height: 64px;
+  width: 52px;
+  height: 52px;
   border-radius: 50%;
   background: #000;
   z-index: 1;
@@ -121,18 +120,18 @@ body {
 
 /* avatar */
 .avatar {
-  width: 60px;
-  height: 60px;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
   background: url("https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png") center/cover no-repeat;
   z-index: 2;
 }
 
-/* numero metalizado */
+/* número */
 .level-number {
   position: absolute;
   bottom: -2px;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 900;
 
   background: linear-gradient(#fff,#ffd84d,#b8860b);
@@ -159,7 +158,7 @@ body {
   font-weight: 700;
 }
 
-/* MESAS (TODO ORIGINAL) */
+/* MESAS */
 .tables {
   display: flex;
   flex-direction: column;
@@ -189,21 +188,50 @@ body {
   flex-direction: column;
 }
 
-/* SILLAS */
+/* SILLAS RESTAURADAS */
 .seat {
   position: absolute;
   width: 46px;
   height: 36px;
 
-  background: linear-gradient(145deg,#ff3f3f,#3a0000);
+  background: linear-gradient(145deg,#ff3f3f 0%,#7a0000 55%,#3a0000 100%);
   border-radius: 10px;
 
   box-shadow:
     inset 0 -5px 10px rgba(0,0,0,0.7),
+    inset 0 2px 3px rgba(255,255,255,0.14),
     0 6px 12px rgba(0,0,0,0.6);
 }
 
-/* posiciones igual */
+.seat::after {
+  content: "";
+  position: absolute;
+  top: 5px;
+  left: 6px;
+  right: 6px;
+  height: 45%;
+  background: linear-gradient(120deg, rgba(255,255,255,0.22), transparent);
+  border-radius: 8px;
+}
+
+.seat::before {
+  content: "";
+  position: absolute;
+  top: -16px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 38px;
+  height: 20px;
+
+  background: linear-gradient(145deg,#a80000,#2a0000);
+  border-radius: 6px;
+
+  box-shadow:
+    inset 0 -3px 5px rgba(0,0,0,0.7),
+    0 3px 6px rgba(0,0,0,0.45);
+}
+
+/* posiciones */
 .t2 .seat:nth-child(1) {
   left: -48px;
   top: 50%;
@@ -240,7 +268,7 @@ body {
   transform: translateY(-50%) rotate(90deg);
 }
 
-/* botón intacto */
+/* botón */
 .play-btn {
   width: 110px;
   height: 40px;
@@ -279,13 +307,13 @@ body {
 
   <div class="profile">
 
-    <!-- MEDALLA + AVATAR -->
     <div class="medal">
       <div class="avatar"></div>
       <div class="level-number">7</div>
     </div>
 
     <div class="stats">
+      <div class="stat-row"><span>🎖️</span><span>LEVEL 7</span></div>
       <div class="stat-row"><span>🪙</span><span>COINS 12,500</span></div>
       <div class="stat-row"><span>🎮</span><span>GAMES 128</span></div>
     </div>
