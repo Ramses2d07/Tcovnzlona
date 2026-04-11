@@ -43,9 +43,9 @@ body {
   gap: 40px;
 }
 
-/* PERFIL PREMIUM */
+/* PERFIL */
 .profile {
-  width: 280px;
+  width: 320px;
   padding: 18px 12px;
   border-radius: 18px;
 
@@ -69,7 +69,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
 }
 
 /* GRID */
@@ -115,20 +115,23 @@ body {
   background: url("https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png") center/cover no-repeat;
 }
 
-/* STATS */
+/* ESTADÍSTICAS EN UNA LÍNEA */
 .stats {
   display: flex;
-  flex-direction: column;
-  gap: 6px;
+  flex-direction: row;
+  justify-content: space-between;
   width: 100%;
+  gap: 10px;
 }
 
+/* CADA BLOQUE */
 .stat-row {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   font-size: 10px;
   font-weight: 600;
+  white-space: nowrap;
 }
 
 /* ICONOS */
@@ -164,15 +167,13 @@ body {
     inset 0 0 25px rgba(0,0,0,0.9),
     0 15px 35px rgba(0,0,0,0.7);
 
-  position: relative;
-
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
 }
 
-/* SILLAS (RESTO ORIGINAL) */
+/* SILLAS */
 .seat {
   position: absolute;
   width: 42px;
@@ -239,23 +240,6 @@ body {
     inset 0 2px 0 rgba(255,255,255,0.35),
     inset 0 -3px 6px rgba(0,0,0,0.2);
 }
-
-/* ===== ICONOS SVG PREMIUM ===== */
-
-/* MEDALLA */
-.medal svg {
-  filter: drop-shadow(0 0 4px rgba(255,215,0,0.6));
-}
-
-/* MONEDA */
-.coin svg {
-  filter: drop-shadow(0 0 4px rgba(255,215,0,0.6));
-}
-
-/* TROFEO */
-.trophy svg {
-  filter: drop-shadow(0 0 4px rgba(255,255,255,0.35));
-}
 </style>
 </head>
 
@@ -274,17 +258,9 @@ body {
 
       <div class="stat-row">
         <span class="icon medal">
-          <!-- MEDALLA REALISTA -->
           <svg viewBox="0 0 64 64">
-            <defs>
-              <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0%" stop-color="#fff2a8"/>
-                <stop offset="50%" stop-color="#d4af37"/>
-                <stop offset="100%" stop-color="#8a6a00"/>
-              </linearGradient>
-            </defs>
-            <circle cx="32" cy="22" r="14" fill="url(#g1)"/>
-            <path d="M24 34 L20 60 L32 52 L44 60 L40 34 Z" fill="#b8860b"/>
+            <circle cx="32" cy="22" r="14" fill="#d4af37"/>
+            <path d="M24 34 L20 60 L32 52 L44 60 L40 34 Z" fill="#8a6a00"/>
           </svg>
         </span>
         <span>Nivel 7</span>
@@ -292,39 +268,22 @@ body {
 
       <div class="stat-row">
         <span class="icon coin">
-          <!-- MONEDA REALISTA -->
           <svg viewBox="0 0 64 64">
-            <defs>
-              <radialGradient id="g2">
-                <stop offset="0%" stop-color="#fff6b0"/>
-                <stop offset="60%" stop-color="#f1c40f"/>
-                <stop offset="100%" stop-color="#b8860b"/>
-              </radialGradient>
-            </defs>
-            <circle cx="32" cy="32" r="26" fill="url(#g2)"/>
-            <circle cx="32" cy="32" r="14" fill="#ffd84d" opacity="0.8"/>
+            <circle cx="32" cy="32" r="26" fill="#f1c40f"/>
+            <circle cx="32" cy="32" r="14" fill="#ffd84d"/>
           </svg>
         </span>
-        <span>Créditos 12,500</span>
+        <span>12,500</span>
       </div>
 
       <div class="stat-row">
         <span class="icon trophy">
-          <!-- TROFEO REALISTA -->
           <svg viewBox="0 0 64 64">
-            <defs>
-              <linearGradient id="g3">
-                <stop offset="0%" stop-color="#ffffff"/>
-                <stop offset="50%" stop-color="#c0c0c0"/>
-                <stop offset="100%" stop-color="#6d6d6d"/>
-              </linearGradient>
-            </defs>
-            <path d="M20 10 H44 V20 C44 30 38 36 32 36 C26 36 20 30 20 20 Z" fill="url(#g3)"/>
+            <path d="M20 10 H44 V20 C44 30 38 36 32 36 C26 36 20 30 20 20 Z" fill="#c0c0c0"/>
             <rect x="26" y="36" width="12" height="14" fill="#9a9a9a"/>
-            <rect x="22" y="50" width="20" height="8" fill="#777"/>
           </svg>
         </span>
-        <span>Partidas 128</span>
+        <span>128</span>
       </div>
 
     </div>
