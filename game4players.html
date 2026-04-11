@@ -91,12 +91,13 @@ body {
 .stat:nth-child(2) { left: 50%; }
 .stat:nth-child(3) { left: 71%; }
 
-/* MESA UNICA */
+/* MESA */
 .tables {
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-top: 40px;
+  position: relative;
 }
 
 .table {
@@ -111,6 +112,11 @@ body {
     inset 0 0 25px rgba(0,0,0,0.9),
     0 0 10px rgba(0,0,0,0.7);
   position: relative;
+
+  /* 🔧 PARCHE */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* SILLAS */
@@ -120,9 +126,10 @@ body {
   height: 36px;
   border-radius: 10px;
   background: linear-gradient(145deg,#ff3f3f,#3a0000);
+  z-index: 2;
 }
 
-/* POSICIONES DINÁMICAS */
+/* POSICIONES */
 .seat:nth-child(1) { top: -55px; left: 50%; transform: translateX(-50%); }
 .seat:nth-child(2) { right: -55px; top: 50%; transform: translateY(-50%); }
 .seat:nth-child(3) { bottom: -55px; left: 50%; transform: translateX(-50%); }
@@ -140,12 +147,31 @@ body {
   color: #fff;
   background: linear-gradient(145deg,#ffe27a,#ffb800,#a66b00);
   border-radius: 12px;
+
+  /* 🔧 PARCHE */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 5;
+  border: none;
+  cursor: pointer;
 }
 
+/* TEXTO */
 .mode-label {
   margin-top: 6px;
   font-size: 10px;
   font-weight: 700;
+
+  /* 🔧 PARCHE */
+  position: absolute;
+  top: 68%;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #fff;
+  font-size: 12px;
+  letter-spacing: 1px;
 }
 </style>
 </head>
