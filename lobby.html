@@ -68,25 +68,23 @@ body {
 }
 
 .name {
-  font-weight: bold;
-  font-size: 14px;
+  font-weight: 700;
+  font-size: 11px; /* más pequeño */
 }
 
 .stats {
-  font-size: 11px;
+  font-size: 9px; /* más pequeño */
   opacity: 0.85;
   text-align: center;
 }
 
-/* MESAS CONTENEDOR */
+/* MESAS */
 .tables {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 55px;
-
-  /* 🔥 BAJAR TODO EL BLOQUE EN PANTALLA */
-  margin-top: 120px; /* ajusta aquí si quieres más o menos */
+  margin-top: 120px;
 }
 
 /* MESA */
@@ -122,48 +120,12 @@ body {
   border-radius: 10px;
 }
 
-.t2 .seat:nth-child(1) {
-  left: -40px;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-.t2 .seat:nth-child(2) {
-  right: -40px;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-.t4 .seat:nth-child(1) {
-  top: -40px;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.t4 .seat:nth-child(2) {
-  right: -40px;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-.t4 .seat:nth-child(3) {
-  bottom: -40px;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.t4 .seat:nth-child(4) {
-  left: -40px;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-/* BOTÓN */
+/* BOTÓN MÁS ANGOSTO */
 .play-btn {
-  width: 140px;
-  height: 38px;
+  width: 100px;   /* más corto */
+  height: 38px;   /* mismo alto */
 
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 900;
 
   font-family: Arial, sans-serif;
@@ -184,7 +146,7 @@ body {
 
   text-shadow:
     0 1px 0 #000,
-    0 0 6px rgba(255,255,255,0.5);
+    0 0 5px rgba(255,255,255,0.45);
 }
 
 /* TEXTO METAL SUAVE */
@@ -231,7 +193,7 @@ body {
 
   <div class="profile">
     <div class="avatar"></div>
-    <div class="name">Jugador 01</div>
+    <div class="name">Jugador 1</div>
     <div class="stats">Nivel 7 | Créditos 12,500 | Partidas 128</div>
   </div>
 
