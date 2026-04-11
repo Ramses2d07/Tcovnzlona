@@ -93,9 +93,16 @@ body {
   margin-top: 160px;
 }
 
-/* 🪵 MESA PRO */
+/* 🪵 MESA PRO (AHORA FLEX HORIZONTAL) */
 .table {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+
   position: relative;
+
   width: 420px;
   height: 200px;
 
@@ -119,9 +126,8 @@ body {
   transform: scale(1.05);
 }
 
-/* 🪑 SILLAS CASINO ROJAS */
+/* 🪑 SILLAS CASINO ROJAS (SIMPLIFICADAS) */
 .seat {
-  position: absolute;
   width: 55px;
   height: 55px;
 
@@ -134,6 +140,8 @@ body {
     inset 0 2px 6px rgba(255,255,255,0.25);
 
   border: 2px solid rgba(255,255,255,0.15);
+
+  position: relative;
 }
 
 /* respaldo */
@@ -153,45 +161,7 @@ body {
   box-shadow: 0 5px 10px rgba(0,0,0,0.5);
 }
 
-/* posiciones 2 jugadores */
-.t2 .seat:nth-child(1){
-  top:-35px;
-  left:50%;
-  transform:translateX(-50%);
-}
-
-.t2 .seat:nth-child(2){
-  bottom:-35px;
-  left:50%;
-  transform:translateX(-50%);
-}
-
-/* posiciones 4 jugadores */
-.t4 .seat:nth-child(1){
-  top:-35px;
-  left:50%;
-  transform:translateX(-50%);
-}
-
-.t4 .seat:nth-child(2){
-  right:-35px;
-  top:50%;
-  transform:translateY(-50%);
-}
-
-.t4 .seat:nth-child(3){
-  bottom:-35px;
-  left:50%;
-  transform:translateX(-50%);
-}
-
-.t4 .seat:nth-child(4){
-  left:-35px;
-  top:50%;
-  transform:translateY(-50%);
-}
-
-/* 🎮 BOTÓN PRO */
+/* 🎮 BOTÓN */
 .play-btn {
   padding: 12px 18px;
   font-weight: 900;
@@ -271,7 +241,7 @@ body {
 
 <div class="tables">
 
-  <div class="table t2">
+  <div class="table">
     <div class="seat"></div>
     <div class="seat"></div>
 
@@ -281,7 +251,7 @@ body {
     </div>
   </div>
 
-  <div class="table t4">
+  <div class="table">
     <div class="seat"></div>
     <div class="seat"></div>
     <div class="seat"></div>
