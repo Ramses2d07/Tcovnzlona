@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lobby - Truco Venezolano</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #0f0f0f;
+      color: white;
+    }
+
+    .header {
+      text-align: center;
+      padding: 20px;
+      font-size: 28px;
+      font-weight: bold;
+      background: #111;
+    }
+
+    .profile {
+      text-align: center;
+      margin: 20px;
+      padding: 15px;
+      background: #1c1c1c;
+      border-radius: 12px;
+    }
+
+    .tables {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      flex-wrap: wrap;
+      margin-top: 30px;
+    }
+
+    .table {
+      width: 220px;
+      height: 220px;
+      background: #6d4c41;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      cursor: pointer;
+      transition: 0.2s;
+      box-shadow: 0 0 20px rgba(0,0,0,0.5);
+      user-select: none;
+    }
+
+    .table:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 35px rgba(0,0,0,0.7);
+    }
+
+    .table h3 {
+      margin: 5px;
+    }
+
+    .small {
+      font-size: 14px;
+      opacity: 0.8;
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <div class="header">
+    🎮 Lobby de Mesas
+  </div>
+
+  <div class="profile">
+    👤 Perfil: Jugador 1<br>
+    🪵 Nivel: Novato
+  </div>
+
+  <div class="tables">
+
+    <div class="table" onclick="joinTable(2)">
+      <h3>🪵 Mesa 2P</h3>
+      <div class="small">2 jugadores</div>
+    </div>
+
+    <div class="table" onclick="joinTable(4)">
+      <h3>🪵 Mesa 4P</h3>
+      <div class="small">4 jugadores</div>
+    </div>
+
+  </div>
+
+  <script>
+    let audioCtx;
+
+    function initAudio() {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+    }
+
+    // 🪵 SONIDO MADERA (TOC REAL)
+    function woodKnock(volume = 0.6) {
+      initAudio();
+
+      const duration = 0.12;
+
+      const bufferSize = audioCtx.sampleRate * duration;
+      const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+      const output = buffer.getChannelData(0);
+
+      for (let i = 0; i < bufferSize; i++) {
+        output[i] = (Math.random() * 2 - 1) * Math.exp(-i / (bufferSize / 5));
+      }
+
+      const noise = audioCtx.createBufferSource();
+      noise.buffer = buffer;
+
+      const filter = audioCtx.createBiquadFilter();
+      filter.type = "lowpass";
+      filter.frequency.value = 850;
+
+      const gain = audioCtx.createGain();
+      gain.gain.setValueAtTime(volume, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + duration);
+
+      noise.connect(filter);
+      filter.connect(gain);
+      gain.connect(audioCtx.destination);
+
+      noise.start();
+      noise.stop(audioCtx.currentTime + duration);
+    }
+
+    function joinTable(players) {
+      woodKnock(0.7);
+
+      setTimeout(() => {
+        if (players === 2) {
+          alert("Entrando a mesa de 2 jugadores 🪵");
+        } else {
+          alert("Entrando a mesa de 4 jugadores 🪵");
+        }
+      }, 100);
+    }
+  </script>
+
+</body>
+</html>
