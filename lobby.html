@@ -1,7 +1,11 @@
-<!DOCTYPE html><html lang="es">
+<!DOCTYPE html>
+<html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Casino Lobby</title><style>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Casino Lobby</title>
+
+<style>
 * { box-sizing: border-box; }
 
 body {
@@ -25,7 +29,7 @@ body {
   background: rgba(0,0,0,0.75);
 }
 
-/* 🔥 SOLO POSICIONAMIENTO HACIA ARRIBA */
+/* UI */
 .game-ui {
   position: relative;
   z-index: 2;
@@ -38,24 +42,33 @@ body {
   gap: 60px;
 }
 
-/* 🔥 PERFIL CON PNG COMPLETO */
+/* 🔥 PERFIL AJUSTADO AL PNG (HORIZONTAL) */
 .profile {
   width: 360px;
-  height: 360px;
-  background: url("mdlla.png") center/contain no-repeat;
+  height: 260px; /* 🔥 más ancho que alto */
   position: relative;
 }
 
-/* AVATAR CENTRO */
+/* 🔥 PNG PERFECTAMENTE ADAPTADO */
+.profile::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("mdlla.png") center/100% 100% no-repeat;
+  pointer-events: none;
+}
+
+/* AVATAR */
 .avatar {
   position: absolute;
-  top: 95px;
+  top: 60px;
   left: 50%;
   transform: translateX(-50%);
-  width: 95px;
-  height: 95px;
+  width: 90px;
+  height: 90px;
   border-radius: 50%;
   background: url("https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png") center/cover no-repeat;
+  z-index: 2;
 }
 
 /* TEXTOS */
@@ -63,23 +76,24 @@ body {
 .coins-text,
 .games-text {
   position: absolute;
-  font-size: 13px;
+  font-size: 11px;
   font-weight: 900;
   color: #ffffff;
   letter-spacing: 1px;
+  bottom: 50px;
 }
 
-.level-text { bottom: 65px; left: 45px; }
-.coins-text { bottom: 65px; left: 150px; }
-.games-text { bottom: 65px; right: 45px; }
+.level-text { left: 40px; }
+.coins-text { left: 50%; transform: translateX(-50%); }
+.games-text { right: 40px; }
 
 /* VALORES */
 .level-value,
 .coins-value,
 .games-value {
   position: absolute;
-  bottom: 35px;
-  font-size: 18px;
+  bottom: 25px;
+  font-size: 16px;
   font-weight: 900;
   color: #ffd700;
   letter-spacing: 2px;
@@ -89,9 +103,9 @@ body {
     0 0 6px rgba(255,215,0,0.6);
 }
 
-.level-value { left: 45px; }
-.coins-value { left: 150px; }
-.games-value { right: 45px; }
+.level-value { left: 40px; }
+.coins-value { left: 50%; transform: translateX(-50%); }
+.games-value { right: 40px; }
 
 /* MESAS */
 .tables {
@@ -153,7 +167,7 @@ body {
   border-radius: 6px;
 }
 
-/* posiciones */
+/* POSICIONES */
 .t2 .seat:nth-child(1) {
   left: -55px;
   top: 50%;
@@ -216,33 +230,51 @@ body {
   font-size: 10px;
   font-weight: 700;
 }
-</style></head><body><div class="background"></div>
-<div class="overlay"></div><div class="game-ui">  <div class="profile">
-    <div class="avatar"></div><div class="level-text">LEVEL</div>
-<div class="coins-text">COINS</div>
-<div class="games-text">GAMES</div>
+</style>
+</head>
 
-<div class="level-value">7</div>
-<div class="coins-value">12500</div>
-<div class="games-value">128</div>
+<body>
 
-  </div>  <div class="tables"><div class="table t2">
-  <div class="seat"></div>
-  <div class="seat"></div>
-  <button class="play-btn" onclick="joinGame(2,'INDIVIDUAL')">2 PLAYERS</button>
-  <div class="mode-label">INDIVIDUAL</div>
+<div class="background"></div>
+<div class="overlay"></div>
+
+<div class="game-ui">
+
+  <div class="profile">
+    <div class="avatar"></div>
+
+    <div class="level-text">LEVEL</div>
+    <div class="coins-text">COINS</div>
+    <div class="games-text">GAMES</div>
+
+    <div class="level-value">7</div>
+    <div class="coins-value">12500</div>
+    <div class="games-value">128</div>
+  </div>
+
+  <div class="tables">
+
+    <div class="table t2">
+      <div class="seat"></div>
+      <div class="seat"></div>
+      <button class="play-btn" onclick="joinGame(2,'INDIVIDUAL')">2 PLAYERS</button>
+      <div class="mode-label">INDIVIDUAL</div>
+    </div>
+
+    <div class="table t4">
+      <div class="seat"></div>
+      <div class="seat"></div>
+      <div class="seat"></div>
+      <div class="seat"></div>
+      <button class="play-btn" onclick="joinGame(4,'EQUIPO')">4 PLAYERS</button>
+      <div class="mode-label">EQUIPO</div>
+    </div>
+
+  </div>
+
 </div>
 
-<div class="table t4">
-  <div class="seat"></div>
-  <div class="seat"></div>
-  <div class="seat"></div>
-  <div class="seat"></div>
-  <button class="play-btn" onclick="joinGame(4,'EQUIPO')">4 PLAYERS</button>
-  <div class="mode-label">EQUIPO</div>
-</div>
-
-  </div></div><script>
+<script>
 function joinGame(players, mode) {
   if (players === 2) {
     window.location.href = "game2players.html";
@@ -251,5 +283,7 @@ function joinGame(players, mode) {
     window.location.href = "gamer4player.html";
   }
 }
-</script></body>
+</script>
+
+</body>
 </html>
