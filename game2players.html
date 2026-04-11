@@ -81,7 +81,7 @@ body {
   margin-top: 6px;
 }
 
-/* 🔥 MEDALLA ORIGINAL + IMAGEN */
+/* MEDALLA */
 .level-badge {
   width: 60px;
   height: 34px;
@@ -97,8 +97,7 @@ body {
 
   border-radius: 10px 4px 10px 4px;
 
-  background:
-    linear-gradient(145deg, #ffd700, #b8860b, #8b6508);
+  background: linear-gradient(145deg, #ffd700, #b8860b, #8b6508);
 
   border: 1px solid rgba(255,255,255,0.35);
 
@@ -111,7 +110,7 @@ body {
   overflow: hidden;
 }
 
-/* imagen de la medalla */
+/* IMAGEN MEDALLA CORREGIDA */
 .badge-img {
   position: absolute;
   width: 100%;
@@ -122,13 +121,13 @@ body {
   z-index: 0;
 }
 
-/* número encima */
+/* TEXTO NIVEL ENCIMA */
 .badge-text {
   position: relative;
   z-index: 2;
 }
 
-/* brillo tipo metal */
+/* brillo */
 .level-badge::after {
   content: "";
   position: absolute;
@@ -148,7 +147,7 @@ body {
   100% { transform: translateX(100%); }
 }
 
-/* 🔥 COLORES POR NIVEL */
+/* COLORES NIVEL */
 .level-bronze { filter: hue-rotate(20deg) brightness(0.8); }
 .level-silver { filter: grayscale(1) brightness(1.2); }
 .level-gold { filter: saturate(1.2); }
@@ -196,14 +195,12 @@ body {
   color: #eaeaea;
 }
 
-/* ESTADO */
 .status {
   font-size: 14px;
   font-weight: bold;
   opacity: 0.9;
 }
 
-/* BOTÓN SALIR */
 .exit-btn {
   margin-top: 10px;
   padding: 10px 18px;
@@ -227,14 +224,15 @@ body {
 <div class="room">
 
   <div class="players-bar">
-    
+
     <div class="player-card">
       <div class="avatar"></div>
       <div class="name">TÚ</div>
       <div class="level-text">Nivel</div>
 
       <div class="level-badge" id="myLevel">
-        <img src="./medalla.svg" class="badge-img">
+        <!-- 🔥 CORREGIDO AQUÍ -->
+        <img src="./medalla.svg" class="badge-img" alt="medalla">
         <span class="badge-text">7</span>
       </div>
     </div>
@@ -245,7 +243,8 @@ body {
       <div class="level-text">Nivel</div>
 
       <div class="level-badge" id="enemyLevel">
-        <img src="./medalla.svg" class="badge-img">
+        <!-- 🔥 CORREGIDO AQUÍ -->
+        <img src="./medalla.svg" class="badge-img" alt="medalla">
         <span class="badge-text">-</span>
       </div>
     </div>
@@ -285,7 +284,6 @@ function setLevelStyle(elementId, level) {
 }
 
 updatePot();
-
 setLevelStyle("myLevel", 7);
 
 setTimeout(() => {
