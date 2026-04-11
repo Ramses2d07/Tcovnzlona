@@ -1,357 +1,293 @@
 <!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html lang="es">  
+<head>  
+<meta charset="UTF-8">  
+<meta name="viewport" content="width=device-width, initial-scale=1.0">  
+<title>4 Players Room</title>  
 
-<title>2 Players Room</title>
+<style>  
+* { box-sizing: border-box; }  
 
-<style>
-* { box-sizing: border-box; }
+body {  
+  margin: 0;  
+  font-family: Arial, sans-serif;  
+  background: #000;  
+  color: #fff;  
+  overflow: hidden;  
+}  
 
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #000;
-  color: #fff;
-  overflow: hidden;
-}
+.background {  
+  position: fixed;  
+  inset: 0;  
+  background: url("inicio11.png") center/cover no-repeat;  
+}  
 
-/* FONDO */
-.background {
-  position: fixed;
-  inset: 0;
-  background: url("inicio11.png") center/cover no-repeat;
-}
+.overlay {  
+  position: fixed;  
+  inset: 0;  
+  background: rgba(0,0,0,0.8);  
+}  
 
-.overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.8);
-}
+.room {  
+  position: relative;  
+  z-index: 2;  
+  height: 100vh;  
+  display: flex;  
+  flex-direction: column;  
+  align-items: center;  
+  justify-content: center;  
+  gap: 20px;  
+}  
 
-/* CONTENEDOR */
-.room {
-  position: relative;
-  z-index: 2;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 20px;
-}
+.players-grid {  
+  display: grid;  
+  grid-template-columns: repeat(2, auto);  
+  gap: 40px 80px;  
+  margin-bottom: 10px;  
+}  
 
-/* TARJETAS */
-.players-bar {
-  display: flex;
-  gap: 60px;
-  margin-bottom: 10px;
-}
+.player-card {  
+  width: 120px;  
+  padding: 10px;  
+  border-radius: 12px;  
+  background: linear-gradient(145deg,#2c3138,#14171b);  
+  border: 1px solid rgba(255,255,255,0.2);  
+  text-align: center;  
+  box-shadow: 0 6px 15px rgba(0,0,0,0.6);  
+}  
 
-.player-card {
-  width: 120px;
-  padding: 10px;
-  border-radius: 12px;
-  background: linear-gradient(145deg,#2c3138,#14171b);
-  border: 1px solid rgba(255,255,255,0.2);
-  text-align: center;
-  box-shadow: 0 6px 15px rgba(0,0,0,0.6);
-}
+.player-card .avatar {  
+  width: 48px;  
+  height: 48px;  
+  border-radius: 50%;  
+  background: url("https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png") center/cover;  
+  border: 2px solid #f1c40f;  
+  margin: auto;  
+}  
 
-.player-card .avatar {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  background: url("https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png") center/cover;
-  border: 2px solid #f1c40f;
-  margin: auto;
-}
+.player-card .name {  
+  font-size: 12px;  
+  margin-top: 6px;  
+  font-weight: bold;  
+}  
 
-.player-card .name {
-  font-size: 12px;
-  margin-top: 6px;
-  font-weight: bold;
-}
+.level-text {  
+  font-size: 10px;  
+  opacity: 0.8;  
+  margin-top: 6px;  
+}  
 
-/* TEXTO NIVEL */
-.level-text {
-  font-size: 10px;
-  opacity: 0.8;
-  margin-top: 6px;
-}
+.level-badge {  
+  width: 80px;  
+  height: 80px;  
+  margin: 6px auto 0;  
+  position: relative;  
+  display: flex;  
+  align-items: center;  
+  justify-content: center;  
+}  
 
-/* MEDALLA */
-.level-badge {
-  width: 80px;
-  height: 80px;
-  margin: 6px auto 0;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+.badge-img {  
+  position: absolute;  
+  width: 100%;  
+  height: 100%;  
+  object-fit: contain;  
+}  
 
-/* IMAGEN MEDALLA */
-.badge-img {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
+.badge-color {  
+  position: absolute;  
+  width: 55%;  
+  height: 55%;  
+  border-radius: 50%;  
+  mix-blend-mode: color;  
+  opacity: 0.85;  
+}  
 
-/* CAPA COLOR */
-.badge-color {
-  position: absolute;
-  width: 55%;
-  height: 55%;
-  border-radius: 50%;
-  mix-blend-mode: color;
-  opacity: 0.85;
-}
+.bronze { background: #cd7f32; }  
+.silver { background: #c0c0c0; }  
+.gold { background: #ffd700; }  
+.diamond { background: #6fe7ff; }  
 
-/* COLORES */
-.bronze { background: #cd7f32; }
-.silver { background: #c0c0c0; }
-.gold { background: #ffd700; }
-.diamond { background: #6fe7ff; }
+.badge-text {  
+  position: absolute;  
+  top: 50%;  
+  left: 50%;  
+  transform: translate(-50%, -50%);  
+  font-size: 22px;  
+  font-weight: 900;  
+  color: #fff;  
+  text-shadow:  
+    0 2px 0 #000,  
+    0 3px 6px rgba(0,0,0,0.9),  
+    0 0 6px rgba(255,255,255,0.3);  
+  z-index: 3;  
+}  
 
-/* TEXTO NIVEL */
-.badge-text {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  
-  font-size: 22px;
-  font-weight: 900;
-  color: #fff;
+.text-bronze { color: #cd7f32; }  
+.text-silver { color: #e0e0e0; }  
+.text-gold { color: #ffd700; }  
+.text-diamond { color: #6fe7ff; }  
 
-  text-shadow:
-    0 2px 0 #000,
-    0 3px 6px rgba(0,0,0,0.9),
-    0 0 6px rgba(255,255,255,0.3);
+.rank-label {  
+  position: absolute;  
+  bottom: -14px;  
+  left: 50%;  
+  transform: translateX(-50%);  
+  padding: 3px 10px;  
+  font-size: 10px;  
+  font-weight: 900;  
+  border-radius: 6px;  
+  background: linear-gradient(145deg, #444, #111);  
+  border: 1px solid rgba(255,255,255,0.25);  
+}  
 
-  z-index: 3;
-  isolation: isolate;
-}
+.rank-bronze { background: linear-gradient(145deg,#cd7f32,#5a2e0f); }  
+.rank-silver { background: linear-gradient(145deg,#e0e0e0,#6b6b6b); }  
+.rank-gold { background: linear-gradient(145deg,#ffd700,#7a5c00); }  
+.rank-diamond { background: linear-gradient(145deg,#6fe7ff,#005a6b); }  
 
-/* COLOR TEXTO */
-.text-bronze { color: #cd7f32; }
-.text-silver { color: #e0e0e0; }
-.text-gold { color: #ffd700; }
-.text-diamond { color: #6fe7ff; }
+.table {  
+  width: 320px;  
+  height: 180px;  
+  border-radius: 20px;  
+  background:  
+    radial-gradient(circle at 50% 40%, rgba(255,255,255,0.15), transparent 60%),  
+    radial-gradient(circle, #0f7a35, #042610);  
+  border: 12px solid #3b2314;  
+  position: relative;  
+}  
 
-/* ===== NUEVO: PLACA METAL ===== */
-.rank-label {
-  position: absolute;
-  bottom: -14px;
-  left: 50%;
-  transform: translateX(-50%);
+.pot {  
+  position: absolute;  
+  top: 50%;  
+  left: 50%;  
+  transform: translate(-50%, -50%);  
+  width: 140px;  
+  padding: 10px;  
+  border-radius: 12px;  
+  background: linear-gradient(145deg,#2c3138,#14171b);  
+  text-align: center;  
+  font-weight: bold;  
+}  
 
-  padding: 3px 10px;
-  font-size: 10px;
-  font-weight: 900;
-  letter-spacing: 1px;
+.status {  
+  font-size: 14px;  
+  font-weight: bold;  
+}  
+</style>  
+</head>  
 
-  border-radius: 6px;
+<body>  
 
-  background: linear-gradient(145deg, #444, #111);
-  border: 1px solid rgba(255,255,255,0.25);
+<div class="background"></div>  
+<div class="overlay"></div>  
 
-  box-shadow:
-    inset 0 1px 2px rgba(255,255,255,0.2),
-    inset 0 -2px 4px rgba(0,0,0,0.8),
-    0 2px 6px rgba(0,0,0,0.6);
+<div class="room">  
 
-  text-transform: uppercase;
-}
+<div class="players-grid">  
 
-.rank-bronze {
-  background: linear-gradient(145deg, #cd7f32, #5a2e0f);
-  color: #ffd2a6;
-}
+<div class="player-card">  
+  <div class="avatar"></div>  
+  <div class="name">TÚ</div>  
+  <div class="level-text">Nivel</div>  
+  <div class="level-badge" id="p1">  
+    <img src="mdlla.png" class="badge-img">  
+    <div class="badge-color"></div>  
+    <span class="badge-text">7</span>  
+    <div class="rank-label">ORO</div>  
+  </div>  
+</div>  
 
-.rank-silver {
-  background: linear-gradient(145deg, #e0e0e0, #6b6b6b);
-  color: #ffffff;
-}
+<div class="player-card">  
+  <div class="avatar"></div>  
+  <div class="name">Esperando...</div>  
+  <div class="level-text">Nivel</div>  
+  <div class="level-badge" id="p2">  
+    <img src="mdlla.png" class="badge-img">  
+    <div class="badge-color"></div>  
+    <span class="badge-text">-</span>  
+    <div class="rank-label">-</div>  
+  </div>  
+</div>  
 
-.rank-gold {
-  background: linear-gradient(145deg, #ffd700, #7a5c00);
-  color: #fff6b0;
-}
+<div class="player-card">  
+  <div class="avatar"></div>  
+  <div class="name">Esperando...</div>  
+  <div class="level-text">Nivel</div>  
+  <div class="level-badge" id="p3">  
+    <img src="mdlla.png" class="badge-img">  
+    <div class="badge-color"></div>  
+    <span class="badge-text">-</span>  
+    <div class="rank-label">-</div>  
+  </div>  
+</div>  
 
-.rank-diamond {
-  background: linear-gradient(145deg, #6fe7ff, #005a6b);
-  color: #dfffff;
-}
+<div class="player-card">  
+  <div class="avatar"></div>  
+  <div class="name">Esperando...</div>  
+  <div class="level-text">Nivel</div>  
+  <div class="level-badge" id="p4">  
+    <img src="mdlla.png" class="badge-img">  
+    <div class="badge-color"></div>  
+    <span class="badge-text">-</span>  
+    <div class="rank-label">-</div>  
+  </div>  
+</div>  
 
-/* MESA */
-.table {
-  width: 320px;
-  height: 180px;
-  border-radius: 20px;
-  background:
-    radial-gradient(circle at 50% 40%, rgba(255,255,255,0.15), transparent 60%),
-    radial-gradient(circle, #0f7a35, #042610);
-  border: 12px solid #3b2314;
-  box-shadow:
-    inset 0 0 30px rgba(0,0,0,0.9),
-    0 0 20px rgba(0,0,0,0.7);
-  position: relative;
-}
+</div>  
 
-/* BOTE */
-.pot {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 140px;
-  padding: 10px;
-  border-radius: 12px;
-  background: linear-gradient(145deg,#2c3138,#14171b);
-  border: 1px solid rgba(255,255,255,0.2);
-  box-shadow: 0 6px 15px rgba(0,0,0,0.6);
-  text-align: center;
-  font-weight: bold;
-  font-size: 14px;
-}
+<div class="table">  
+  <div class="pot" id="potText">BOTE: 0</div>  
+</div>  
 
-.status {
-  font-size: 14px;
-  font-weight: bold;
-}
+<div class="status" id="statusText">Esperando jugadores...</div>  
 
-.exit-btn {
-  margin-top: 10px;
-  padding: 10px 18px;
-  font-weight: bold;
-  border: none;
-  border-radius: 10px;
-  background: linear-gradient(145deg,#ff4d4d,#b30000);
-  color: #fff;
-  cursor: pointer;
-}
-</style>
-</head>
+</div>  
 
-<body>
+<script>  
+function setLevelStyle(id, level) {  
+  const el = document.getElementById(id);  
+  const color = el.querySelector(".badge-color");  
+  const text = el.querySelector(".badge-text");  
+  const label = el.querySelector(".rank-label");  
 
-<div class="background"></div>
-<div class="overlay"></div>
+  color.className = "badge-color";  
+  text.className = "badge-text";  
+  label.className = "rank-label";  
 
-<div class="room">
+  let rank = "";  
 
-  <div class="players-bar">
+  if (level < 5) {  
+    color.classList.add("bronze");  
+    text.classList.add("text-bronze");  
+    label.classList.add("rank-bronze");  
+    rank = "BRONCE";  
+  } else if (level < 10) {  
+    color.classList.add("silver");  
+    text.classList.add("text-silver");  
+    label.classList.add("rank-silver");  
+    rank = "PLATA";  
+  } else if (level < 20) {  
+    color.classList.add("gold");  
+    text.classList.add("text-gold");  
+    label.classList.add("rank-gold");  
+    rank = "ORO";  
+  } else {  
+    color.classList.add("diamond");  
+    text.classList.add("text-diamond");  
+    label.classList.add("rank-diamond");  
+    rank = "DIAMANTE";  
+  }  
 
-    <div class="player-card">
-      <div class="avatar"></div>
-      <div class="name">TÚ</div>
-      <div class="level-text">Nivel</div>
+  text.innerText = level;  
+  label.innerText = rank;  
+}  
 
-      <div class="level-badge" id="myLevel">
-        <img src="mdlla.png" class="badge-img">
-        <div class="badge-color"></div>
-        <span class="badge-text">7</span>
-        <div class="rank-label">ORO</div>
-      </div>
-    </div>
+setLevelStyle("p1", 7);  
+setTimeout(()=>setLevelStyle("p2",5),2000);  
+setTimeout(()=>setLevelStyle("p3",12),3000);  
+setTimeout(()=>setLevelStyle("p4",22),4000);  
+</script>  
 
-    <div class="player-card">
-      <div class="avatar"></div>
-      <div class="name" id="enemyName">Esperando...</div>
-      <div class="level-text">Nivel</div>
-
-      <div class="level-badge" id="enemyLevel">
-        <img src="mdlla.png" class="badge-img">
-        <div class="badge-color"></div>
-        <span class="badge-text">-</span>
-        <div class="rank-label">-</div>
-      </div>
-    </div>
-
-  </div>
-
-  <div class="table">
-    <div class="pot" id="potText">BOTE: 0</div>
-  </div>
-
-  <div class="status" id="statusText">Esperando jugador...</div>
-
-  <button class="exit-btn" onclick="exitRoom()">SALIR</button>
-
-</div>
-
-<script>
-let betPlayer1 = 1000;
-let betPlayer2 = 0;
-
-function updatePot() {
-  document.getElementById("potText").innerText =
-    "BOTE: " + (betPlayer1 + betPlayer2);
-}
-
-function setLevelStyle(elementId, level) {
-  const el = document.getElementById(elementId);
-  const colorLayer = el.querySelector(".badge-color");
-  const text = el.querySelector(".badge-text");
-  const label = el.querySelector(".rank-label");
-
-  colorLayer.className = "badge-color";
-  text.className = "badge-text";
-  label.className = "rank-label";
-
-  let rankName = "";
-
-  if (level < 5) {
-    colorLayer.classList.add("bronze");
-    text.classList.add("text-bronze");
-    label.classList.add("rank-bronze");
-    rankName = "BRONCE";
-  }
-  else if (level < 10) {
-    colorLayer.classList.add("silver");
-    text.classList.add("text-silver");
-    label.classList.add("rank-silver");
-    rankName = "PLATA";
-  }
-  else if (level < 20) {
-    colorLayer.classList.add("gold");
-    text.classList.add("text-gold");
-    label.classList.add("rank-gold");
-    rankName = "ORO";
-  }
-  else {
-    colorLayer.classList.add("diamond");
-    text.classList.add("text-diamond");
-    label.classList.add("rank-diamond");
-    rankName = "DIAMANTE";
-  }
-
-  text.innerText = level;
-  label.innerText = rankName;
-}
-
-updatePot();
-setLevelStyle("myLevel", 7);
-
-setTimeout(() => {
-  document.getElementById("enemyName").innerText = "Jugador 2";
-  setLevelStyle("enemyLevel", 5);
-
-  betPlayer2 = 1000;
-  updatePot();
-
-  document.getElementById("statusText").innerText =
-    "Jugador encontrado. Esperando inicio...";
-}, 3000);
-
-function exitRoom() {
-  window.location.href = "index.html";
-}
-</script>
-
-</body>
+</body>  
 </html>
