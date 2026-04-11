@@ -103,7 +103,7 @@ body {
   background: url("https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png") center/cover no-repeat;
 }
 
-/* stats */
+/* STATS LIMPIO (SIN EFECTOS) */
 .stats {
   display: flex;
   flex-direction: row;
@@ -112,30 +112,22 @@ body {
   gap: 10px;
 }
 
-/* texto metálico */
 .stat-row {
   display: flex;
   align-items: center;
   gap: 6px;
 
   font-size: 11px;
-  font-weight: 800;
+  font-weight: 700;
 
-  background: linear-gradient(180deg, #ffffff 0%, #cfcfcf 35%, #8f8f8f 70%, #ffffff 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-
-  text-shadow:
-    0 1px 0 #000,
-    0 0 6px rgba(255,255,255,0.15);
+  color: #eaeaea;
 }
 
-/* iconos */
 .icon {
   width: 18px;
   height: 18px;
   display: inline-flex;
-  filter: drop-shadow(0 0 4px rgba(255,255,255,0.25));
+  filter: none;
 }
 
 /* MESAS */
@@ -170,7 +162,7 @@ body {
   flex-direction: column;
 }
 
-/* sillas */
+/* SILLAS */
 .seat {
   position: absolute;
   width: 42px;
@@ -187,7 +179,7 @@ body {
 .t4 .seat:nth-child(3) { bottom: -48px; left: 50%; transform: translateX(-50%); }
 .t4 .seat:nth-child(4) { left: -48px; top: 50%; transform: translateY(-50%); }
 
-/* botón */
+/* BOTÓN */
 .play-btn {
   width: 110px;
   height: 40px;
@@ -209,7 +201,7 @@ body {
     inset 0 -3px 6px rgba(0,0,0,0.2);
 }
 
-/* etiquetas modo */
+/* MODE LABEL */
 .mode-label {
   margin-top: 6px;
 
@@ -217,13 +209,7 @@ body {
   font-weight: 700;
   letter-spacing: 1px;
 
-  background: linear-gradient(180deg, #ffffff, #bdbdbd, #ffffff);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-
-  text-shadow:
-    0 1px 0 #000,
-    0 0 6px rgba(255,255,255,0.12);
+  color: #eaeaea;
 }
 </style>
 </head>
