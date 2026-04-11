@@ -14,7 +14,7 @@ body {
   color: white;
 }
 
-/* 🟦 CAPA FONDO */
+/* 🟦 FONDO */
 .background {
   position: fixed;
   inset: 0;
@@ -35,7 +35,7 @@ body {
   );
 }
 
-/* 🟩 UI GENERAL */
+/* 🟩 UI */
 .game-ui {
   position: relative;
   z-index: 2;
@@ -83,12 +83,12 @@ body {
   margin-top: 150px;
 }
 
-/* 🪵 MESAS PRINCIPALES */
+/* 🪵 MESAS */
 .table {
   position: relative;
 
-  width: 320px;
-  height: 180px;
+  width: 280px;
+  height: 155px;
 
   border-radius: 18px;
 
@@ -109,12 +109,12 @@ body {
   transform: scale(1.05);
 }
 
-/* 🪑 SILLAS CASINO */
+/* 🪑 SILLAS */
 .seat {
   position: absolute;
 
-  width: 44px;
-  height: 44px;
+  width: 42px;
+  height: 42px;
 
   background: linear-gradient(145deg, #ff2b2b, #8b0000);
 
@@ -144,53 +144,54 @@ body {
   box-shadow: 0 6px 12px rgba(0,0,0,0.5);
 }
 
-/* 🪑 POSICIONES REALES */
+/* POSICIONES */
+.seat:nth-child(1){ top:-45px; left:50%; transform:translateX(-50%); }
+.seat:nth-child(2){ right:-45px; top:50%; transform:translateY(-50%); }
+.seat:nth-child(3){ bottom:-45px; left:50%; transform:translateX(-50%); }
+.seat:nth-child(4){ left:-45px; top:50%; transform:translateY(-50%); }
 
-/* arriba */
-.seat:nth-child(1) {
-  top: -50px;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-/* derecha */
-.seat:nth-child(2) {
-  right: -50px;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-/* abajo */
-.seat:nth-child(3) {
-  bottom: -50px;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-/* izquierda */
-.seat:nth-child(4) {
-  left: -50px;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-/* 🎮 BOTÓN CENTRAL */
+/* 🎮 BOTÓN PLAY TIPO VIDEOJUEGO */
 .play-btn {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
 
-  padding: 8px 12px;
-  font-size: 11px;
+  padding: 10px 18px;
 
-  background: linear-gradient(145deg,#2ecc71,#1b7f45);
-  border: 2px solid #f1c40f;
-  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 1px;
+
+  color: #fff;
+
+  background: linear-gradient(145deg, #ffcc00, #e6a800);
+
+  border: 2px solid #fff;
+  border-radius: 12px;
 
   cursor: pointer;
 
-  box-shadow: 0 0 10px rgba(46,204,113,0.5);
+  box-shadow:
+    0 6px 0 #a87400,
+    0 10px 18px rgba(0,0,0,0.6);
+
+  transition: all 0.15s ease;
+  text-transform: uppercase;
+}
+
+.play-btn:hover {
+  transform: translate(-50%, -50%) scale(1.05);
+  box-shadow:
+    0 8px 0 #a87400,
+    0 14px 25px rgba(0,0,0,0.7);
+}
+
+.play-btn:active {
+  transform: translate(-50%, -48%) scale(0.98);
+  box-shadow:
+    0 3px 0 #a87400,
+    0 6px 12px rgba(0,0,0,0.6);
 }
 
 /* TEXTO */
@@ -208,13 +209,13 @@ body {
 
 <body>
 
-<!-- 🟦 FONDO -->
+<!-- FONDO -->
 <div class="background"></div>
 
-<!-- 🌑 OVERLAY -->
+<!-- OVERLAY -->
 <div class="overlay"></div>
 
-<!-- 🟩 UI -->
+<!-- UI -->
 <div class="game-ui">
 
   <div class="profile">
@@ -230,8 +231,8 @@ body {
       <div class="seat"></div>
       <div class="seat"></div>
 
-      <button class="play-btn">2P</button>
-      <div class="sub">INDIVIDUAL</div>
+      <button class="play-btn">PLAY</button>
+      <div class="sub">2 PLAYERS</div>
     </div>
 
     <!-- 4 jugadores -->
@@ -241,8 +242,8 @@ body {
       <div class="seat"></div>
       <div class="seat"></div>
 
-      <button class="play-btn">4P</button>
-      <div class="sub">EQUIPO</div>
+      <button class="play-btn">PLAY</button>
+      <div class="sub">4 PLAYERS</div>
     </div>
 
   </div>
