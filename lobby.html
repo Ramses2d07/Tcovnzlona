@@ -18,7 +18,7 @@ body {
 .background {
   position: fixed;
   inset: 0;
-  background: url("inicio11.png") center center / cover no-repeat;
+  background: url("inicio11.png") center/cover no-repeat;
   transform: scale(1.02);
 }
 
@@ -44,11 +44,9 @@ body {
   top: 12px;
   left: 50%;
   transform: translateX(-50%);
-
   display: flex;
   align-items: center;
   gap: 14px;
-
   padding: 12px 20px;
   background: rgba(20,20,20,0.85);
   border: 3px solid #f1c40f;
@@ -81,10 +79,8 @@ body {
 /* 🪵 MESAS */
 .table {
   position: relative;
-
   width: 320px;
   height: 180px;
-
   border-radius: 18px;
 
   background:
@@ -96,23 +92,16 @@ body {
   box-shadow:
     inset 0 0 30px rgba(0,0,0,0.9),
     0 20px 50px rgba(0,0,0,0.8);
-
-  transition: transform 0.25s ease;
-}
-
-.table:hover {
-  transform: scale(1.05);
 }
 
 /* 🪑 SILLAS */
 .seat {
   position: absolute;
-
   width: 42px;
   height: 42px;
-
   background: linear-gradient(145deg, #ff2b2b, #8b0000);
   border-radius: 10px;
+
   border: 2px solid rgba(255,255,255,0.18);
 
   box-shadow:
@@ -126,50 +115,48 @@ body {
   top: -18px;
   left: 50%;
   transform: translateX(-50%);
-
   width: 36px;
   height: 18px;
-
   background: linear-gradient(145deg, #cc0000, #5a0000);
-  border-radius: 6px 6px 4px 4px;
+  border-radius: 6px;
   box-shadow: 0 6px 12px rgba(0,0,0,0.5);
 }
 
-/* 🪑 POSICIONES */
+/* =========================
+   🎯 2 PLAYERS (CORREGIDO)
+========================= */
 
-/* arriba (2 players → IZQUIERDA ahora) */
+/* arriba → AHORA IZQUIERDA */
 .table.t2 .seat:nth-child(1){
   top: 50%;
-  left: -45px;
+  left: -55px;
   transform: translateY(-50%);
 }
 
 /* derecha */
 .table.t2 .seat:nth-child(2){
-  right: -45px;
+  right: -55px;
   top: 50%;
   transform: translateY(-50%);
 }
 
 /* abajo */
 .table.t2 .seat:nth-child(3){
-  bottom: -45px;
+  bottom: -55px;
   left: 50%;
   transform: translateX(-50%);
 }
 
-/* izquierda */
-.table.t2 .seat:nth-child(4){
-  display: none;
-}
+/* =========================
+   🎯 4 PLAYERS
+========================= */
 
-/* 4 jugadores (igual que antes) */
-.table.t4 .seat:nth-child(1){ top:-45px; left:50%; transform:translateX(-50%); }
-.table.t4 .seat:nth-child(2){ right:-45px; top:50%; transform:translateY(-50%); }
-.table.t4 .seat:nth-child(3){ bottom:-45px; left:50%; transform:translateX(-50%); }
-.table.t4 .seat:nth-child(4){ left:-45px; top:50%; transform:translateY(-50%); }
+.table.t4 .seat:nth-child(1){ top:-55px; left:50%; transform:translateX(-50%); }
+.table.t4 .seat:nth-child(2){ right:-55px; top:50%; transform:translateY(-50%); }
+.table.t4 .seat:nth-child(3){ bottom:-55px; left:50%; transform:translateX(-50%); }
+.table.t4 .seat:nth-child(4){ left:-55px; top:50%; transform:translateY(-50%); }
 
-/* 🎮 BOTÓN */
+/* 🎮 BOTÓN (BORDE MÁS GRUESO Y MÁS BLANCO) */
 .play-btn {
   position: absolute;
   top: 50%;
@@ -191,7 +178,9 @@ body {
   text-transform: uppercase;
 
   background: linear-gradient(145deg, #ffcc00, #e6a800);
-  border: 3px solid #ffffff;
+
+  border: 4px solid #ffffff; /* 🔥 MÁS GRUESO Y MÁS BLANCO */
+
   border-radius: 12px;
 
   cursor: pointer;
@@ -199,19 +188,9 @@ body {
   box-shadow:
     0 6px 0 #a87400,
     0 10px 18px rgba(0,0,0,0.6);
-
-  transition: all 0.15s ease;
 }
 
-.play-btn:hover {
-  transform: translate(-50%, -50%) scale(1.05);
-}
-
-.play-btn:active {
-  transform: translate(-50%, -48%) scale(0.98);
-}
-
-/* TEXTO */
+/* TEXTO CORRECTO */
 .sub {
   position: absolute;
   width: 100%;
@@ -227,8 +206,14 @@ body {
   opacity: 0.95;
 }
 
-.sub:nth-of-type(1){ bottom:-24px; }
-.sub:nth-of-type(2){ bottom:-40px; }
+/* orden correcto */
+.sub.mode {
+  bottom: -40px;
+}
+
+.sub.type {
+  bottom: -24px;
+}
 
 </style>
 </head>
@@ -255,8 +240,9 @@ body {
       <div class="seat"></div>
 
       <button class="play-btn">PLAY</button>
-      <div class="sub">2 PLAYERS</div>
-      <div class="sub">INDIVIDUAL</div>
+
+      <div class="sub mode">2 PLAYERS</div>
+      <div class="sub type">INDIVIDUAL</div>
     </div>
 
     <!-- 4 PLAYERS -->
@@ -267,8 +253,9 @@ body {
       <div class="seat"></div>
 
       <button class="play-btn">PLAY</button>
-      <div class="sub">4 PLAYERS</div>
-      <div class="sub">TEAM MODE</div>
+
+      <div class="sub mode">4 PLAYERS</div>
+      <div class="sub type">TEAM MODE</div>
     </div>
 
   </div>
