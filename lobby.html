@@ -76,7 +76,7 @@ body {
   gap: 8px;
 }
 
-/* GRID */
+/* GRID METÁLICO */
 .profile::after {
   content: "";
   position: absolute;
@@ -89,7 +89,7 @@ body {
   pointer-events: none;
 }
 
-/* BRILLO */
+/* BRILLO SUAVE */
 .profile::before {
   content: "";
   position: absolute;
@@ -112,14 +112,39 @@ body {
   100% { transform: translateX(100%); }
 }
 
+/* AVATAR CIRCULAR */
+.avatar-wrapper {
+  position: relative;
+  width: 48px;
+  height: 48px;
+}
+
+/* imagen avatar */
 .avatar {
-  width: 44px;
-  height: 44px;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
-  background: url("avatar.png") center/cover no-repeat;
   border: 2px solid #f1c40f;
+  background: url("https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png") center/cover no-repeat;
+  cursor: pointer;
   position: relative;
   z-index: 2;
+}
+
+/* input oculto */
+.avatar-input {
+  display: none;
+}
+
+/* brillo casino */
+.avatar::after {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,255,255,0.25), transparent 60%);
+  opacity: 0.6;
+  pointer-events: none;
 }
 
 .name {
@@ -143,8 +168,6 @@ body {
   flex-direction: column;
   align-items: center;
   gap: 55px;
-
-  /* 🔼 SUBIDAS UN POCO */
   margin-top: 85px;
 }
 
@@ -287,9 +310,17 @@ body {
 <div class="game-ui">
 
   <div class="profile">
-    <div class="avatar"></div>
+
+    <div class="avatar-wrapper">
+      <label for="avatarInput">
+        <div class="avatar" id="avatarPreview"></div>
+      </label>
+      <input class="avatar-input" type="file" id="avatarInput" accept="image/*">
+    </div>
+
     <div class="name">Jugador 1</div>
     <div class="stats">Nivel 7 | Créditos 12,500 | Partidas 128</div>
+
   </div>
 
   <div class="tables">
@@ -315,6 +346,22 @@ body {
   </div>
 
 </div>
+
+<script>
+const input = document.getElementById("avatarInput");
+const preview = document.getElementById("avatarPreview");
+
+input.addEventListener("change", function () {
+  const file = this.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = function (e) {
+    preview.style.background = `url('${e.target.result}') center/cover no-repeat`;
+  };
+  reader.readAsDataURL(file);
+});
+</script>
 
 </body>
 </html>
