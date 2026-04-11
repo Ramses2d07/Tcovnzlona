@@ -10,8 +10,7 @@
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  overflow-x: hidden;
-  overflow-y: hidden;
+  overflow: hidden;
   color: #fff;
   background: #000;
 }
@@ -26,7 +25,7 @@ body {
 .overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.75);
+  background: rgba(0,0,0,0.72);
 }
 
 .game-ui {
@@ -34,34 +33,33 @@ body {
   z-index: 2;
 }
 
-/* PROFILE PANEL */
+/* PROFILE */
 .profile {
   position: fixed;
-  top: 18px;
+  top: 20px;
   left: 50%;
   transform: translateX(-50%);
 
-  width: 280px;
-  height: 200px;
+  width: 300px;
+  height: 120px;
 
-  border: 3px solid #f1c40f;
-  border-radius: 18px;
+  border: 2px solid #f1c40f;
+  border-radius: 16px;
   background: rgba(20,20,20,0.92);
 
-  padding: 12px;
-  box-sizing: border-box;
-}
-
-/* TOP */
-.profile-top {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 10px;
+  justify-content: center;
+
+  gap: 6px;
+
+  box-shadow: 0 10px 25px rgba(0,0,0,0.6);
 }
 
 .avatar {
-  width: 52px;
-  height: 52px;
+  width: 46px;
+  height: 46px;
   border-radius: 50%;
   background: url("avatar.png") center/cover no-repeat;
   border: 2px solid #f1c40f;
@@ -69,46 +67,32 @@ body {
 
 .name {
   font-weight: bold;
-  font-size: 14px;
+  font-size: 15px;
 }
 
-/* INFO */
-.profile-info {
-  margin-top: 10px;
-  font-size: 12px;
-  line-height: 18px;
+.stats {
+  font-size: 11px;
+  opacity: 0.85;
 }
 
-/* LEVEL BAR */
-.level-bar {
-  margin-top: 10px;
-  width: 100%;
-  height: 8px;
-  background: rgba(255,255,255,0.15);
-  border-radius: 10px;
-  overflow: hidden;
-}
-
-.level-bar-fill {
-  width: 60%;
-  height: 100%;
-  background: linear-gradient(90deg, #f1c40f, #ffcc00);
-}
-
-/* MESAS MÁS ABAJO */
+/* MESAS */
 .tables {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 50px;
-  margin-top: 260px;
+  gap: 60px;
+
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
-/* Mesa */
 .table {
   position: relative;
-  width: 280px;
-  height: 150px;
+  width: 300px;
+  height: 160px;
+
   border-radius: 18px;
 
   background:
@@ -121,74 +105,92 @@ body {
     inset 0 0 25px rgba(0,0,0,0.9),
     0 15px 35px rgba(0,0,0,0.7);
 
-  overflow: visible;
+  transition: transform 0.2s ease;
 }
 
-/* Sillas */
+.table:hover {
+  transform: scale(1.03);
+}
+
+/* SILLAS */
 .seat {
   position: absolute;
-  width: 42px;
-  height: 42px;
+  width: 44px;
+  height: 44px;
   background: linear-gradient(145deg, #ff2b2b, #8b0000);
   border-radius: 10px;
   box-shadow: 0 10px 20px rgba(0,0,0,0.8);
+  transition: transform 0.2s;
+}
+
+.seat:hover {
+  transform: scale(1.1);
 }
 
 /* 2 jugadores */
 .table.t2 .seat:nth-child(1){
-  left: -40px;
+  left: -45px;
   top: 50%;
   transform: translateY(-50%);
 }
 
 .table.t2 .seat:nth-child(2){
-  right: -40px;
+  right: -45px;
   top: 50%;
   transform: translateY(-50%);
 }
 
 /* 4 jugadores */
 .table.t4 .seat:nth-child(1){
-  top: -40px;
+  top: -45px;
   left: 50%;
   transform: translateX(-50%);
 }
 
 .table.t4 .seat:nth-child(2){
-  right: -40px;
+  right: -45px;
   top: 50%;
   transform: translateY(-50%);
 }
 
 .table.t4 .seat:nth-child(3){
-  bottom: -40px;
+  bottom: -45px;
   left: 50%;
   transform: translateX(-50%);
 }
 
 .table.t4 .seat:nth-child(4){
-  left: -40px;
+  left: -45px;
   top: 50%;
   transform: translateY(-50%);
 }
 
-/* Botón */
+/* BOTÓN */
 .play-btn {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  padding: 8px 14px;
+
+  padding: 10px 16px;
   background: #ffcc00;
-  border: 4px solid #fff;
+  border: 3px solid #fff;
   border-radius: 10px;
+
   font-weight: bold;
   color: #000;
   font-size: 13px;
+
   cursor: pointer;
+  transition: 0.2s;
 }
 
-/* Textos */
+.play-btn:hover {
+  transform: translate(-50%, -50%) scale(1.08);
+  background: #ffd84d;
+}
+
+/* TEXTO */
 .labels {
   position: absolute;
   bottom: -45px;
@@ -197,6 +199,19 @@ body {
   font-size: 11px;
   font-weight: bold;
   line-height: 14px;
+  opacity: 0.9;
+}
+
+/* RESPONSIVE */
+@media (max-width: 600px) {
+  .table {
+    width: 260px;
+    height: 150px;
+  }
+
+  .profile {
+    width: 260px;
+  }
 }
 </style>
 </head>
@@ -208,54 +223,28 @@ body {
 
 <div class="game-ui">
 
-  <!-- PROFILE COMPLETO -->
   <div class="profile">
-
-    <div class="profile-top">
-      <div class="avatar"></div>
-      <div class="name">Jugador 01</div>
-    </div>
-
-    <div class="profile-info">
-      Créditos: 12,500<br>
-      Nivel: 7<br>
-      Partidas jugadas: 128
-    </div>
-
-    <div class="level-bar">
-      <div class="level-bar-fill"></div>
-    </div>
-
+    <div class="avatar"></div>
+    <div class="name">Jugador 01</div>
+    <div class="stats">Nivel 7 | Créditos 12,500 | Partidas 128</div>
   </div>
 
   <div class="tables">
 
-    <!-- 2 jugadores -->
     <div class="table t2">
       <div class="seat"></div>
       <div class="seat"></div>
-
       <button class="play-btn">PLAY</button>
-
-      <div class="labels">
-        2 PLAYERS<br>
-        INDIVIDUAL
-      </div>
+      <div class="labels">2 PLAYERS<br>INDIVIDUAL</div>
     </div>
 
-    <!-- 4 jugadores -->
     <div class="table t4">
       <div class="seat"></div>
       <div class="seat"></div>
       <div class="seat"></div>
       <div class="seat"></div>
-
       <button class="play-btn">PLAY</button>
-
-      <div class="labels">
-        4 PLAYERS<br>
-        TEAM MODE
-      </div>
+      <div class="labels">4 PLAYERS<br>TEAM MODE</div>
     </div>
 
   </div>
