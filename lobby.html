@@ -69,11 +69,11 @@ body {
 
 .name {
   font-weight: 700;
-  font-size: 11px; /* más pequeño */
+  font-size: 11px;
 }
 
 .stats {
-  font-size: 9px; /* más pequeño */
+  font-size: 9px;
   opacity: 0.85;
   text-align: center;
 }
@@ -111,7 +111,7 @@ body {
   gap: 4px;
 }
 
-/* SILLAS */
+/* SILLAS (SIN CAMBIOS) */
 .seat {
   position: absolute;
   width: 42px;
@@ -120,17 +120,51 @@ body {
   border-radius: 10px;
 }
 
-/* BOTÓN MÁS ANGOSTO */
+.t2 .seat:nth-child(1) {
+  left: -40px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.t2 .seat:nth-child(2) {
+  right: -40px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.t4 .seat:nth-child(1) {
+  top: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.t4 .seat:nth-child(2) {
+  right: -40px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.t4 .seat:nth-child(3) {
+  bottom: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.t4 .seat:nth-child(4) {
+  left: -40px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* BOTÓN */
 .play-btn {
-  width: 100px;   /* más corto */
-  height: 38px;   /* mismo alto */
+  width: 100px;
+  height: 38px;
 
   font-size: 12px;
   font-weight: 900;
 
-  font-family: Arial, sans-serif;
   color: #fff;
-
   background: linear-gradient(145deg, #ffd84d, #ffb800);
 
   border-radius: 10px;
@@ -149,7 +183,7 @@ body {
     0 0 5px rgba(255,255,255,0.45);
 }
 
-/* TEXTO METAL SUAVE */
+/* TEXTO */
 .mode-label {
   font-size: 10px;
   font-weight: 300;
