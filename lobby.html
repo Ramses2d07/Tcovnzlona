@@ -132,7 +132,7 @@ body {
 
 .t4 { margin-top: 35px; }
 
-/* SILLAS (CUERO + BORDADO ROMBO BLANCO) */
+/* SILLAS (CUERO + BORDADO ROMBO BLANCO CORRECTO) */
 .seat {
   position: absolute;
   width: 46px;
@@ -154,12 +154,23 @@ body {
 .seat::after {
   content: "";
   position: absolute;
-  top: 5px;
-  left: 6px;
-  right: 6px;
-  height: 45%;
-  border-radius: 8px;
-  background: linear-gradient(120deg, rgba(255,255,255,0.22), transparent);
+  inset: 0;
+  background:
+    linear-gradient(120deg, rgba(255,255,255,0.22), transparent 45%),
+    repeating-linear-gradient(45deg,
+      rgba(255,255,255,0.16) 0px,
+      rgba(255,255,255,0.16) 1px,
+      transparent 1px,
+      transparent 10px
+    ),
+    repeating-linear-gradient(-45deg,
+      rgba(255,255,255,0.16) 0px,
+      rgba(255,255,255,0.16) 1px,
+      transparent 1px,
+      transparent 10px
+    );
+  border-radius: 10px;
+  pointer-events: none;
 }
 
 /* respaldo */
@@ -173,25 +184,6 @@ body {
   height: 20px;
   border-radius: 6px;
   background: linear-gradient(145deg,#a80000,#2a0000);
-}
-
-/* BORDADO ROMBO BLANCO */
-.seat {
-  background-image:
-    linear-gradient(145deg,#ff3f3f 0%,#7a0000 55%,#3a0000 100%),
-    repeating-linear-gradient(45deg,
-      rgba(255,255,255,0.18) 0px,
-      rgba(255,255,255,0.18) 1px,
-      transparent 1px,
-      transparent 10px),
-    repeating-linear-gradient(-45deg,
-      rgba(255,255,255,0.18) 0px,
-      rgba(255,255,255,0.18) 1px,
-      transparent 1px,
-      transparent 10px
-    );
-
-  background-blend-mode: overlay, normal, normal;
 }
 
 /* POSICIONES */
