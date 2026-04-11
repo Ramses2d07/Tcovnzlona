@@ -147,10 +147,7 @@ body {
   transform: translateY(-50%);
 }
 
-/* =========================
-   BOTÓN + TEXTO NEÓN/BORDE
-========================= */
-
+/* BOTÓN */
 .play-btn {
   position: absolute;
   top: 50%;
@@ -165,7 +162,6 @@ body {
   font-family: Arial, sans-serif;
 
   color: #fff;
-
   background: linear-gradient(145deg, #ffd84d, #ffb800);
   border-radius: 12px;
   border: 0;
@@ -178,25 +174,39 @@ body {
     inset 0 2px 0 rgba(255,255,255,0.4),
     inset 0 -3px 6px rgba(0,0,0,0.2);
 
-  /* TEXTO CON BORDE + GLOW */
   text-shadow:
     0 1px 0 #000,
     0 0 6px rgba(255,255,255,0.5);
 }
 
-.play-btn:active {
-  transform: translate(-50%, -50%) scale(0.95);
+/* LABELS DEBAJO DEL BOTÓN */
+.mode-label {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: -30px;
+
+  font-size: 11px;
+  font-weight: 700;
+  color: #ffffff;
+  opacity: 0.9;
+  letter-spacing: 0.5px;
 }
 
-/* LABELS */
-.labels {
-  position: absolute;
-  bottom: -38px;
-  width: 100%;
-  text-align: center;
-  font-size: 10px;
-  font-weight: 600;
-  opacity: 0.9;
+/* línea debajo del texto */
+.mode-label::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 2px;
+  margin: 4px auto 0;
+  background: rgba(255,255,255,0.7);
+  border-radius: 2px;
+}
+
+/* cada botón necesita su label */
+.table {
+  position: relative;
 }
 </style>
 </head>
@@ -219,8 +229,9 @@ body {
     <div class="table t2">
       <div class="seat"></div>
       <div class="seat"></div>
+
       <button class="play-btn">PLAY</button>
-      <div class="labels">INDIVIDUAL</div>
+      <div class="mode-label">INDIVIDUAL</div>
     </div>
 
     <div class="table t4">
@@ -228,8 +239,9 @@ body {
       <div class="seat"></div>
       <div class="seat"></div>
       <div class="seat"></div>
-      <button class="play-btn">TEAM MODE</button>
-      <div class="labels">TEAM MODE</div>
+
+      <button class="play-btn">PLAY</button>
+      <div class="mode-label">TEAM MODE</div>
     </div>
 
   </div>
