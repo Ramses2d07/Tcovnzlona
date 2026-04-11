@@ -1,218 +1,234 @@
 <!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<html lang="es">  
-<head>  
-<meta charset="UTF-8">  
-<meta name="viewport" content="width=device-width, initial-scale=1.0">  <title>Casino Lobby</title>  <style>  
-body {  
-  margin: 0;  
-  font-family: Arial, sans-serif;  
-  overflow-x: hidden;  
-  overflow-y: hidden;  
-  color: #fff;  
-  background: #000;  
-}  
-  
-/* Fondo */  
-.background {  
-  position: fixed;  
-  inset: 0;  
-  background: url("inicio11.png") center/cover no-repeat;  
-}  
-  
-.overlay {  
-  position: fixed;  
-  inset: 0;  
-  background: rgba(0,0,0,0.75);  
-}  
-  
-.game-ui {  
-  position: relative;  
-  z-index: 2;  
-}  
-  
-/* PROFILE COMPACTO CENTRADO */  
-.profile {  
-  position: fixed;  
-  top: 30px;  
-  left: 50%;  
-  transform: translateX(-50%);  
-  
-  width: 280px;  
-  height: 120px;  
-  
-  border: 3px solid #f1c40f;  
-  border-radius: 18px;  
-  background: rgba(20,20,20,0.92);  
-  
-  display: flex;  
-  flex-direction: column;  
-  align-items: center;  
-  justify-content: center;  
-  
-  gap: 6px;  
-}  
-  
-/* AVATAR */  
-.avatar {  
-  width: 42px;  
-  height: 42px;  
-  border-radius: 50%;  
-  background: url("avatar.png") center/cover no-repeat;  
-  border: 2px solid #f1c40f;  
-}  
-  
-/* TEXTO */  
-.name {  
-  font-weight: bold;  
-  font-size: 14px;  
-}  
-  
-/* INFO EN UNA LÍNEA */  
-.stats {  
-  font-size: 11px;  
-  opacity: 0.9;  
-}  
-  
-/* MESAS CENTRADAS */  
-.tables {  
-  display: flex;  
-  flex-direction: column;  
-  align-items: center;  
-  gap: 50px;  
-  
-  position: absolute;  
-  top: 60%;  
-  left: 50%;  
-  transform: translate(-50%, -50%);  
-}  
-  
-/* Mesa */  
-.table {  
-  position: relative;  
-  width: 280px;  
-  height: 150px;  
-  border-radius: 18px;  
-  
-  background:  
-    radial-gradient(circle at 50% 40%, rgba(255,255,255,0.12), transparent 60%),  
-    radial-gradient(circle, #0f7a35, #042610);  
-  
-  border: 10px solid #3b2314;  
-  
-  box-shadow:  
-    inset 0 0 25px rgba(0,0,0,0.9),  
-    0 15px 35px rgba(0,0,0,0.7);  
-  
-  overflow: visible;  
-}  
-  
-/* Sillas */  
-.seat {  
-  position: absolute;  
-  width: 42px;  
-  height: 42px;  
-  background: linear-gradient(145deg, #ff2b2b, #8b0000);  
-  border-radius: 10px;  
-  box-shadow: 0 10px 20px rgba(0,0,0,0.8);  
-}  
-  
-/* 2 jugadores */  
-.table.t2 .seat:nth-child(1){  
-  left: -40px;  
-  top: 50%;  
-  transform: translateY(-50%);  
-}  
-  
-.table.t2 .seat:nth-child(2){  
-  right: -40px;  
-  top: 50%;  
-  transform: translateY(-50%);  
-}  
-  
-/* 4 jugadores */  
-.table.t4 .seat:nth-child(1){  
-  top: -40px;  
-  left: 50%;  
-  transform: translateX(-50%);  
-}  
-  
-.table.t4 .seat:nth-child(2){  
-  right: -40px;  
-  top: 50%;  
-  transform: translateY(-50%);  
-}  
-  
-.table.t4 .seat:nth-child(3){  
-  bottom: -40px;  
-  left: 50%;  
-  transform: translateX(-50%);  
-}  
-  
-.table.t4 .seat:nth-child(4){  
-  left: -40px;  
-  top: 50%;  
-  transform: translateY(-50%);  
-}  
-  
-/* Botón */  
-.play-btn {  
-  position: absolute;  
-  top: 50%;  
-  left: 50%;  
-  transform: translate(-50%, -50%);  
-  padding: 8px 14px;  
-  background: #ffcc00;  
-  border: 4px solid #fff;  
-  border-radius: 10px;  
-  font-weight: bold;  
-  color: #000;  
-  font-size: 13px;  
-  cursor: pointer;  
-}  
-  
-/* Texto inferior */  
-.labels {  
-  position: absolute;  
-  bottom: -45px;  
-  width: 100%;  
-  text-align: center;  
-  font-size: 11px;  
-  font-weight: bold;  
-  line-height: 14px;  
-}  
-</style>  </head>  <body>  <div class="background"></div>  
-<div class="overlay"></div>  <div class="game-ui">    <!-- PROFILE COMPACTO -->    <div class="profile">  
-    <div class="avatar"></div>  
-    <div class="name">Jugador 01</div>  
-    <div class="stats">Nivel 7 | Créditos 12,500 | Partidas 128</div>  
-  </div>    <div class="tables">  <!-- 2 jugadores -->  
-<div class="table t2">  
-  <div class="seat"></div>  
-  <div class="seat"></div>  
+<title>Casino Lobby</title>
 
-  <button class="play-btn">PLAY</button>  
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  color: #fff;
+  background: #000;
+}
 
-  <div class="labels">  
-    2 PLAYERS<br>  
-    INDIVIDUAL  
-  </div>  
-</div>  
+/* Fondo */
+.background {
+  position: fixed;
+  inset: 0;
+  background: url("inicio11.png") center/cover no-repeat;
+}
 
-<!-- 4 jugadores -->  
-<div class="table t4">  
-  <div class="seat"></div>  
-  <div class="seat"></div>  
-  <div class="seat"></div>  
-  <div class="seat"></div>  
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+}
 
-  <button class="play-btn">PLAY</button>  
+.game-ui {
+  position: relative;
+  z-index: 2;
+}
 
-  <div class="labels">  
-    4 PLAYERS<br>  
-    TEAM MODE  
-  </div>  
+/* PROFILE */
+.profile {
+  position: fixed;
+  top: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+
+  width: 280px;
+  height: 120px;
+
+  border: 3px solid #f1c40f;
+  border-radius: 18px;
+  background: rgba(20,20,20,0.92);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  gap: 6px;
+}
+
+.avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: url("avatar.png") center/cover no-repeat;
+  border: 2px solid #f1c40f;
+}
+
+.name {
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.stats {
+  font-size: 11px;
+  opacity: 0.9;
+}
+
+/* MESAS (CORREGIDO) */
+.tables {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 50px;
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  transform: translate(-50%, -50%);
+}
+
+/* Mesa */
+.table {
+  position: relative;
+  width: 280px;
+  height: 150px;
+  border-radius: 18px;
+
+  background:
+    radial-gradient(circle at 50% 40%, rgba(255,255,255,0.12), transparent 60%),
+    radial-gradient(circle, #0f7a35, #042610);
+
+  border: 10px solid #3b2314;
+
+  box-shadow:
+    inset 0 0 25px rgba(0,0,0,0.9),
+    0 15px 35px rgba(0,0,0,0.7);
+
+  overflow: visible;
+}
+
+/* Sillas */
+.seat {
+  position: absolute;
+  width: 42px;
+  height: 42px;
+  background: linear-gradient(145deg, #ff2b2b, #8b0000);
+  border-radius: 10px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.8);
+}
+
+/* 2 jugadores */
+.table.t2 .seat:nth-child(1){
+  left: -40px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.table.t2 .seat:nth-child(2){
+  right: -40px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* 4 jugadores */
+.table.t4 .seat:nth-child(1){
+  top: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.table.t4 .seat:nth-child(2){
+  right: -40px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.table.t4 .seat:nth-child(3){
+  bottom: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.table.t4 .seat:nth-child(4){
+  left: -40px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* Botón */
+.play-btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 8px 14px;
+  background: #ffcc00;
+  border: 4px solid #fff;
+  border-radius: 10px;
+  font-weight: bold;
+  color: #000;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+/* Texto inferior */
+.labels {
+  position: absolute;
+  bottom: -45px;
+  width: 100%;
+  text-align: center;
+  font-size: 11px;
+  font-weight: bold;
+  line-height: 14px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="background"></div>
+<div class="overlay"></div>
+
+<div class="game-ui">
+
+  <div class="profile">
+    <div class="avatar"></div>
+    <div class="name">Jugador 01</div>
+    <div class="stats">Nivel 7 | Créditos 12,500 | Partidas 128</div>
+  </div>
+
+  <div class="tables">
+
+    <div class="table t2">
+      <div class="seat"></div>
+      <div class="seat"></div>
+
+      <button class="play-btn">PLAY</button>
+
+      <div class="labels">
+        2 PLAYERS<br>
+        INDIVIDUAL
+      </div>
+    </div>
+
+    <div class="table t4">
+      <div class="seat"></div>
+      <div class="seat"></div>
+      <div class="seat"></div>
+      <div class="seat"></div>
+
+      <button class="play-btn">PLAY</button>
+
+      <div class="labels">
+        4 PLAYERS<br>
+        TEAM MODE
+      </div>
+    </div>
+
+  </div>
+
 </div>
 
-  </div>  </div>  </body>  
+</body>
 </html>
