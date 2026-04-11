@@ -47,78 +47,10 @@ body {
 .profile {
   width: 340px;
   padding: 18px 14px;
-
   border-radius: 18px;
-  background: linear-gradient(145deg,
-    #3a3f46 0%,
-    #2b2f36 35%,
-    #1e2228 70%,
-    #2f343b 100%
-  );
-
+  background: linear-gradient(145deg,#3a3f46,#1e2228);
   border: 1px solid rgba(255,255,255,0.15);
-
-  box-shadow:
-    0 10px 25px rgba(0,0,0,0.6),
-    inset 0 1px 0 rgba(255,255,255,0.12),
-    inset 0 -2px 8px rgba(0,0,0,0.7);
-
-  position: relative;
-  overflow: hidden;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-}
-
-/* brillo */
-.profile::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    120deg,
-    transparent 0%,
-    rgba(255,255,255,0.08) 30%,
-    rgba(255,255,255,0.18) 50%,
-    rgba(255,255,255,0.08) 70%,
-    transparent 100%
-  );
-  transform: translateX(-100%);
-  animation: shine 6s linear infinite;
-}
-
-@keyframes shine {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
-}
-
-/* avatar */
-.avatar {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  border: 2px solid #f1c40f;
-  background: url("https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png") center/cover no-repeat;
-}
-
-/* stats */
-.stats {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  width: 100%;
-  gap: 10px;
-}
-
-.stat-row {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 11px;
-  font-weight: 700;
-  color: #eaeaea;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.6);
 }
 
 /* MESAS */
@@ -134,48 +66,63 @@ body {
   width: 280px;
   height: 150px;
   border-radius: 18px;
-
-  background:
-    radial-gradient(circle at 50% 40%, rgba(255,255,255,0.12), transparent 60%),
-    radial-gradient(circle, #0f7a35, #042610);
-
+  background: radial-gradient(circle at 50% 40%, rgba(255,255,255,0.12), transparent 60%),
+              radial-gradient(circle, #0f7a35, #042610);
   border: 10px solid #3b2314;
-
-  box-shadow:
-    inset 0 0 25px rgba(0,0,0,0.9),
-    0 15px 35px rgba(0,0,0,0.7);
-
+  box-shadow: inset 0 0 25px rgba(0,0,0,0.9);
   position: relative;
-
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
 }
 
-/* SILLAS ORIENTADAS AL CENTRO */
+/* ===== SILLAS MEJORADAS ===== */
 .seat {
   position: absolute;
-  width: 42px;
-  height: 28px;
-  background: linear-gradient(145deg, #ff2b2b, #8b0000);
+  width: 46px;
+  height: 36px;
+
+  background: linear-gradient(145deg,#ff3f3f 0%,#7a0000 55%,#3a0000 100%);
+  border-radius: 10px;
+
+  box-shadow:
+    inset 0 -5px 10px rgba(0,0,0,0.7),
+    inset 0 2px 3px rgba(255,255,255,0.14),
+    0 6px 12px rgba(0,0,0,0.6);
+}
+
+/* brillo cuero */
+.seat::after {
+  content: "";
+  position: absolute;
+  top: 5px;
+  left: 6px;
+  right: 6px;
+  height: 45%;
+  background: linear-gradient(120deg, rgba(255,255,255,0.22), transparent);
   border-radius: 8px;
 }
 
-/* respaldo */
+/* respaldo integrado */
 .seat::before {
   content: "";
   position: absolute;
-  top: -14px;
+  top: -16px;
   left: 50%;
   transform: translateX(-50%);
-  width: 34px;
-  height: 16px;
-  background: linear-gradient(145deg, #b30000, #5a0000);
+  width: 38px;
+  height: 20px;
+
+  background: linear-gradient(145deg,#a80000,#2a0000);
   border-radius: 6px;
+
+  box-shadow:
+    inset 0 -3px 5px rgba(0,0,0,0.7),
+    0 3px 6px rgba(0,0,0,0.45);
 }
 
-/* 2 jugadores */
+/* posiciones con orientación al centro */
 .t2 .seat:nth-child(1) {
   left: -48px;
   top: 50%;
@@ -188,7 +135,6 @@ body {
   transform: translateY(-50%) rotate(-90deg);
 }
 
-/* 4 jugadores */
 .t4 .seat:nth-child(1) {
   top: -48px;
   left: 50%;
@@ -213,26 +159,17 @@ body {
   transform: translateY(-50%) rotate(90deg);
 }
 
-/* BOTÓN CON NEÓN RESTAURADO */
+/* BOTÓN */
 .play-btn {
   width: 110px;
   height: 40px;
-
-  font-size: 12px;
   font-weight: 900;
   color: #fff;
-
-  background: linear-gradient(145deg, #ffd84d, #ffb800);
-
+  background: linear-gradient(145deg,#ffd84d,#ffb800);
   border-radius: 10px;
   border: 1px solid #000;
-
-  box-shadow:
-    0 0 0 1px rgba(255,255,255,0.75),
-    0 0 8px rgba(255,255,255,0.35),
-    0 6px 14px rgba(0,0,0,0.45),
-    inset 0 2px 0 rgba(255,255,255,0.35),
-    inset 0 -3px 6px rgba(0,0,0,0.25);
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.7),
+              0 0 10px rgba(255,255,255,0.35);
 }
 
 /* LABEL */
@@ -240,7 +177,6 @@ body {
   margin-top: 6px;
   font-size: 10px;
   font-weight: 700;
-  letter-spacing: 1px;
   color: #eaeaea;
 }
 </style>
@@ -253,15 +189,7 @@ body {
 
 <div class="game-ui">
 
-  <div class="profile">
-    <div class="avatar"></div>
-
-    <div class="stats">
-      <div class="stat-row">🎖️ LEVEL 7</div>
-      <div class="stat-row">🪙 COINS 12,500</div>
-      <div class="stat-row">🎮 GAMES 128</div>
-    </div>
-  </div>
+  <div class="profile"></div>
 
   <div class="tables">
 
