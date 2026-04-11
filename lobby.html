@@ -1,12 +1,7 @@
-<!DOCTYPE html>
-<html lang="es">
+<!DOCTYPE html><html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Casino Lobby</title>
-
-<style>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Casino Lobby</title><style>
 * { box-sizing: border-box; }
 
 body {
@@ -43,85 +38,60 @@ body {
   gap: 60px;
 }
 
-/* PERFIL */
+/* 🔥 PERFIL CON PNG COMPLETO */
 .profile {
-  width: 340px;
-  padding: 18px 14px;
-  border-radius: 18px;
-  background: linear-gradient(145deg,#3a3f46,#1e2228);
-  border: 1px solid rgba(255,255,255,0.15);
-  box-shadow: 0 10px 25px rgba(0,0,0,0.6);
-  position: relative;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-}
-
-.profile::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(120deg, transparent, rgba(255,255,255,0.2), transparent);
-  animation: shine 6s linear infinite;
-}
-
-@keyframes shine {
-  from { transform: translateX(-100%); }
-  to { transform: translateX(100%); }
-}
-
-/* MEDALLA */
-.medal {
-  width: 120px;
-  height: 120px;
+  width: 360px;
+  height: 360px;
   background: url("mdlla.png") center/contain no-repeat;
   position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
+/* AVATAR CENTRO */
 .avatar {
-  width: 58px;
-  height: 58px;
+  position: absolute;
+  top: 95px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 95px;
+  height: 95px;
   border-radius: 50%;
   background: url("https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png") center/cover no-repeat;
-  z-index: 2;
 }
 
-.level-number {
+/* TEXTOS */
+.level-text,
+.coins-text,
+.games-text {
   position: absolute;
-  bottom: 2px;
-  font-size: 20px;
+  font-size: 13px;
   font-weight: 900;
+  color: #ffffff;
   letter-spacing: 1px;
+}
+
+.level-text { bottom: 65px; left: 45px; }
+.coins-text { bottom: 65px; left: 150px; }
+.games-text { bottom: 65px; right: 45px; }
+
+/* VALORES */
+.level-value,
+.coins-value,
+.games-value {
+  position: absolute;
+  bottom: 35px;
+  font-size: 18px;
+  font-weight: 900;
+  color: #ffd700;
+  letter-spacing: 2px;
   font-family: Impact, Arial Black, sans-serif;
-  background: linear-gradient(#fff,#ffd84d,#b8860b);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
   text-shadow:
     0 2px 4px rgba(0,0,0,0.8),
     0 0 6px rgba(255,215,0,0.6);
 }
 
-/* stats */
-.stats {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  gap: 10px;
-  z-index: 2;
-}
-
-.stat-row {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 11px;
-  font-weight: 700;
-}
+.level-value { left: 45px; }
+.coins-value { left: 150px; }
+.games-value { right: 45px; }
 
 /* MESAS */
 .tables {
@@ -246,52 +216,33 @@ body {
   font-size: 10px;
   font-weight: 700;
 }
-</style>
-</head>
+</style></head><body><div class="background"></div>
+<div class="overlay"></div><div class="game-ui">  <div class="profile">
+    <div class="avatar"></div><div class="level-text">LEVEL</div>
+<div class="coins-text">COINS</div>
+<div class="games-text">GAMES</div>
 
-<body>
+<div class="level-value">7</div>
+<div class="coins-value">12500</div>
+<div class="games-value">128</div>
 
-<div class="background"></div>
-<div class="overlay"></div>
-
-<div class="game-ui">
-
-  <div class="profile">
-    <div class="medal">
-      <div class="avatar"></div>
-      <div class="level-number">7</div>
-    </div>
-
-    <div class="stats">
-      <div class="stat-row"><span>🎖️</span><span>LEVEL 7</span></div>
-      <div class="stat-row"><span>🪙</span><span>COINS 12,500</span></div>
-      <div class="stat-row"><span>🎮</span><span>GAMES 128</span></div>
-    </div>
-  </div>
-
-  <div class="tables">
-
-    <div class="table t2">
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <button class="play-btn" onclick="joinGame(2,'INDIVIDUAL')">2 PLAYERS</button>
-      <div class="mode-label">INDIVIDUAL</div>
-    </div>
-
-    <div class="table t4">
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <button class="play-btn" onclick="joinGame(4,'EQUIPO')">4 PLAYERS</button>
-      <div class="mode-label">EQUIPO</div>
-    </div>
-
-  </div>
-
+  </div>  <div class="tables"><div class="table t2">
+  <div class="seat"></div>
+  <div class="seat"></div>
+  <button class="play-btn" onclick="joinGame(2,'INDIVIDUAL')">2 PLAYERS</button>
+  <div class="mode-label">INDIVIDUAL</div>
 </div>
 
-<script>
+<div class="table t4">
+  <div class="seat"></div>
+  <div class="seat"></div>
+  <div class="seat"></div>
+  <div class="seat"></div>
+  <button class="play-btn" onclick="joinGame(4,'EQUIPO')">4 PLAYERS</button>
+  <div class="mode-label">EQUIPO</div>
+</div>
+
+  </div></div><script>
 function joinGame(players, mode) {
   if (players === 2) {
     window.location.href = "game2players.html";
@@ -300,7 +251,5 @@ function joinGame(players, mode) {
     window.location.href = "gamer4player.html";
   }
 }
-</script>
-
-</body>
+</script></body>
 </html>
