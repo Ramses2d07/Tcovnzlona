@@ -38,7 +38,7 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  padding-top: 3px; /* 🔥 más arriba */
+  padding-top: 3px;
   gap: 8px;
 }
 
@@ -48,7 +48,7 @@ body {
   max-width: 380px;
   aspect-ratio: 16/11;
   position: relative;
-  margin-bottom: -25px; /* 🔥 acerca mesas */
+  margin-bottom: -25px;
 }
 
 /* PNG */
@@ -60,13 +60,13 @@ body {
   pointer-events: none;
 }
 
-/* AVATAR (MEJOR CENTRADO) */
+/* AVATAR */
 .avatar {
   position: absolute;
-  top: 28%; /* 🔥 más preciso */
+  top: 28%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 55px; /* 🔥 más fino */
+  width: 55px;
   height: 55px;
   border-radius: 50%;
   background: url("https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png") center/cover no-repeat;
@@ -78,7 +78,7 @@ body {
 .coins-value,
 .games-value {
   position: absolute;
-  bottom: 55px; /* 🔥 SUBIDOS AL MARCO */
+  bottom: 55px;
   font-size: 17px;
   font-weight: 900;
   color: #ffd700;
@@ -90,7 +90,6 @@ body {
   z-index: 3;
 }
 
-/* CENTRADO REAL EN CAJAS */
 .level-value {
   left: 22%;
   transform: translateX(-50%);
@@ -106,13 +105,13 @@ body {
   transform: translateX(-50%);
 }
 
-/* MESAS */
+/* 🔥 MESAS (PARCHE APLICADO) */
 .tables {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 25px;
-  margin-top: -45px; /* 🔥 MÁS ARRIBA */
+  margin-top: 15px; /* 🔥 CORREGIDO */
 }
 
 .table {
