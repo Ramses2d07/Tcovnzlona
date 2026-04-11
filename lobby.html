@@ -38,17 +38,17 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  padding-top: 10px;
-  gap: 20px;
+  padding-top: 5px;
+  gap: 10px;
 }
 
 /* PERFIL */
 .profile {
   width: 92vw;
-  max-width: 400px;
+  max-width: 380px;
   aspect-ratio: 16/11;
   position: relative;
-  margin-bottom: -10px;
+  margin-bottom: -20px;
 }
 
 /* PNG */
@@ -60,38 +60,39 @@ body {
   pointer-events: none;
 }
 
-/* AVATAR */
+/* AVATAR (AJUSTADO PERFECTO) */
 .avatar {
   position: absolute;
-  top: 33%;
+  top: 30%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 70px;
-  height: 70px;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
   background: url("https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png") center/cover no-repeat;
   z-index: 2;
 }
 
-/* VALORES (AJUSTADOS AL PNG) */
+/* VALORES PERFECTAMENTE CENTRADOS */
 .level-value,
 .coins-value,
 .games-value {
   position: absolute;
-  bottom: 18px;
-  font-size: 18px;
+  bottom: 20px;
+  font-size: 17px;
   font-weight: 900;
   color: #ffd700;
-  letter-spacing: 2px;
+  letter-spacing: 1.5px;
   font-family: Impact, Arial Black, sans-serif;
   text-shadow:
     0 2px 4px rgba(0,0,0,0.9),
-    0 0 8px rgba(255,215,0,0.8);
+    0 0 10px rgba(255,215,0,0.9);
   z-index: 3;
 }
 
+/* POSICIÓN REAL SOBRE EL PNG */
 .level-value {
-  left: 70px;
+  left: 22%;
   transform: translateX(-50%);
 }
 
@@ -101,8 +102,8 @@ body {
 }
 
 .games-value {
-  right: 70px;
-  transform: translateX(50%);
+  left: 78%;
+  transform: translateX(-50%);
 }
 
 /* MESAS */
@@ -110,8 +111,8 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 35px;
-  margin-top: -20px;
+  gap: 30px;
+  margin-top: -35px;
 }
 
 .table {
