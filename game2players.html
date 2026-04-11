@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -40,7 +39,45 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 30px;
+  gap: 20px;
+}
+
+/* TARJETAS DE JUGADOR */
+.players-bar {
+  display: flex;
+  gap: 60px;
+  margin-bottom: 10px;
+}
+
+.player-card {
+  width: 120px;
+  padding: 10px;
+  border-radius: 12px;
+  background: linear-gradient(145deg,#2c3138,#14171b);
+  border: 1px solid rgba(255,255,255,0.2);
+  text-align: center;
+
+  box-shadow: 0 6px 15px rgba(0,0,0,0.6);
+}
+
+.player-card .avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: url("https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png") center/cover;
+  border: 2px solid #f1c40f;
+  margin: auto;
+}
+
+.player-card .name {
+  font-size: 12px;
+  margin-top: 6px;
+  font-weight: bold;
+}
+
+.player-card .level {
+  font-size: 11px;
+  opacity: 0.8;
 }
 
 /* MESA */
@@ -62,38 +99,17 @@ body {
   position: relative;
 }
 
-/* JUGADORES */
-.player {
+/* POTE */
+.pot {
   position: absolute;
-  width: 90px;
-  text-align: center;
-}
-
-.player .avatar {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background: url("https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png") center/cover;
-  border: 2px solid #f1c40f;
-  margin: auto;
-}
-
-.player .name {
-  font-size: 12px;
-  margin-top: 6px;
-}
-
-/* POSICIONES */
-.p1 {
-  left: -110px;
   top: 50%;
-  transform: translateY(-50%);
-}
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-weight: bold;
+  font-size: 16px;
+  color: #f1c40f;
 
-.p2 {
-  right: -110px;
-  top: 50%;
-  transform: translateY(-50%);
+  text-shadow: 0 0 8px rgba(255,255,0,0.6);
 }
 
 /* ESTADO */
@@ -126,18 +142,26 @@ body {
 
 <div class="room">
 
-  <div class="table">
-
-    <div class="player p1">
+  <!-- TARJETAS -->
+  <div class="players-bar">
+    
+    <div class="player-card" id="player1">
       <div class="avatar"></div>
       <div class="name">TÚ</div>
+      <div class="level">Nivel 7</div>
     </div>
 
-    <div class="player p2">
+    <div class="player-card" id="player2">
       <div class="avatar"></div>
       <div class="name" id="enemyName">Esperando...</div>
+      <div class="level" id="enemyLevel">-</div>
     </div>
 
+  </div>
+
+  <!-- MESA -->
+  <div class="table">
+    <div class="pot" id="potText">POTE: 0</div>
   </div>
 
   <div class="status" id="statusText">Esperando jugador...</div>
@@ -147,15 +171,30 @@ body {
 </div>
 
 <script>
-// Simulación de conexión de jugador
+let betPlayer1 = 1000;
+let betPlayer2 = 0;
+
+// actualizar pote
+function updatePot() {
+  document.getElementById("potText").innerText = "POTE: " + (betPlayer1 + betPlayer2);
+}
+
+updatePot();
+
+// Simulación de conexión
 setTimeout(() => {
   document.getElementById("enemyName").innerText = "Jugador 2";
-  document.getElementById("statusText").innerText = "Jugador encontrado. Iniciando...";
+  document.getElementById("enemyLevel").innerText = "Nivel 5";
+  
+  betPlayer2 = 1000;
+  updatePot();
+
+  document.getElementById("statusText").innerText = "Jugador encontrado. Esperando inicio...";
 }, 3000);
 
 // salir
 function exitRoom() {
-  window.location.href = "index.html"; // lobby
+  window.location.href = "index.html";
 }
 </script>
 
