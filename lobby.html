@@ -71,7 +71,7 @@ body {
   to { transform: translateX(100%); }
 }
 
-/* 🔥 MEDALLA REAL */
+/* 🔥 MEDALLA REAL (marco) */
 .medal {
   width: 120px;
   height: 120px;
@@ -82,7 +82,7 @@ body {
   justify-content: center;
 }
 
-/* avatar centrado dentro */
+/* avatar dentro */
 .avatar {
   width: 58px;
   height: 58px;
@@ -91,7 +91,7 @@ body {
   z-index: 2;
 }
 
-/* 🔥 NIVEL EN LA BASE DE LA MEDALLA */
+/* número abajo integrado */
 .level-number {
   position: absolute;
   bottom: 2px;
@@ -152,7 +152,7 @@ body {
   flex-direction: column;
 }
 
-/* SILLAS (ya correctas) */
+/* SILLAS */
 .seat {
   position: absolute;
   width: 46px;
@@ -267,4 +267,52 @@ body {
 
   <div class="profile">
 
+    <!-- 🔥 PARCHE APLICADO -->
     <div class="medal">
+      <div class="avatar"></div>
+      <div class="level-number">7</div>
+    </div>
+
+    <div class="stats">
+      <div class="stat-row"><span>🎖️</span><span>LEVEL 7</span></div>
+      <div class="stat-row"><span>🪙</span><span>COINS 12,500</span></div>
+      <div class="stat-row"><span>🎮</span><span>GAMES 128</span></div>
+    </div>
+
+  </div>
+
+  <div class="tables">
+
+    <div class="table t2">
+      <div class="seat"></div>
+      <div class="seat"></div>
+      <button class="play-btn" onclick="joinGame(2,'INDIVIDUAL')">2 PLAYERS</button>
+      <div class="mode-label">INDIVIDUAL</div>
+    </div>
+
+    <div class="table t4">
+      <div class="seat"></div>
+      <div class="seat"></div>
+      <div class="seat"></div>
+      <div class="seat"></div>
+      <button class="play-btn" onclick="joinGame(4,'EQUIPO')">4 PLAYERS</button>
+      <div class="mode-label">EQUIPO</div>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+function joinGame(players, mode) {
+  if (players === 2) {
+    window.location.href = "game2players.html";
+  }
+  if (players === 4) {
+    window.location.href = "gamer4player.html";
+  }
+}
+</script>
+
+</body>
+</html>
