@@ -39,6 +39,7 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  padding-top: 0;
   gap: 60px;
 }
 
@@ -47,11 +48,15 @@ body {
   width: 340px;
   padding: 18px 14px;
   border-radius: 18px;
+
   background: linear-gradient(145deg,#3a3f46,#1e2228);
   border: 1px solid rgba(255,255,255,0.15);
+
   box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+
   position: relative;
   overflow: hidden;
+
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -63,12 +68,20 @@ body {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(120deg,transparent,rgba(255,255,255,0.15),transparent);
+  background: linear-gradient(
+    120deg,
+    transparent 0%,
+    rgba(255,255,255,0.08) 30%,
+    rgba(255,255,255,0.18) 50%,
+    rgba(255,255,255,0.08) 70%,
+    transparent 100%
+  );
   transform: translateX(-100%);
   animation: shine 6s linear infinite;
 }
 
 @keyframes shine {
+  0% { transform: translateX(-100%); }
   100% { transform: translateX(100%); }
 }
 
@@ -77,92 +90,80 @@ body {
   content: "";
   position: absolute;
   inset: 0;
+
   background-image:
     linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px);
+
   background-size: 18px 18px;
   opacity: 0.25;
+
+  pointer-events: none;
 }
 
-/* CONTENEDOR AVATAR + MEDALLA */
-.profile-top {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 14px;
-  z-index: 2;
-}
-
-/* avatar */
+/* ===== PARCHE MEDALLA ===== */
 .avatar {
-  width: 52px;
-  height: 52px;
+  width: 90px;
+  height: 90px;
   border-radius: 50%;
-  background: url("https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png") center/cover;
-  border: 2px solid #f1c40f;
-}
-
-/* MEDALLA */
-.level-badge {
-  width: 70px;
-  height: 70px;
+  background: none;
   position: relative;
 }
 
-.badge-img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
+/* medalla */
+.avatar::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("mdlla.png") center/contain no-repeat;
 }
 
-.badge-color {
+/* color dinámico */
+.avatar::after {
+  content: "";
   position: absolute;
-  top: 24%;
-  left: 24%;
-  width: 52%;
-  height: 52%;
+  inset: 0;
   border-radius: 50%;
   mix-blend-mode: color;
-  opacity: 0.9;
+  opacity: 0.85;
 }
 
+/* foto dentro */
+.avatar .inner-avatar {
+  position: absolute;
+  top: 22%;
+  left: 22%;
+  width: 56%;
+  height: 56%;
+  border-radius: 50%;
+  background: url("https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png") center/cover no-repeat;
+}
+
+/* nivel abajo */
+.level-number {
+  position: absolute;
+  bottom: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 16px;
+  font-weight: 900;
+
+  text-shadow:
+    0 2px 0 #000,
+    0 3px 6px rgba(0,0,0,0.9),
+    0 0 6px rgba(255,255,255,0.3);
+}
+
+/* colores */
 .bronze { background: #cd7f32; }
 .silver { background: #c0c0c0; }
 .gold { background: #ffd700; }
 .diamond { background: #6fe7ff; }
 
-/* NÚMERO */
-.badge-text {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%,-50%);
-  font-size: 20px;
-  font-weight: 900;
-  color: #fff;
-  text-shadow:
-    0 2px 0 #000,
-    0 3px 6px rgba(0,0,0,0.9),
-    0 0 4px rgba(255,255,255,0.3);
-}
-
-/* PLACA */
-.rank-label {
-  position: absolute;
-  bottom: -12px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 9px;
-  font-weight: 900;
-  padding: 2px 8px;
-  border-radius: 6px;
-  text-transform: uppercase;
-}
-
-.rank-bronze { background: linear-gradient(#cd7f32,#5a2e0f); }
-.rank-silver { background: linear-gradient(#e0e0e0,#6b6b6b); }
-.rank-gold { background: linear-gradient(#ffd700,#7a5c00); }
-.rank-diamond { background: linear-gradient(#6fe7ff,#005a6b); }
+.text-bronze { color: #cd7f32; }
+.text-silver { color: #e0e0e0; }
+.text-gold { color: #ffd700; }
+.text-diamond { color: #6fe7ff; }
 
 /* stats */
 .stats {
@@ -170,15 +171,20 @@ body {
   display: flex;
   justify-content: space-between;
   gap: 10px;
+  position: relative;
   z-index: 2;
 }
 
 .stat-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
   font-size: 11px;
   font-weight: 700;
+  color: #eaeaea;
 }
 
-/* MESAS */
+/* MESAS (SIN CAMBIOS) */
 .tables {
   display: flex;
   flex-direction: column;
@@ -194,14 +200,12 @@ body {
     radial-gradient(circle at 50% 40%, rgba(255,255,255,0.12), transparent 60%),
     radial-gradient(circle, #0f7a35, #042610);
   border: 10px solid #3b2314;
-  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
 }
 
-/* BOTÓN */
 .play-btn {
   width: 110px;
   height: 40px;
@@ -213,7 +217,6 @@ body {
   cursor: pointer;
 }
 
-/* LABEL */
 .mode-label {
   margin-top: 6px;
   font-size: 10px;
@@ -231,22 +234,16 @@ body {
 
   <div class="profile">
 
-    <!-- AVATAR + MEDALLA -->
-    <div class="profile-top">
-      <div class="avatar"></div>
-
-      <div class="level-badge" id="levelBadge">
-        <img src="mdlla.png" class="badge-img">
-        <div class="badge-color"></div>
-        <div class="badge-text">7</div>
-        <div class="rank-label">ORO</div>
-      </div>
+    <!-- MEDALLA COMO AVATAR -->
+    <div class="avatar" id="avatarBadge">
+      <div class="inner-avatar"></div>
+      <div class="level-number">7</div>
     </div>
 
     <div class="stats">
-      <div class="stat-row">🎖️ LEVEL 7</div>
-      <div class="stat-row">🪙 COINS 12,500</div>
-      <div class="stat-row">🎮 GAMES 128</div>
+      <div class="stat-row"><span class="icon">🎖️</span><span>LEVEL 7</span></div>
+      <div class="stat-row"><span class="icon">🪙</span><span>COINS 12,500</span></div>
+      <div class="stat-row"><span class="icon">🎮</span><span>GAMES 128</span></div>
     </div>
 
   </div>
@@ -269,23 +266,30 @@ body {
 
 <script>
 function setLevel(level){
-  const badge = document.getElementById("levelBadge");
-  const color = badge.querySelector(".badge-color");
-  const text = badge.querySelector(".badge-text");
-  const label = badge.querySelector(".rank-label");
+  const avatar = document.getElementById("avatarBadge");
+  const levelText = avatar.querySelector(".level-number");
 
-  color.className = "badge-color";
-  label.className = "rank-label";
+  avatar.classList.remove("bronze","silver","gold","diamond");
+  levelText.classList.remove("text-bronze","text-silver","text-gold","text-diamond");
 
-  let rank="";
+  if(level<5){
+    avatar.classList.add("bronze");
+    levelText.classList.add("text-bronze");
+  }
+  else if(level<10){
+    avatar.classList.add("silver");
+    levelText.classList.add("text-silver");
+  }
+  else if(level<20){
+    avatar.classList.add("gold");
+    levelText.classList.add("text-gold");
+  }
+  else{
+    avatar.classList.add("diamond");
+    levelText.classList.add("text-diamond");
+  }
 
-  if(level<5){ color.classList.add("bronze"); label.classList.add("rank-bronze"); rank="BRONCE"; }
-  else if(level<10){ color.classList.add("silver"); label.classList.add("rank-silver"); rank="PLATA"; }
-  else if(level<20){ color.classList.add("gold"); label.classList.add("rank-gold"); rank="ORO"; }
-  else{ color.classList.add("diamond"); label.classList.add("rank-diamond"); rank="DIAMANTE"; }
-
-  text.innerText = level;
-  label.innerText = rank;
+  levelText.innerText = level;
 }
 
 setLevel(7);
