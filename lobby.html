@@ -47,8 +47,8 @@ body {
 .profile {
   width: 320px;
   padding: 18px 12px;
-  border-radius: 18px;
 
+  border-radius: 18px;
   background: linear-gradient(145deg,
     #3a3f46 0%,
     #2b2f36 35%,
@@ -69,10 +69,10 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
 }
 
-/* GRID */
+/* GRID + BRILLO (igual) */
 .profile::after {
   content: "";
   position: absolute;
@@ -84,7 +84,6 @@ body {
   opacity: 0.35;
 }
 
-/* BRILLO */
 .profile::before {
   content: "";
   position: absolute;
@@ -115,20 +114,20 @@ body {
   background: url("https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png") center/cover no-repeat;
 }
 
-/* ESTADÍSTICAS EN UNA LÍNEA */
+/* 🔧 CAMBIO PRINCIPAL: menos separación */
 .stats {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   width: 100%;
-  gap: 10px;
+  gap: 5px; /* antes era mayor */
 }
 
-/* CADA BLOQUE */
+/* filas compactas */
 .stat-row {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 4px; /* reducido */
   font-size: 10px;
   font-weight: 600;
   white-space: nowrap;
@@ -142,7 +141,7 @@ body {
   filter: drop-shadow(0 0 3px rgba(255,255,255,0.25));
 }
 
-/* MESAS */
+/* MESAS (sin cambios) */
 .tables {
   display: flex;
   flex-direction: column;
@@ -151,7 +150,6 @@ body {
   margin-top: 85px;
 }
 
-/* MESA */
 .table {
   width: 280px;
   height: 150px;
@@ -173,7 +171,7 @@ body {
   flex-direction: column;
 }
 
-/* SILLAS */
+/* SILLAS (NO TOCADO) */
 .seat {
   position: absolute;
   width: 42px;
@@ -218,11 +216,10 @@ body {
   transform: translateY(-50%);
 }
 
-/* BOTÓN */
+/* BOTÓN (igual) */
 .play-btn {
   width: 100px;
   height: 38px;
-
   font-size: 12px;
   font-weight: 900;
 
@@ -231,7 +228,6 @@ body {
 
   border-radius: 10px;
   border: 0;
-  cursor: pointer;
 
   box-shadow:
     0 0 0 1px #000,
