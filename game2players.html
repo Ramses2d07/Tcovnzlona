@@ -119,19 +119,22 @@ const db = firebase.database();
 /* ID único del jugador */
 const playerId = "p_" + Math.random().toString(36).substr(2, 9);
 
-/* guardar ID para playgame */
-localStorage.setItem("playerId", playerId);
+/* evitar reconexión doble */
+if (sessionStorage.getItem("joined")) {
+  console.log("Ya está en cola");
+} else {
+  sessionStorage.setItem("joined", "true");
 
-/* entrar a cola */
-db.ref("queue/" + playerId).set({
-  status: "waiting",
-  time: Date.now()
-});
+  db.ref("queue/" + playerId).set({
+    status: "waiting",
+    time: Date.now()
+  });
+}
 
-/* evitar doble match */
+/* control de match */
 let matched = false;
 
-/* matchmaking */
+/* matchmaking estable */
 db.ref("queue").on("value", (snap) => {
   if (matched) return;
 
@@ -150,13 +153,14 @@ db.ref("queue").on("value", (snap) => {
     const roomId = Date.now();
 
     db.ref("rooms/" + roomId).set({
-      p1,
-      p2
+      p1: p1,
+      p2: p2
     });
 
     db.ref("queue").remove();
 
-    window.location.href = "playgame.html?room=" + roomId + "&pid=" + playerId;
+    window.location.href =
+      "playgame.html?room=" + roomId + "&pid=" + playerId;
   }
 });
 </script>
