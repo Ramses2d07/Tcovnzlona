@@ -99,7 +99,15 @@ const myId = url.get("pid");
 
 const roomRef = db.ref("rooms/" + roomId);
 
-/* valor cartas truco */
+/* FIX: identidad estable */
+function getRole(room){
+  if(!room) return "spectator";
+  if(room.p1 === myId) return "p1";
+  if(room.p2 === myId) return "p2";
+  return "spectator";
+}
+
+/* valor cartas */
 function value(c){
   const v={
     "4":1,"5":2,"6":3,"7":4,
@@ -109,7 +117,7 @@ function value(c){
   return v[c]||0;
 }
 
-/* 🔥 inicialización segura (solo 1 vez) */
+/* inicialización segura */
 roomRef.once("value", snap=>{
   const r = snap.val();
   if(!r || !r.p1 || !r.p2) return;
@@ -134,7 +142,7 @@ roomRef.once("value", snap=>{
   }
 });
 
-/* jugar carta con transacción (IMPORTANTE FIX) */
+/* jugar carta */
 function playCard(card){
   roomRef.transaction(room=>{
     if(!room) return room;
@@ -154,18 +162,25 @@ function playCard(card){
   });
 }
 
-/* loop principal */
+/* render */
 roomRef.on("value", snap=>{
   const r = snap.val();
   if(!r) return;
 
-  const isP1 = r.p1 === myId;
+  const role = getRole(r);
+
+  const isP1 = role === "p1";
+  const isP2 = role === "p2";
 
   document.getElementById("me").innerText =
-    isP1 ? "Jugador 1 (Tú)" : "Jugador 2 (Tú)";
+    isP1 ? "Jugador 1 (Tú)" :
+    isP2 ? "Jugador 2 (Tú)" :
+    "Espectador";
 
   document.getElementById("rival").innerText =
-    isP1 ? "Jugador 2" : "Jugador 1";
+    isP1 ? "Jugador 2" :
+    isP2 ? "Jugador 1" :
+    "-";
 
   document.getElementById("turn").innerText =
     r.turn === myId ? "TU TURNO" : "Turno rival";
