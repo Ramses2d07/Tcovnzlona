@@ -122,49 +122,62 @@ if (!playerId) {
 
 status.innerText = "Buscando rival...";
 
-/* entrar a cola */
+/* ENTRAR A COLA */
 db.ref("queue/" + playerId).set({
   time: Date.now()
 });
 
-/* 🔥 MATCHMAKING REAL CON LOCK */
-const lockRef = db.ref("match_lock");
+/* ESCUCHAR SALAS DIRECTAMENTE (IMPORTANTE) */
+db.ref("rooms").on("child_added", snap => {
+  const room = snap.val();
 
-db.ref("queue").on("value", async (snap) => {
+  if (room.p1 === playerId || room.p2 === playerId) {
+
+    status.innerText = "Entrando a partida...";
+
+    if (room.p1 === playerId) {
+      document.getElementById("p1").innerText = "Tú (Jugador 1)";
+    } else {
+      document.getElementById("p2").innerText = "Tú (Jugador 2)";
+    }
+
+    setTimeout(() => {
+      window.location.href =
+        "playgame.html?room=" + snap.key + "&pid=" + playerId;
+    }, 500);
+  }
+});
+
+/* MATCHMAKING SIMPLE Y ROBUSTO */
+db.ref("queue").on("value", async snap => {
 
   const data = snap.val();
   if (!data) return;
 
-  const players = Object.keys(data);
+  let players = Object.keys(data);
 
   if (players.length < 2) {
     status.innerText = "Esperando jugador...";
     return;
   }
 
-  /* ordenar estable */
-  players.sort();
+  /* orden por tiempo real (IMPORTANTE) */
+  players.sort((a, b) => data[a].time - data[b].time);
 
   const p1 = players[0];
   const p2 = players[1];
 
-  /* SOLO UNO CREA LA SALA */
+  /* SOLO p1 crea la sala */
   if (playerId !== p1) {
-    status.innerText = "Conectado / esperando inicio...";
     document.getElementById("p1").innerText = "Jugador 1 listo";
+    status.innerText = "Conectado / esperando inicio...";
     return;
   }
 
-  const lock = await lockRef.transaction(current => {
-    if (current) return;
-    return { owner: playerId, time: Date.now() };
-  });
-
-  if (!lock.committed) return;
-
-  status.innerText = "Creando partida...";
-
   const roomId = "room_" + Date.now();
+
+  const exists = await db.ref("rooms/" + roomId).once("value");
+  if (exists.exists()) return;
 
   await db.ref("rooms/" + roomId).set({
     p1,
@@ -174,13 +187,6 @@ db.ref("queue").on("value", async (snap) => {
   });
 
   await db.ref("queue").remove();
-  await db.ref("match_lock").remove();
-
-  setTimeout(() => {
-    window.location.href =
-      "playgame.html?room=" + roomId + "&pid=" + playerId;
-  }, 600);
-
 });
 </script>
 
