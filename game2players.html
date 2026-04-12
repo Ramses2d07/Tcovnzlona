@@ -116,10 +116,10 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
-/* ID único */
+/* ID único por pestaña */
 const playerId = "p_" + Math.random().toString(36).substr(2, 9);
 
-/* evitar doble entrada */
+/* evitar doble entrada en la misma pestaña */
 if (!sessionStorage.getItem("joined")) {
   sessionStorage.setItem("joined", "true");
 
@@ -129,10 +129,9 @@ if (!sessionStorage.getItem("joined")) {
   });
 }
 
-/* control */
 let matched = false;
 
-/* MATCHMAKING ESTABLE */
+/* MATCHMAKING SEGURO */
 db.ref("queue").on("value", (snap) => {
   if (matched) return;
 
@@ -154,15 +153,17 @@ db.ref("queue").on("value", (snap) => {
   db.ref("rooms/" + roomId).set({
     p1,
     p2
-  }).then(() => {
-
-    /* limpiar cola DESPUÉS de crear sala */
-    db.ref("queue").remove();
-
-    /* redirigir ambos inmediatamente */
-    window.location.href =
-      "playgame.html?room=" + roomId + "&pid=" + playerId;
   });
+
+  /* IMPORTANTE:
+     no borrar queue aquí inmediatamente
+     dejar que Firebase propague cambios */
+  setTimeout(() => {
+    db.ref("queue").remove();
+  }, 800);
+
+  window.location.href =
+    "playgame.html?room=" + roomId + "&pid=" + playerId;
 });
 </script>
 
