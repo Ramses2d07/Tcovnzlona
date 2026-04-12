@@ -15,6 +15,7 @@ body {
   background: #000;
   color: #fff;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   height: 100vh;
@@ -24,7 +25,7 @@ body {
   background: #1c1f24;
   padding: 20px;
   border-radius: 12px;
-  width: 320px;
+  width: 340px;
   text-align: center;
   box-shadow: 0 0 20px rgba(0,0,0,0.5);
 }
@@ -41,6 +42,32 @@ body {
   font-weight: bold;
   color: #ffd700;
 }
+
+#table {
+  margin: 15px 0;
+  min-height: 60px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.card {
+  width: 60px;
+  height: 80px;
+  background: white;
+  color: black;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  cursor: pointer;
+  user-select: none;
+}
+
+.card.played {
+  opacity: 0.6;
+}
 </style>
 </head>
 
@@ -49,7 +76,12 @@ body {
 <div class="box">
   <div class="player" id="me">Yo: ...</div>
   <div class="player" id="rival">Rival: ...</div>
+
+  <div id="table"></div>
+
   <div class="turn" id="turn">Turno: ...</div>
+
+  <div id="hand"></div>
 </div>
 
 <script>
@@ -72,40 +104,110 @@ if (!roomId || !myId) {
   document.body.innerHTML = "Error: sala inválida";
 }
 
-/* escuchar sala */
-db.ref("rooms/" + roomId).on("value", (snap) => {
+/* CARTAS */
+const deck = ["A","2","3","4","5","6","7","10","11","12"];
+
+/* INICIALIZAR PARTIDA UNA SOLA VEZ */
+const roomRef = db.ref("rooms/" + roomId);
+
+roomRef.once("value", snap => {
+  const room = snap.val();
+  if (!room.hands) {
+
+    deck.sort(() => Math.random() - 0.5);
+
+    roomRef.update({
+      turn: room.p1,
+      hands: {
+        [room.p1]: deck.slice(0,3),
+        [room.p2]: deck.slice(3,6)
+      },
+      table: []
+    });
+  }
+});
+
+/* JUGAR CARTA */
+function playCard(card) {
+  roomRef.once("value", snap => {
+    const room = snap.val();
+    if (!room) return;
+
+    if (room.turn !== myId) return;
+
+    const newTable = room.table || [];
+    newTable.push({ player: myId, card });
+
+    const newHands = room.hands;
+    newHands[myId] = newHands[myId].filter(c => c !== card);
+
+    const nextTurn = (myId === room.p1) ? room.p2 : room.p1;
+
+    roomRef.update({
+      table: newTable,
+      hands: newHands,
+      turn: nextTurn
+    });
+  });
+}
+
+/* RENDER */
+roomRef.on("value", snap => {
   const room = snap.val();
   if (!room) return;
 
+  /* IDENTIDAD */
   let me = "";
   let rival = "";
 
-  /* IDENTIDAD */
   if (room.p1 === myId) {
     me = "Jugador 1 (Tú)";
     rival = "Jugador 2";
-  } 
-  else if (room.p2 === myId) {
+  } else {
     me = "Jugador 2 (Tú)";
     rival = "Jugador 1";
-  } 
-  else {
-    me = "Sin acceso a la sala";
-    rival = "-";
-    return;
   }
 
   document.getElementById("me").innerText = "Yo: " + me;
   document.getElementById("rival").innerText = "Rival: " + rival;
 
-  /* TURNOS */
-  if (room.turn) {
-    if (room.turn === myId) {
-      document.getElementById("turn").innerText = "🎮 Tu turno";
-    } else {
-      document.getElementById("turn").innerText = "⏳ Turno del rival";
-    }
+  /* TURNO */
+  document.getElementById("turn").innerText =
+    room.turn === myId ? "🎮 Tu turno" : "⏳ Turno del rival";
+
+  /* MESA */
+  const table = document.getElementById("table");
+  table.innerHTML = "";
+
+  (room.table || []).forEach(c => {
+    const div = document.createElement("div");
+    div.className = "card played";
+    div.innerText = c.card;
+    table.appendChild(div);
+  });
+
+  /* MANO */
+  const hand = document.getElementById("hand");
+  if (!hand) {
+    const h = document.createElement("div");
+    h.id = "hand";
+    document.querySelector(".box").appendChild(h);
   }
+
+  const handEl = document.getElementById("hand");
+  handEl.innerHTML = "";
+
+  const myHand = room.hands?.[myId] || [];
+
+  myHand.forEach(card => {
+    const c = document.createElement("div");
+    c.className = "card";
+    c.innerText = card;
+
+    c.onclick = () => playCard(card);
+
+    handEl.appendChild(c);
+  });
 });
 </script>
 
