@@ -83,31 +83,39 @@ const myId = url.get("pid");
 
 const roomRef = db.ref("rooms/" + roomId);
 
-/* VALOR CARTAS TRUCO */
+/* VALOR CARTAS */
 function value(c){
   const v={
     "4":1,"5":2,"6":3,"7":4,
     "10":5,"11":6,"12":7,
     "A":8,"2":9,"3":10
   };
-  return v[c]||0;
+  return v[c] || 0;
 }
 
-/* INICIALIZAR PARTIDA */
+/* INIT PARTIDA (CORREGIDO) */
 roomRef.once("value", s=>{
-  const r=s.val();
+  const r = s.val();
+  if(!r) return;
+
   if(!r.hands){
-    const deck=["A","2","3","4","5","6","7","10","11","12"]
+
+    const deck = ["A","2","3","4","5","6","7","10","11","12"]
       .sort(()=>Math.random()-0.5);
 
+    const scoreInit = {};
+    scoreInit[r.p1] = 0;
+    scoreInit[r.p2] = 0;
+
     roomRef.update({
-      turn:r.p1,
-      round:1,
-      score:{[r.p1]:0,[r.p2]:0},
-      table:[],
-      hands:{
-        [r.p1]:deck.slice(0,3),
-        [r.p2]:deck.slice(3,6)
+      turn: r.p1,
+      round: 1,
+      table: [],
+      score: scoreInit,
+      state: "playing",
+      hands: {
+        [r.p1]: deck.slice(0,3),
+        [r.p2]: deck.slice(3,6)
       }
     });
   }
@@ -116,99 +124,106 @@ roomRef.once("value", s=>{
 /* JUGAR CARTA */
 function playCard(card){
   roomRef.once("value", s=>{
-    const r=s.val();
-    if(!r || r.turn!==myId) return;
+    const r = s.val();
+    if(!r || r.turn !== myId) return;
 
-    const table=r.table||[];
+    const table = r.table || [];
 
-    if(table.find(c=>c.player===myId)) return;
+    if(table.find(c=>c.player === myId)) return;
 
-    table.push({player:myId,card});
+    table.push({player: myId, card});
 
-    const hands={...r.hands};
-    hands[myId]=hands[myId].filter(c=>c!==card);
+    const hands = {...r.hands};
+    hands[myId] = hands[myId].filter(c=>c !== card);
 
     roomRef.update({
       table,
       hands,
-      turn: myId===r.p1?r.p2:r.p1
+      turn: myId === r.p1 ? r.p2 : r.p1
     });
   });
 }
 
 /* RESOLVER RONDA */
 roomRef.on("value", snap=>{
-  const r=snap.val();
+  const r = snap.val();
   if(!r) return;
 
-  const table=r.table||[];
+  const table = r.table || [];
 
-  if(table.length===2){
+  if(table.length === 2){
 
-    const c1=table[0];
-    const c2=table[1];
+    const c1 = table[0];
+    const c2 = table[1];
 
-    const v1=value(c1.card);
-    const v2=value(c2.card);
+    const v1 = value(c1.card);
+    const v2 = value(c2.card);
 
-    let winner=null;
-    if(v1>v2) winner=c1.player;
-    if(v2>v1) winner=c2.player;
+    let winner = null;
+    if(v1 > v2) winner = c1.player;
+    if(v2 > v1) winner = c2.player;
 
-    let score=r.score||{};
-
+    const score = r.score || {};
     if(winner){
-      score[winner]=(score[winner]||0)+1;
+      score[winner] = (score[winner] || 0) + 1;
     }
 
-    let round=(r.round||1)+1;
+    const round = (r.round || 1) + 1;
 
-    let finished=
-      (score[r.p1]||0)>=2 ||
-      (score[r.p2]||0)>=2;
+    const finished =
+      (score[r.p1] || 0) >= 2 ||
+      (score[r.p2] || 0) >= 2;
 
     setTimeout(()=>{
       roomRef.update({
-        table:[],
+        table: [],
         score,
         round,
-        turn:winner||r.p1,
-        state: finished?"finished":"playing"
+        turn: winner || r.p1,
+        state: finished ? "finished" : "playing"
       });
-    },800);
+    }, 700);
   }
 
   /* UI */
   document.getElementById("me").innerText =
-    r.p1===myId?"Jugador 1 (Tú)":"Jugador 2 (Tú)";
+    r.p1 === myId ? "Jugador 1 (Tú)" : "Jugador 2 (Tú)";
 
   document.getElementById("rival").innerText =
-    r.p1===myId?"Jugador 2":"Jugador 1";
+    r.p1 === myId ? "Jugador 2" : "Jugador 1";
 
   document.getElementById("turn").innerText =
-    r.turn===myId?"TU TURNO":"Turno rival";
+    r.turn === myId ? "TU TURNO" : "Turno rival";
+
+  /* 🔥 SCORE FIJO Y SEGURO */
+  const s1 = r.score?.[r.p1] ?? 0;
+  const s2 = r.score?.[r.p2] ?? 0;
 
   document.getElementById("score").innerText =
-    (r.score?.[r.p1]||0)+" - "+(r.score?.[r.p2]||0);
+    `${s1} - ${s2}`;
 
-  const table=document.getElementById("table");
-  table.innerHTML="";
+  /* MESA */
+  const tableEl = document.getElementById("table");
+  tableEl.innerHTML = "";
+
   table.forEach(c=>{
-    const d=document.createElement("div");
-    d.className="card played";
-    d.innerText=c.card;
-    table.appendChild(d);
+    const d = document.createElement("div");
+    d.className = "card played";
+    d.innerText = c.card;
+    tableEl.appendChild(d);
   });
 
-  const hand=document.getElementById("hand");
-  hand.innerHTML="";
-  const myHand=r.hands?.[myId]||[];
+  /* MANO */
+  const hand = document.getElementById("hand");
+  hand.innerHTML = "";
+
+  const myHand = r.hands?.[myId] || [];
 
   myHand.forEach(c=>{
-    const d=document.createElement("div");
-    d.className="card";
-    d.innerText=c;
-    d.onclick=()=>playCard(c);
+    const d = document.createElement("div");
+    d.className = "card";
+    d.innerText = c;
+    d.onclick = () => playCard(c);
     hand.appendChild(d);
   });
 });
