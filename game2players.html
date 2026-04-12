@@ -112,23 +112,22 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
-/* ID único por pestaña */
+/* ID estable por navegador */
 let playerId = sessionStorage.getItem("pid");
-
 if (!playerId) {
   playerId = "p_" + Math.random().toString(36).substr(2, 9);
   sessionStorage.setItem("pid", playerId);
 }
 
-/* meter en cola SOLO una vez */
+/* entrar a cola */
 db.ref("queue/" + playerId).set({
+  id: playerId,
   status: "waiting",
   time: Date.now()
 });
 
-/* LOCK GLOBAL (evita doble creación de sala) */
+/* lock global */
 const lockRef = db.ref("match_lock");
-
 let matched = false;
 
 db.ref("queue").on("value", async (snap) => {
@@ -137,13 +136,16 @@ db.ref("queue").on("value", async (snap) => {
   const data = snap.val();
   if (!data) return;
 
-  const players = Object.keys(data);
+  /* SOLO jugadores activos */
+  const players = Object.keys(data)
+    .filter(k => data[k] && data[k].status === "waiting")
+    .sort(); // orden estable
 
   if (players.length < 2) return;
 
-  /* intentar bloquear creación de partida */
+  /* lock real */
   const result = await lockRef.transaction(current => {
-    if (current) return; // ya hay creador
+    if (current) return; 
     return {
       owner: playerId,
       time: Date.now()
@@ -154,9 +156,8 @@ db.ref("queue").on("value", async (snap) => {
 
   matched = true;
 
-  const list = Object.keys(data);
-  const p1 = list[0];
-  const p2 = list[1];
+  const p1 = players[0];
+  const p2 = players[1];
 
   const roomId = "room_" + Date.now();
 
@@ -167,8 +168,10 @@ db.ref("queue").on("value", async (snap) => {
     state: "playing"
   });
 
-  /* limpiar cola correctamente */
-  await db.ref("queue").remove();
+  /* limpiar solo jugadores usados */
+  await db.ref("queue/" + p1).remove();
+  await db.ref("queue/" + p2).remove();
+
   await db.ref("match_lock").remove();
 
   window.location.href =
