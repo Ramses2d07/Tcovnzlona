@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Play Game PRO</title>
+<title>Play Game PRO FIX</title>
 
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
@@ -38,6 +38,7 @@ body {
   align-items:center;
   border-radius:8px;
   cursor:pointer;
+  user-select:none;
 }
 
 #hand {
@@ -82,22 +83,13 @@ firebase.initializeApp({
 
 const db = firebase.database();
 
-const url = new URLSearchParams(location.search);
-const roomId = url.get("room");
-const myId = url.get("pid");
+const params = new URLSearchParams(location.search);
+const roomId = params.get("room");
+const myId = params.get("pid");
 
 const roomRef = db.ref("rooms/" + roomId);
-const movesRef = db.ref("moves/" + roomId);
 
-/* ROLE */
-function getRole(r){
-  if(!r) return null;
-  if(r.p1 === myId) return "p1";
-  if(r.p2 === myId) return "p2";
-  return null;
-}
-
-/* INIT MANO SOLO UNA VEZ */
+/* INIT SOLO UNA VEZ */
 roomRef.once("value").then(snap => {
   const r = snap.val();
   if(!r || r.inited) return;
@@ -107,76 +99,41 @@ roomRef.once("value").then(snap => {
 
   roomRef.update({
     inited:true,
-    turn:r.p1
-  });
-
-  db.ref("hands/" + roomId).set({
-    [r.p1]: deck.slice(0,3),
-    [r.p2]: deck.slice(3,6)
+    turn:r.p1,
+    table:[],
+    hands:{
+      [r.p1]: deck.slice(0,3),
+      [r.p2]: deck.slice(3,6)
+    }
   });
 });
 
-/* JUGAR CARTA (PRO EVENT SYSTEM) */
+/* PLAY CARD (FIX REAL ATÓMICO) */
 function playCard(card){
 
   roomRef.transaction(r => {
     if(!r) return r;
     if(r.turn !== myId) return r;
 
-    r.turn = (r.turn === r.p1) ? r.p2 : r.p1;
+    const hand = r.hands?.[myId] || [];
+    if(!hand.includes(card)) return r;
+
+    r.table = r.table || [];
+
+    r.table.push({
+      player: myId,
+      card
+    });
+
+    r.hands[myId] = hand.filter(c => c !== card);
+
+    r.turn = (myId === r.p1) ? r.p2 : r.p1;
 
     return r;
   });
-
-  const moveId = "m_" + Date.now() + "_" + Math.random();
-
-  movesRef.child(moveId).set({
-    player: myId,
-    card: card,
-    time: Date.now()
-  });
-
-  db.ref("hands/" + roomId + "/" + myId)
-    .transaction(hand => {
-      if(!hand) return hand;
-      return hand.filter(c => c !== card);
-    });
 }
 
-/* RENDER MOVES */
-movesRef.on("value", snap => {
-  const moves = snap.val() || {};
-
-  const table = Object.values(moves);
-
-  const div = document.getElementById("table");
-  div.innerHTML = "";
-
-  table.forEach(m => {
-    const d = document.createElement("div");
-    d.className = "card";
-    d.innerText = m.card;
-    div.appendChild(d);
-  });
-});
-
-/* HAND */
-db.ref("hands/" + roomId + "/" + myId).on("value", snap => {
-  const hand = snap.val() || [];
-
-  const div = document.getElementById("hand");
-  div.innerHTML = "";
-
-  hand.forEach(c => {
-    const d = document.createElement("div");
-    d.className = "card";
-    d.innerText = c;
-    d.onclick = () => playCard(c);
-    div.appendChild(d);
-  });
-});
-
-/* ROOM STATE */
+/* RENDER */
 roomRef.on("value", snap => {
   const r = snap.val();
   if(!r) return;
@@ -189,6 +146,29 @@ roomRef.on("value", snap => {
 
   document.getElementById("rival").innerText =
     r.p1 === myId ? "Jugador 2" : "Jugador 1";
+
+  /* mesa */
+  const tableDiv = document.getElementById("table");
+  tableDiv.innerHTML = "";
+
+  (r.table || []).forEach(m => {
+    const d = document.createElement("div");
+    d.className = "card";
+    d.innerText = m.card;
+    tableDiv.appendChild(d);
+  });
+
+  /* mano */
+  const handDiv = document.getElementById("hand");
+  handDiv.innerHTML = "";
+
+  (r.hands?.[myId] || []).forEach(c => {
+    const d = document.createElement("div");
+    d.className = "card";
+    d.innerText = c;
+    d.onclick = () => playCard(c);
+    handDiv.appendChild(d);
+  });
 });
 </script>
 
