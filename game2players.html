@@ -116,8 +116,14 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
-/* ID único por pestaña */
-const playerId = "p_" + Math.random().toString(36).substr(2, 9);
+/* FIX IMPORTANTE:
+   usar ID persistente por navegador */
+let playerId = sessionStorage.getItem("pid");
+
+if (!playerId) {
+  playerId = "p_" + Math.random().toString(36).substr(2, 9);
+  sessionStorage.setItem("pid", playerId);
+}
 
 /* evitar doble entrada */
 let joined = false;
@@ -132,10 +138,9 @@ if (!sessionStorage.getItem("joined")) {
   });
 }
 
-/* control de match */
+/* matchmaking */
 let matched = false;
 
-/* MATCHMAKING SEGURO */
 db.ref("queue").on("value", (snap) => {
   if (matched || !joined) return;
 
@@ -143,7 +148,6 @@ db.ref("queue").on("value", (snap) => {
   if (!data) return;
 
   const players = Object.keys(data);
-
   if (players.length < 2) return;
 
   matched = true;
@@ -159,6 +163,9 @@ db.ref("queue").on("value", (snap) => {
     turn: p1,
     state: "playing"
   }).then(() => {
+
+    // limpiar cola de forma segura
+    db.ref("queue").remove();
 
     window.location.href =
       "playgame.html?room=" + roomId + "&pid=" + playerId;
