@@ -25,7 +25,7 @@ body {
   background: #1c1f24;
   padding: 20px;
   border-radius: 12px;
-  width: 340px;
+  width: 360px;
   text-align: center;
   box-shadow: 0 0 20px rgba(0,0,0,0.5);
 }
@@ -62,11 +62,34 @@ body {
   justify-content: center;
   font-weight: bold;
   cursor: pointer;
-  user-select: none;
 }
 
 .card.played {
   opacity: 0.6;
+}
+
+/* BOTONES TRUCO */
+#controls {
+  margin-top: 10px;
+}
+
+button {
+  margin: 5px;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+#trucoBtn { background: #e67e22; color: white; }
+#acceptBtn { background: #2ecc71; color: white; display: none; }
+#rejectBtn { background: #e74c3c; color: white; display: none; }
+
+#score {
+  margin-top: 8px;
+  font-weight: bold;
+  color: #00ffcc;
 }
 </style>
 </head>
@@ -77,11 +100,19 @@ body {
   <div class="player" id="me">Yo: ...</div>
   <div class="player" id="rival">Rival: ...</div>
 
+  <div id="score">0 - 0</div>
+
   <div id="table"></div>
 
   <div class="turn" id="turn">Turno: ...</div>
 
   <div id="hand"></div>
+
+  <div id="controls">
+    <button id="trucoBtn">TRUCO</button>
+    <button id="acceptBtn">ACEPTAR</button>
+    <button id="rejectBtn">RECHAZAR</button>
+  </div>
 </div>
 
 <script>
@@ -95,25 +126,18 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
-/* URL */
 const url = new URLSearchParams(window.location.search);
 const roomId = url.get("room");
 const myId = url.get("pid");
 
-if (!roomId || !myId) {
-  document.body.innerHTML = "Error: sala inválida";
-}
-
-/* CARTAS */
-const deck = ["A","2","3","4","5","6","7","10","11","12"];
-
-/* INICIALIZAR PARTIDA UNA SOLA VEZ */
 const roomRef = db.ref("rooms/" + roomId);
 
+/* INIT PARTIDA */
 roomRef.once("value", snap => {
   const room = snap.val();
   if (!room.hands) {
 
+    const deck = ["A","2","3","4","5","6","7","10","11","12"];
     deck.sort(() => Math.random() - 0.5);
 
     roomRef.update({
@@ -122,7 +146,9 @@ roomRef.once("value", snap => {
         [room.p1]: deck.slice(0,3),
         [room.p2]: deck.slice(3,6)
       },
-      table: []
+      table: [],
+      score: { p1: 0, p2: 0 },
+      truco: { state: "none", owner: null }
     });
   }
 });
@@ -130,50 +156,90 @@ roomRef.once("value", snap => {
 /* JUGAR CARTA */
 function playCard(card) {
   roomRef.once("value", snap => {
-    const room = snap.val();
-    if (!room) return;
+    const r = snap.val();
+    if (r.turn !== myId) return;
 
-    if (room.turn !== myId) return;
+    const table = r.table || [];
+    table.push({ player: myId, card });
 
-    const newTable = room.table || [];
-    newTable.push({ player: myId, card });
+    const hands = r.hands;
+    hands[myId] = hands[myId].filter(c => c !== card);
 
-    const newHands = room.hands;
-    newHands[myId] = newHands[myId].filter(c => c !== card);
-
-    const nextTurn = (myId === room.p1) ? room.p2 : room.p1;
+    const next = (myId === r.p1) ? r.p2 : r.p1;
 
     roomRef.update({
-      table: newTable,
-      hands: newHands,
-      turn: nextTurn
+      table,
+      hands,
+      turn: next
     });
   });
 }
+
+/* TRUCO */
+document.getElementById("trucoBtn").onclick = () => {
+  roomRef.update({
+    "truco/state": "pending",
+    "truco/owner": myId
+  });
+};
+
+/* ACEPTAR */
+document.getElementById("acceptBtn").onclick = () => {
+  roomRef.once("value", snap => {
+    const r = snap.val();
+    const score = r.score || {p1:0,p2:0};
+
+    if (myId === r.p1) score.p1 += 1;
+    else score.p2 += 1;
+
+    roomRef.update({
+      score,
+      truco: { state: "none", owner: null }
+    });
+  });
+};
+
+/* RECHAZAR */
+document.getElementById("rejectBtn").onclick = () => {
+  roomRef.once("value", snap => {
+    const r = snap.val();
+    const score = r.score || {p1:0,p2:0};
+
+    if (r.truco.owner === r.p1) score.p2 += 1;
+    else score.p1 += 1;
+
+    roomRef.update({
+      score,
+      truco: { state: "none", owner: null }
+    });
+  });
+};
 
 /* RENDER */
 roomRef.on("value", snap => {
   const room = snap.val();
   if (!room) return;
 
-  /* IDENTIDAD */
-  let me = "";
-  let rival = "";
+  document.getElementById("me").innerText =
+    room.p1 === myId ? "Jugador 1 (Tú)" : "Jugador 2 (Tú)";
 
-  if (room.p1 === myId) {
-    me = "Jugador 1 (Tú)";
-    rival = "Jugador 2";
-  } else {
-    me = "Jugador 2 (Tú)";
-    rival = "Jugador 1";
-  }
+  document.getElementById("rival").innerText =
+    room.p1 === myId ? "Jugador 2" : "Jugador 1";
 
-  document.getElementById("me").innerText = "Yo: " + me;
-  document.getElementById("rival").innerText = "Rival: " + rival;
-
-  /* TURNO */
   document.getElementById("turn").innerText =
-    room.turn === myId ? "🎮 Tu turno" : "⏳ Turno del rival";
+    room.turn === myId ? "🎮 Tu turno" : "⏳ Turno rival";
+
+  document.getElementById("score").innerText =
+    (room.score?.p1 || 0) + " - " + (room.score?.p2 || 0);
+
+  /* TRUCO UI */
+  if (room.truco?.state === "pending" && room.truco.owner !== myId) {
+    document.getElementById("acceptBtn").style.display = "inline-block";
+    document.getElementById("rejectBtn").style.display = "inline-block";
+  } else {
+    document.getElementById("acceptBtn").style.display = "none";
+    document.getElementById("rejectBtn").style.display = "none";
+  }
 
   /* MESA */
   const table = document.getElementById("table");
@@ -188,14 +254,7 @@ roomRef.on("value", snap => {
 
   /* MANO */
   const hand = document.getElementById("hand");
-  if (!hand) {
-    const h = document.createElement("div");
-    h.id = "hand";
-    document.querySelector(".box").appendChild(h);
-  }
-
-  const handEl = document.getElementById("hand");
-  handEl.innerHTML = "";
+  hand.innerHTML = "";
 
   const myHand = room.hands?.[myId] || [];
 
@@ -203,10 +262,8 @@ roomRef.on("value", snap => {
     const c = document.createElement("div");
     c.className = "card";
     c.innerText = card;
-
     c.onclick = () => playCard(card);
-
-    handEl.appendChild(c);
+    hand.appendChild(c);
   });
 });
 </script>
