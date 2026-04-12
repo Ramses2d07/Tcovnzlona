@@ -51,7 +51,6 @@ body {
   align-items:center;
   justify-content:center;
   cursor:pointer;
-  user-select:none;
 }
 
 .card.played { opacity:0.6; }
@@ -99,87 +98,88 @@ const myId = url.get("pid");
 
 const roomRef = db.ref("rooms/" + roomId);
 
-/* FIX: identidad estable */
-function getRole(room){
-  if(!room) return "spectator";
-  if(room.p1 === myId) return "p1";
-  if(room.p2 === myId) return "p2";
-  return "spectator";
+/* ROLE */
+function getRole(r){
+  if(!r) return null;
+  if(r.p1 === myId) return "p1";
+  if(r.p2 === myId) return "p2";
+  return null;
 }
 
-/* valor cartas */
+/* CARTAS */
 function value(c){
-  const v={
-    "4":1,"5":2,"6":3,"7":4,
-    "10":5,"11":6,"12":7,
-    "A":8,"2":9,"3":10
-  };
+  const v={"4":1,"5":2,"6":3,"7":4,"10":5,"11":6,"12":7,"A":8,"2":9,"3":10};
   return v[c]||0;
 }
 
-/* inicialización segura */
-roomRef.once("value", snap=>{
-  const r = snap.val();
-  if(!r || !r.p1 || !r.p2) return;
+/* 🔥 INIT SEGURO (SOLO UNA VEZ) */
+roomRef.transaction(room => {
+  if(!room) return room;
 
-  if(!r.hands){
-    const deck=["A","2","3","4","5","6","7","10","11","12"]
-      .sort(()=>Math.random()-0.5);
+  if(room.inited) return; // evita repetir setup
 
-    roomRef.update({
-      turn:r.p1,
-      round:1,
-      table:[],
-      score:{
-        [r.p1]:0,
-        [r.p2]:0
-      },
-      hands:{
-        [r.p1]:deck.slice(0,3),
-        [r.p2]:deck.slice(3,6)
-      }
-    });
-  }
+  const deck=["A","2","3","4","5","6","7","10","11","12"]
+    .sort(()=>Math.random()-0.5);
+
+  room.inited = true;
+  room.turn = room.p1;
+  room.round = 1;
+  room.table = [];
+  room.score = {
+    [room.p1]:0,
+    [room.p2]:0
+  };
+  room.hands = {
+    [room.p1]:deck.slice(0,3),
+    [room.p2]:deck.slice(3,6)
+  };
+
+  return room;
 });
 
-/* jugar carta */
+/* JUGAR CARTA (FIX REAL) */
 function playCard(card){
-  roomRef.transaction(room=>{
+
+  roomRef.transaction(room => {
     if(!room) return room;
+
     if(room.turn !== myId) return room;
 
-    room.table = room.table || [];
+    if(!room.table) room.table = [];
 
-    if(room.table.some(c=>c.player===myId)) return room;
+    const alreadyPlayed = room.table.some(c => c.player === myId);
+    if(alreadyPlayed) return room;
 
-    room.table.push({player:myId, card});
+    room.table.push({
+      player: myId,
+      card
+    });
 
-    room.hands[myId] = room.hands[myId].filter(c=>c!==card);
+    if(room.hands && room.hands[myId]){
+      room.hands[myId] = room.hands[myId].filter(c => c !== card);
+    }
 
-    room.turn = (myId === room.p1) ? room.p2 : room.p1;
+    room.turn = (room.turn === room.p1) ? room.p2 : room.p1;
 
     return room;
   });
 }
 
-/* render */
-roomRef.on("value", snap=>{
+/* RENDER */
+roomRef.on("value", snap => {
   const r = snap.val();
   if(!r) return;
 
   const role = getRole(r);
 
-  const isP1 = role === "p1";
-  const isP2 = role === "p2";
-
   document.getElementById("me").innerText =
-    isP1 ? "Jugador 1 (Tú)" :
-    isP2 ? "Jugador 2 (Tú)" :
+    role === "p1" ? "Jugador 1 (Tú)" :
+    role === "p2" ? "Jugador 2 (Tú)" :
     "Espectador";
 
   document.getElementById("rival").innerText =
-    isP1 ? "Jugador 2" :
-    isP2 ? "Jugador 1" :
+    role === "p1" ? "Jugador 2" :
+    role === "p2" ? "Jugador 1" :
     "-";
 
   document.getElementById("turn").innerText =
