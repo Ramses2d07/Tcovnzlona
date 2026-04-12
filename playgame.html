@@ -1,190 +1,159 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Play Game FIX FINAL</title>
-
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
-
-<style>
-body {
-  margin:0;
-  font-family:Arial;
-  background:#000;
-  color:#fff;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  height:100vh;
-}
-
-.box {
-  width:360px;
-  background:#1c1f24;
-  padding:20px;
-  border-radius:12px;
-  text-align:center;
-}
-
-.card {
-  width:60px;
-  height:80px;
-  background:white;
-  color:black;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  border-radius:8px;
-  cursor:pointer;
-  user-select:none;
-}
-
-#hand {
-  display:flex;
-  gap:10px;
-  justify-content:center;
-  margin-top:10px;
-}
-
-#table {
-  display:flex;
-  justify-content:center;
-  gap:10px;
-  margin:15px 0;
-}
-
-.turn {
-  color:gold;
-  font-weight:bold;
-}
-</style>
-</head>
-
-<body>
-
-<div class="box">
-  <div id="me"></div>
-  <div id="rival"></div>
-
-  <div class="turn" id="turn"></div>
-  <div id="table"></div>
-  <div id="hand"></div>
-</div>
-
-<script>
-firebase.initializeApp({
-  apiKey:"TU_API_KEY",
-  authDomain:"truco-venezolano-6c7d7.firebaseapp.com",
-  databaseURL:"https://truco-venezolano-6c7d7-default-rtdb.firebaseio.com",
-  projectId:"truco-venezolano-6c7d7"
-});
-
-const db = firebase.database();
-
-const p = new URLSearchParams(location.search);
-const roomId = p.get("room");
-const myId = p.get("pid");
-
-const roomRef = db.ref("rooms/" + roomId);
-
-/* INIT SEGURO (UNA SOLA VEZ REAL) */
-roomRef.once("value").then(snap => {
-  const r = snap.val();
-  if(!r || r.inited) return;
-
-  const deck = ["A","2","3","4","5","6","7","10","11","12"]
-    .sort(()=>Math.random()-0.5);
-
-  roomRef.update({
-    inited:true,
-    turn:r.p1,
-    table:[],
-    hands:{
-      [r.p1]: deck.slice(0,3),
-      [r.p2]: deck.slice(3,6)
-    }
-  });
-});
-
-/* 🔥 PARCHE FINAL DE JUEGO */
-function playCard(card){
-
-  roomRef.transaction(r => {
-
-    if(!r) return r;
-
-    // seguridad de turno
-    if(r.turn !== myId) return r;
-
-    r.table = r.table || [];
-    r.hands = r.hands || {};
-
-    const hand = r.hands[myId] || [];
-
-    // validar carta
-    if(!hand.includes(card)) return r;
-
-    // evitar doble jugada en misma ronda
-    if(r.table.some(x => x.player === myId)) return r;
-
-    // registrar jugada
-    r.table.push({
-      player: myId,
-      card: card
-    });
-
-    // quitar carta
-    r.hands[myId] = hand.filter(c => c !== card);
-
-    // cambiar turno SOLO si el otro existe
-    if(r.p1 && r.p2){
-      r.turn = (r.turn === r.p1) ? r.p2 : r.p1;
-    }
-
-    return r;
-  });
-}
-
-/* RENDER */
-roomRef.on("value", snap => {
-  const r = snap.val();
-  if(!r) return;
-
-  document.getElementById("turn").innerText =
-    r.turn === myId ? "TU TURNO" : "Turno rival";
-
-  document.getElementById("me").innerText =
-    r.p1 === myId ? "Jugador 1" : "Jugador 2";
-
-  document.getElementById("rival").innerText =
-    r.p1 === myId ? "Jugador 2" : "Jugador 1";
-
-  /* mesa */
-  const tableDiv = document.getElementById("table");
-  tableDiv.innerHTML = "";
-
-  (r.table || []).forEach(m => {
-    const d = document.createElement("div");
-    d.className = "card";
-    d.innerText = m.card;
-    tableDiv.appendChild(d);
-  });
-
-  /* mano */
-  const handDiv = document.getElementById("hand");
-  handDiv.innerHTML = "";
-
-  (r.hands?.[myId] || []).forEach(c => {
-    const d = document.createElement("div");
-    d.className = "card";
-    d.innerText = c;
-    d.onclick = () => playCard(c);
-    handDiv.appendChild(d);
-  });
-});
-</script>
-
-</body>
-</html>
+<!DOCTYPE html>  <html lang="es">  
+<head>  
+<meta charset="UTF-8">  
+<meta name="viewport" content="width=device-width, initial-scale=1.0">  
+<title>Play Game PRO FIX</title>  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>  <style>  
+body {  
+  margin:0;  
+  font-family:Arial;  
+  background:#000;  
+  color:#fff;  
+  display:flex;  
+  justify-content:center;  
+  align-items:center;  
+  height:100vh;  
+}  
+  
+.box {  
+  width:360px;  
+  background:#1c1f24;  
+  padding:20px;  
+  border-radius:12px;  
+  text-align:center;  
+}  
+  
+.card {  
+  width:60px;  
+  height:80px;  
+  background:white;  
+  color:black;  
+  display:flex;  
+  justify-content:center;  
+  align-items:center;  
+  border-radius:8px;  
+  cursor:pointer;  
+  user-select:none;  
+}  
+  
+#hand {  
+  display:flex;  
+  gap:10px;  
+  justify-content:center;  
+  margin-top:10px;  
+}  
+  
+#table {  
+  display:flex;  
+  justify-content:center;  
+  gap:10px;  
+  margin:15px 0;  
+}  
+  
+.turn {  
+  color:gold;  
+  font-weight:bold;  
+}  
+</style>  </head>  <body>  <div class="box">  
+  <div id="me"></div>  
+  <div id="rival"></div>    <div class="turn" id="turn"></div>  
+  <div id="table"></div>  
+  <div id="hand"></div>  
+</div>  <script>  
+firebase.initializeApp({  
+  apiKey:"TU_API_KEY",  
+  authDomain:"truco-venezolano-6c7d7.firebaseapp.com",  
+  databaseURL:"https://truco-venezolano-6c7d7-default-rtdb.firebaseio.com",  
+  projectId:"truco-venezolano-6c7d7"  
+});  
+  
+const db = firebase.database();  
+  
+const params = new URLSearchParams(location.search);  
+const roomId = params.get("room");  
+const myId = params.get("pid");  
+  
+const roomRef = db.ref("rooms/" + roomId);  
+  
+/* INIT SOLO UNA VEZ */  
+roomRef.once("value").then(snap => {  
+  const r = snap.val();  
+  if(!r || r.inited) return;  
+  
+  const deck = ["A","2","3","4","5","6","7","10","11","12"]  
+    .sort(()=>Math.random()-0.5);  
+  
+  roomRef.update({  
+    inited:true,  
+    turn:r.p1,  
+    table:[],  
+    hands:{  
+      [r.p1]: deck.slice(0,3),  
+      [r.p2]: deck.slice(3,6)  
+    }  
+  });  
+});  
+  
+/* PLAY CARD (FIX REAL ATÓMICO) */  
+function playCard(card){  
+  
+  roomRef.transaction(r => {  
+    if(!r) return r;  
+    if(r.turn !== myId) return r;  
+  
+    const hand = r.hands?.[myId] || [];  
+    if(!hand.includes(card)) return r;  
+  
+    r.table = r.table || [];  
+  
+    r.table.push({  
+      player: myId,  
+      card  
+    });  
+  
+    r.hands[myId] = hand.filter(c => c !== card);  
+  
+    r.turn = (myId === r.p1) ? r.p2 : r.p1;  
+  
+    return r;  
+  });  
+}  
+  
+/* RENDER */  
+roomRef.on("value", snap => {  
+  const r = snap.val();  
+  if(!r) return;  
+  
+  document.getElementById("turn").innerText =  
+    r.turn === myId ? "TU TURNO" : "Turno rival";  
+  
+  document.getElementById("me").innerText =  
+    r.p1 === myId ? "Jugador 1" : "Jugador 2";  
+  
+  document.getElementById("rival").innerText =  
+    r.p1 === myId ? "Jugador 2" : "Jugador 1";  
+  
+  /* mesa */  
+  const tableDiv = document.getElementById("table");  
+  tableDiv.innerHTML = "";  
+  
+  (r.table || []).forEach(m => {  
+    const d = document.createElement("div");  
+    d.className = "card";  
+    d.innerText = m.card;  
+    tableDiv.appendChild(d);  
+  });  
+  
+  /* mano */  
+  const handDiv = document.getElementById("hand");  
+  handDiv.innerHTML = "";  
+  
+  (r.hands?.[myId] || []).forEach(c => {  
+    const d = document.createElement("div");  
+    d.className = "card";  
+    d.innerText = c;  
+    d.onclick = () => playCard(c);  
+    handDiv.appendChild(d);  
+  });  
+});  
+</script>  </body>  
+</html>  
