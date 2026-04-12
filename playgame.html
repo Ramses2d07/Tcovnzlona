@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Play Game</title>
+<title>Play Game PRO</title>
 
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
@@ -15,30 +15,17 @@ body {
   background:#000;
   color:#fff;
   display:flex;
-  flex-direction:column;
-  align-items:center;
   justify-content:center;
+  align-items:center;
   height:100vh;
 }
 
 .box {
+  width:360px;
   background:#1c1f24;
   padding:20px;
   border-radius:12px;
-  width:360px;
   text-align:center;
-}
-
-.player { margin:10px 0; padding:10px; background:#2c3138; border-radius:8px; }
-
-.turn { margin-top:10px; font-weight:bold; color:#ffd700; }
-
-#table {
-  margin:15px 0;
-  display:flex;
-  justify-content:center;
-  gap:10px;
-  min-height:80px;
 }
 
 .card {
@@ -46,25 +33,29 @@ body {
   height:80px;
   background:white;
   color:black;
-  border-radius:8px;
   display:flex;
-  align-items:center;
   justify-content:center;
+  align-items:center;
+  border-radius:8px;
   cursor:pointer;
 }
 
-.card.played { opacity:0.6; }
-
 #hand {
-  margin-top:10px;
   display:flex;
   gap:10px;
   justify-content:center;
+  margin-top:10px;
 }
 
-#score {
-  margin-top:8px;
-  color:#00ffcc;
+#table {
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  margin:15px 0;
+}
+
+.turn {
+  color:gold;
   font-weight:bold;
 }
 </style>
@@ -73,12 +64,11 @@ body {
 <body>
 
 <div class="box">
-  <div class="player" id="me"></div>
-  <div class="player" id="rival"></div>
+  <div id="me"></div>
+  <div id="rival"></div>
 
-  <div id="score">0 - 0</div>
-  <div id="table"></div>
   <div class="turn" id="turn"></div>
+  <div id="table"></div>
   <div id="hand"></div>
 </div>
 
@@ -97,6 +87,7 @@ const roomId = url.get("room");
 const myId = url.get("pid");
 
 const roomRef = db.ref("rooms/" + roomId);
+const movesRef = db.ref("moves/" + roomId);
 
 /* ROLE */
 function getRole(r){
@@ -106,7 +97,7 @@ function getRole(r){
   return null;
 }
 
-/* INIT SEGURO */
+/* INIT MANO SOLO UNA VEZ */
 roomRef.once("value").then(snap => {
   const r = snap.val();
   if(!r || r.inited) return;
@@ -115,96 +106,89 @@ roomRef.once("value").then(snap => {
     .sort(()=>Math.random()-0.5);
 
   roomRef.update({
-    inited: true,
-    turn: r.p1,
-    round: 1,
-    table: [],
-    score: {
-      [r.p1]:0,
-      [r.p2]:0
-    },
-    hands: {
-      [r.p1]: deck.slice(0,3),
-      [r.p2]: deck.slice(3,6)
-    }
+    inited:true,
+    turn:r.p1
+  });
+
+  db.ref("hands/" + roomId).set({
+    [r.p1]: deck.slice(0,3),
+    [r.p2]: deck.slice(3,6)
   });
 });
 
-/* 🔥 PARCHE DEFINITIVO DE JUEGO */
+/* JUGAR CARTA (PRO EVENT SYSTEM) */
 function playCard(card){
 
-  roomRef.transaction(room => {
+  roomRef.transaction(r => {
+    if(!r) return r;
+    if(r.turn !== myId) return r;
 
-    if(!room) return room;
+    r.turn = (r.turn === r.p1) ? r.p2 : r.p1;
 
-    if(room.turn !== myId) return room;
-
-    room.table = room.table || [];
-    room.hands = room.hands || {};
-
-    const hand = room.hands[myId] || [];
-
-    if(!hand.includes(card)) return room;
-
-    if(room.table.some(c => c.player === myId)) return room;
-
-    room.table.push({
-      player: myId,
-      card: card
-    });
-
-    room.hands[myId] = hand.filter(c => c !== card);
-
-    room.turn = (room.turn === room.p1) ? room.p2 : room.p1;
-
-    return room;
+    return r;
   });
 
+  const moveId = "m_" + Date.now() + "_" + Math.random();
+
+  movesRef.child(moveId).set({
+    player: myId,
+    card: card,
+    time: Date.now()
+  });
+
+  db.ref("hands/" + roomId + "/" + myId)
+    .transaction(hand => {
+      if(!hand) return hand;
+      return hand.filter(c => c !== card);
+    });
 }
 
-/* RENDER */
+/* RENDER MOVES */
+movesRef.on("value", snap => {
+  const moves = snap.val() || {};
+
+  const table = Object.values(moves);
+
+  const div = document.getElementById("table");
+  div.innerHTML = "";
+
+  table.forEach(m => {
+    const d = document.createElement("div");
+    d.className = "card";
+    d.innerText = m.card;
+    div.appendChild(d);
+  });
+});
+
+/* HAND */
+db.ref("hands/" + roomId + "/" + myId).on("value", snap => {
+  const hand = snap.val() || [];
+
+  const div = document.getElementById("hand");
+  div.innerHTML = "";
+
+  hand.forEach(c => {
+    const d = document.createElement("div");
+    d.className = "card";
+    d.innerText = c;
+    d.onclick = () => playCard(c);
+    div.appendChild(d);
+  });
+});
+
+/* ROOM STATE */
 roomRef.on("value", snap => {
   const r = snap.val();
   if(!r) return;
 
-  const role = getRole(r);
-
-  document.getElementById("me").innerText =
-    role === "p1" ? "Jugador 1 (Tú)" :
-    role === "p2" ? "Jugador 2 (Tú)" :
-    "Espectador";
-
-  document.getElementById("rival").innerText =
-    role === "p1" ? "Jugador 2" :
-    role === "p2" ? "Jugador 1" :
-    "-";
-
   document.getElementById("turn").innerText =
     r.turn === myId ? "TU TURNO" : "Turno rival";
 
-  document.getElementById("score").innerText =
-    (r.score?.[r.p1]||0) + " - " + (r.score?.[r.p2]||0);
+  document.getElementById("me").innerText =
+    r.p1 === myId ? "Jugador 1" : "Jugador 2";
 
-  const tableDiv = document.getElementById("table");
-  tableDiv.innerHTML = "";
-
-  (r.table || []).forEach(c=>{
-    const d = document.createElement("div");
-    d.className = "card played";
-    d.innerText = c.card;
-    tableDiv.appendChild(d);
-  });
-
-  const hand = document.getElementById("hand");
-  hand.innerHTML = "";
-
-  (r.hands?.[myId] || []).forEach(c=>{
-    const d = document.createElement("div");
-    d.className = "card";
-    d.innerText = c;
-    d.onclick = ()=>playCard(c);
-    hand.appendChild(d);
-  });
+  document.getElementById("rival").innerText =
+    r.p1 === myId ? "Jugador 2" : "Jugador 1";
 });
 </script>
 
