@@ -83,7 +83,7 @@ const myId = url.get("pid");
 
 const roomRef = db.ref("rooms/" + roomId);
 
-/* VALOR CARTAS */
+/* valor cartas */
 function value(c){
   const v={
     "4":1,"5":2,"6":3,"7":4,
@@ -93,126 +93,84 @@ function value(c){
   return v[c]||0;
 }
 
-/* INICIALIZAR PARTIDA (SEGURO) */
-roomRef.once("value", s=>{
-  const r=s.val();
-  if(!r || !r.p1 || !r.p2) return;
+/* 🔥 SOLO EL PRIMER CLIENTE INICIALIZA */
+roomRef.child("init").transaction(current => {
+  if (current === true) return; // ya inicializado
 
-  if(!r.hands){
-    const deck=["A","2","3","4","5","6","7","10","11","12"]
-      .sort(()=>Math.random()-0.5);
+  const deck=["A","2","3","4","5","6","7","10","11","12"]
+    .sort(()=>Math.random()-0.5);
 
-    roomRef.update({
-      turn:r.p1,
-      round:1,
-      score:{[r.p1]:0,[r.p2]:0},
-      table:[],
-      hands:{
-        [r.p1]:deck.slice(0,3),
-        [r.p2]:deck.slice(3,6)
-      }
-    });
-  }
+  roomRef.set({
+    p1: roomId.includes("seed") ? myId : null, // fallback seguro
+    p2: null,
+    turn: null,
+    round:1,
+    score:{},
+    table:[],
+    hands:{},
+    state:"playing",
+    init:true
+  });
+
+  return true;
 });
 
-/* JUGAR CARTA */
-function playCard(card){
-  roomRef.once("value", s=>{
-    const r=s.val();
-    if(!r || r.turn!==myId) return;
-
-    const table=r.table||[];
-
-    if(table.find(c=>c.player===myId)) return;
-
-    table.push({player:myId,card});
-
-    const hands={...r.hands};
-    hands[myId]=hands[myId].filter(c=>c!==card);
-
-    roomRef.update({
-      table,
-      hands,
-      turn: myId===r.p1?r.p2:r.p1
-    });
-  });
-}
-
-/* GAME LOOP */
+/* MEJOR: esperar datos válidos */
 roomRef.on("value", snap=>{
   const r=snap.val();
-  if(!r) return;
+  if(!r || !r.p1 || !r.p2) return;
 
-  const table=r.table||[];
+  /* asignar roles correcto */
+  const isP1 = (r.p1 === myId);
 
-  /* resolver ronda */
-  if(table.length===2){
-
-    const c1=table[0];
-    const c2=table[1];
-
-    const v1=value(c1.card);
-    const v2=value(c2.card);
-
-    let winner=null;
-    if(v1>v2) winner=c1.player;
-    if(v2>v1) winner=c2.player;
-
-    const score=r.score||{};
-
-    if(winner){
-      score[winner]=(score[winner]||0)+1;
-    }
-
-    const finished =
-      (score[r.p1]||0)>=2 ||
-      (score[r.p2]||0)>=2;
-
-    setTimeout(()=>{
-      roomRef.update({
-        table:[],
-        score,
-        turn: winner || r.p1,
-        state: finished?"finished":"playing"
-      });
-    },600);
-  }
-
-  /* UI PLAYERS */
   document.getElementById("me").innerText =
-    r.p1===myId?"Jugador 1 (Tú)":"Jugador 2 (Tú)";
+    isP1 ? "Jugador 1 (Tú)" : "Jugador 2 (Tú)";
 
   document.getElementById("rival").innerText =
-    r.p1===myId?"Jugador 2":"Jugador 1";
+    isP1 ? "Jugador 2" : "Jugador 1";
 
   document.getElementById("turn").innerText =
-    r.turn===myId?"TU TURNO":"Turno rival";
+    r.turn === myId ? "TU TURNO" : "Turno rival";
 
   document.getElementById("score").innerText =
     (r.score?.[r.p1]||0)+" - "+(r.score?.[r.p2]||0);
 
-  /* MESA */
+  /* mesa */
   const tableDiv=document.getElementById("table");
   tableDiv.innerHTML="";
-
-  table.forEach(c=>{
+  (r.table||[]).forEach(c=>{
     const d=document.createElement("div");
     d.className="card played";
     d.innerText=c.card;
     tableDiv.appendChild(d);
   });
 
-  /* MANO */
+  /* mano */
   const hand=document.getElementById("hand");
   hand.innerHTML="";
 
-  const myHand=r.hands?.[myId]||[];
-
-  myHand.forEach(c=>{
+  (r.hands?.[myId]||[]).forEach(c=>{
     const d=document.createElement("div");
     d.className="card";
     d.innerText=c;
-    d.onclick=()=>playCard(c);
+
+    d.onclick=()=>{
+      roomRef.transaction(room=>{
+        if(!room || room.turn !== myId) return room;
+
+        if(room.table?.some(x=>x.player===myId)) return room;
+
+        room.table = room.table || [];
+        room.table.push({player:myId,card:c});
+
+        room.hands[myId] = room.hands[myId].filter(x=>x!==c);
+
+        room.turn = (myId===room.p1)?room.p2:room.p1;
+
+        return room;
+      });
+    };
+
     hand.appendChild(d);
   });
 });
