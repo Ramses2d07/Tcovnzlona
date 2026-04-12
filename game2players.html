@@ -114,7 +114,7 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
-/* ID único persistente */
+/* ID estable */
 let playerId = sessionStorage.getItem("pid");
 
 if (!playerId) {
@@ -124,10 +124,11 @@ if (!playerId) {
 
 /* entrar a cola */
 db.ref("queue/" + playerId).set({
-  time: Date.now()
+  time: Date.now(),
+  status: "waiting"
 });
 
-/* LOCK global para evitar doble creación */
+/* LOCK global */
 const lockRef = db.ref("match_lock");
 
 let matched = false;
@@ -138,19 +139,21 @@ db.ref("queue").on("value", async (snap) => {
   const data = snap.val();
   if (!data) return;
 
+  /* SOLO jugadores activos */
   const players = Object.keys(data);
+
   if (players.length < 2) return;
 
-  /* intentar tomar control */
-  const lock = await lockRef.transaction(current => {
-    if (current) return; // alguien ya creó sala
+  /* intentar lock REAL */
+  const result = await lockRef.transaction(current => {
+    if (current) return; // alguien ya creó partida
     return {
       owner: playerId,
       time: Date.now()
     };
   });
 
-  if (!lock.committed) return;
+  if (!result.committed) return;
 
   matched = true;
 
@@ -168,7 +171,7 @@ db.ref("queue").on("value", async (snap) => {
     state: "playing"
   });
 
-  /* limpiar cola y lock */
+  /* limpiar cola + lock */
   await db.ref("queue").remove();
   await db.ref("match_lock").remove();
 
