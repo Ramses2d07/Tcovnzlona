@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Play Game PRO FIX</title>
+<title>Play Game FIX FINAL</title>
 
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
@@ -83,13 +83,13 @@ firebase.initializeApp({
 
 const db = firebase.database();
 
-const params = new URLSearchParams(location.search);
-const roomId = params.get("room");
-const myId = params.get("pid");
+const p = new URLSearchParams(location.search);
+const roomId = p.get("room");
+const myId = p.get("pid");
 
 const roomRef = db.ref("rooms/" + roomId);
 
-/* INIT SOLO UNA VEZ */
+/* INIT SEGURO (UNA SOLA VEZ REAL) */
 roomRef.once("value").then(snap => {
   const r = snap.val();
   if(!r || r.inited) return;
@@ -108,26 +108,40 @@ roomRef.once("value").then(snap => {
   });
 });
 
-/* PLAY CARD (FIX REAL ATÓMICO) */
+/* 🔥 PARCHE FINAL DE JUEGO */
 function playCard(card){
 
   roomRef.transaction(r => {
+
     if(!r) return r;
+
+    // seguridad de turno
     if(r.turn !== myId) return r;
 
-    const hand = r.hands?.[myId] || [];
+    r.table = r.table || [];
+    r.hands = r.hands || {};
+
+    const hand = r.hands[myId] || [];
+
+    // validar carta
     if(!hand.includes(card)) return r;
 
-    r.table = r.table || [];
+    // evitar doble jugada en misma ronda
+    if(r.table.some(x => x.player === myId)) return r;
 
+    // registrar jugada
     r.table.push({
       player: myId,
-      card
+      card: card
     });
 
+    // quitar carta
     r.hands[myId] = hand.filter(c => c !== card);
 
-    r.turn = (myId === r.p1) ? r.p2 : r.p1;
+    // cambiar turno SOLO si el otro existe
+    if(r.p1 && r.p2){
+      r.turn = (r.turn === r.p1) ? r.p2 : r.p1;
+    }
 
     return r;
   });
