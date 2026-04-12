@@ -88,7 +88,6 @@ body {
 <div class="room">  
 
   <div class="players-grid">  
-
     <div class="player-card">  
       <div class="avatar"></div>  
       <div class="name">Buscando rival...</div>  
@@ -98,7 +97,6 @@ body {
       <div class="avatar"></div>  
       <div class="name">Esperando jugador...</div>  
     </div>  
-
   </div>  
 
   <div class="status" id="statusText">Conectando...</div>  
@@ -116,21 +114,16 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
-/* FIX IMPORTANTE:
-   usar ID persistente por navegador */
+/* 🔑 ID persistente (IMPORTANTE) */
 let playerId = sessionStorage.getItem("pid");
-
 if (!playerId) {
   playerId = "p_" + Math.random().toString(36).substr(2, 9);
   sessionStorage.setItem("pid", playerId);
 }
 
-/* evitar doble entrada */
-let joined = false;
-
+/* evitar doble join */
 if (!sessionStorage.getItem("joined")) {
   sessionStorage.setItem("joined", "true");
-  joined = true;
 
   db.ref("queue/" + playerId).set({
     status: "waiting",
@@ -138,16 +131,17 @@ if (!sessionStorage.getItem("joined")) {
   });
 }
 
-/* matchmaking */
 let matched = false;
 
-db.ref("queue").on("value", (snap) => {
-  if (matched || !joined) return;
+/* MATCHMAKING SEGURO */
+db.ref("queue").on("value", async (snap) => {
+  if (matched) return;
 
   const data = snap.val();
   if (!data) return;
 
   const players = Object.keys(data);
+
   if (players.length < 2) return;
 
   matched = true;
@@ -157,19 +151,19 @@ db.ref("queue").on("value", (snap) => {
 
   const roomId = Date.now().toString();
 
-  db.ref("rooms/" + roomId).set({
+  await db.ref("rooms/" + roomId).set({
     p1,
     p2,
     turn: p1,
     state: "playing"
-  }).then(() => {
-
-    // limpiar cola de forma segura
-    db.ref("queue").remove();
-
-    window.location.href =
-      "playgame.html?room=" + roomId + "&pid=" + playerId;
   });
+
+  /* limpiar SOLO los usados */
+  await db.ref("queue/" + p1).remove();
+  await db.ref("queue/" + p2).remove();
+
+  window.location.href =
+    "playgame.html?room=" + roomId + "&pid=" + playerId;
 });
 </script>
 
