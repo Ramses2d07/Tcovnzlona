@@ -3,43 +3,47 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Play Game PRO</title>
+<title>Play Game</title>
 
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 
 <style>
 body {
-  margin: 0;
-  font-family: Arial;
-  background: #000;
-  color: #fff;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
+  margin:0;
+  font-family:Arial;
+  background:#000;
+  color:#fff;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  height:100vh;
 }
 
 .box {
-  background: #1c1f24;
-  padding: 20px;
-  border-radius: 12px;
-  width: 360px;
-  text-align: center;
+  background:#1c1f24;
+  padding:20px;
+  border-radius:12px;
+  width:360px;
+  text-align:center;
 }
 
-.player { margin: 10px 0; padding: 10px; background:#2c3138; border-radius:8px; }
+.player { margin:10px 0; padding:10px; background:#2c3138; border-radius:8px; }
 
 .turn { margin-top:10px; font-weight:bold; color:#ffd700; }
 
-#table { margin:15px 0; display:flex; gap:10px; justify-content:center; }
+#table { margin:15px 0; display:flex; justify-content:center; gap:10px; }
 
 .card {
-  width:60px;height:80px;
-  background:white;color:black;
+  width:60px;
+  height:80px;
+  background:white;
+  color:black;
   border-radius:8px;
-  display:flex;align-items:center;justify-content:center;
+  display:flex;
+  align-items:center;
+  justify-content:center;
   cursor:pointer;
 }
 
@@ -48,10 +52,6 @@ body {
 #hand { margin-top:10px; display:flex; gap:10px; justify-content:center; }
 
 #score { margin-top:8px; color:#00ffcc; font-weight:bold; }
-
-button { margin:5px; padding:8px; border:none; border-radius:6px; cursor:pointer; }
-
-#acceptBtn,#rejectBtn{ display:none; }
 </style>
 </head>
 
@@ -62,16 +62,9 @@ button { margin:5px; padding:8px; border:none; border-radius:6px; cursor:pointer
   <div class="player" id="rival"></div>
 
   <div id="score">0 - 0</div>
-
   <div id="table"></div>
-
   <div class="turn" id="turn"></div>
-
   <div id="hand"></div>
-
-  <button id="trucoBtn">TRUCO</button>
-  <button id="acceptBtn">ACEPTAR</button>
-  <button id="rejectBtn">RECHAZAR</button>
 </div>
 
 <script>
@@ -90,47 +83,45 @@ const myId = url.get("pid");
 
 const roomRef = db.ref("rooms/" + roomId);
 
-/* VALOR CARTAS */
-function cardValue(c){
-  const o={ "4":1,"5":2,"6":3,"7":4,"10":5,"11":6,"12":7,"A":8,"2":9,"3":10 };
-  return o[c]||0;
+/* VALOR CARTAS TRUCO */
+function value(c){
+  const v={
+    "4":1,"5":2,"6":3,"7":4,
+    "10":5,"11":6,"12":7,
+    "A":8,"2":9,"3":10
+  };
+  return v[c]||0;
 }
 
-/* 🔒 INICIALIZACIÓN SEGURA (FIX PRINCIPAL) */
-roomRef.transaction(room => {
-  if (!room) return room;
+/* INICIALIZAR PARTIDA */
+roomRef.once("value", s=>{
+  const r=s.val();
+  if(!r.hands){
+    const deck=["A","2","3","4","5","6","7","10","11","12"]
+      .sort(()=>Math.random()-0.5);
 
-  if (room.initialized) return room;
-
-  const deck = ["A","2","3","4","5","6","7","10","11","12"]
-    .sort(() => Math.random() - 0.5);
-
-  room.initialized = true;
-  room.state = "playing";
-  room.turn = room.p1;
-
-  room.hands = {
-    [room.p1]: deck.slice(0, 3),
-    [room.p2]: deck.slice(3, 6)
-  };
-
-  room.table = [];
-  room.score = { [room.p1]: 0, [room.p2]: 0 };
-  room.truco = { state: "none", owner: null };
-
-  return room;
+    roomRef.update({
+      turn:r.p1,
+      round:1,
+      score:{[r.p1]:0,[r.p2]:0},
+      table:[],
+      hands:{
+        [r.p1]:deck.slice(0,3),
+        [r.p2]:deck.slice(3,6)
+      }
+    });
+  }
 });
 
 /* JUGAR CARTA */
 function playCard(card){
   roomRef.once("value", s=>{
     const r=s.val();
-    if(!r) return;
-    if(r.turn!==myId) return;
-    if(r.state!=="playing") return;
+    if(!r || r.turn!==myId) return;
 
     const table=r.table||[];
-    if(table.some(c=>c.player===myId)) return;
+
+    if(table.find(c=>c.player===myId)) return;
 
     table.push({player:myId,card});
 
@@ -145,11 +136,49 @@ function playCard(card){
   });
 }
 
-/* RENDER */
+/* RESOLVER RONDA */
 roomRef.on("value", snap=>{
   const r=snap.val();
   if(!r) return;
 
+  const table=r.table||[];
+
+  if(table.length===2){
+
+    const c1=table[0];
+    const c2=table[1];
+
+    const v1=value(c1.card);
+    const v2=value(c2.card);
+
+    let winner=null;
+    if(v1>v2) winner=c1.player;
+    if(v2>v1) winner=c2.player;
+
+    let score=r.score||{};
+
+    if(winner){
+      score[winner]=(score[winner]||0)+1;
+    }
+
+    let round=(r.round||1)+1;
+
+    let finished=
+      (score[r.p1]||0)>=2 ||
+      (score[r.p2]||0)>=2;
+
+    setTimeout(()=>{
+      roomRef.update({
+        table:[],
+        score,
+        round,
+        turn:winner||r.p1,
+        state: finished?"finished":"playing"
+      });
+    },800);
+  }
+
+  /* UI */
   document.getElementById("me").innerText =
     r.p1===myId?"Jugador 1 (Tú)":"Jugador 2 (Tú)";
 
@@ -157,22 +186,20 @@ roomRef.on("value", snap=>{
     r.p1===myId?"Jugador 2":"Jugador 1";
 
   document.getElementById("turn").innerText =
-    r.turn===myId?"TU TURNO":"turno rival";
+    r.turn===myId?"TU TURNO":"Turno rival";
 
   document.getElementById("score").innerText =
     (r.score?.[r.p1]||0)+" - "+(r.score?.[r.p2]||0);
 
-  /* MESA */
   const table=document.getElementById("table");
   table.innerHTML="";
-  (r.table||[]).forEach(c=>{
+  table.forEach(c=>{
     const d=document.createElement("div");
     d.className="card played";
     d.innerText=c.card;
     table.appendChild(d);
   });
 
-  /* MANO */
   const hand=document.getElementById("hand");
   hand.innerHTML="";
   const myHand=r.hands?.[myId]||[];
@@ -184,42 +211,7 @@ roomRef.on("value", snap=>{
     d.onclick=()=>playCard(c);
     hand.appendChild(d);
   });
-
-  /* TRUCO UI */
-  if(r.truco?.state==="pending" && r.truco.owner!==myId){
-    document.getElementById("acceptBtn").style.display="inline-block";
-    document.getElementById("rejectBtn").style.display="inline-block";
-  }else{
-    document.getElementById("acceptBtn").style.display="none";
-    document.getElementById("rejectBtn").style.display="none";
-  }
 });
-
-/* TRUCO */
-document.getElementById("trucoBtn").onclick=()=>{
-  roomRef.update({truco:{state:"pending",owner:myId}});
-};
-
-document.getElementById("acceptBtn").onclick=()=>{
-  roomRef.update({truco:{state:"none",owner:null}});
-};
-
-document.getElementById("rejectBtn").onclick=()=>{
-  roomRef.once("value",s=>{
-    const r=s.val();
-    const score=r.score||{};
-
-    const loser = r.truco.owner===r.p1?r.p1:r.p2;
-    const winner = loser===r.p1?r.p2:r.p1;
-
-    score[winner]=(score[winner]||0)+1;
-
-    roomRef.update({
-      score,
-      truco:{state:"none",owner:null}
-    });
-  });
-};
 </script>
 
 </body>
