@@ -116,10 +116,8 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
-/* ID único por pestaña */
 const playerId = "p_" + Math.random().toString(36).substr(2, 9);
 
-/* evitar doble entrada en la misma pestaña */
 if (!sessionStorage.getItem("joined")) {
   sessionStorage.setItem("joined", "true");
 
@@ -131,7 +129,7 @@ if (!sessionStorage.getItem("joined")) {
 
 let matched = false;
 
-/* MATCHMAKING SEGURO */
+/* MATCHMAKING ESTABLE */
 db.ref("queue").on("value", (snap) => {
   if (matched) return;
 
@@ -139,7 +137,6 @@ db.ref("queue").on("value", (snap) => {
   if (!data) return;
 
   const players = Object.keys(data);
-
   if (players.length < 2) return;
 
   matched = true;
@@ -149,19 +146,14 @@ db.ref("queue").on("value", (snap) => {
 
   const roomId = Date.now().toString();
 
-  /* crear sala */
   db.ref("rooms/" + roomId).set({
     p1,
-    p2
+    p2,
+    turn: p1,
+    state: "playing"
   });
 
-  /* IMPORTANTE:
-     no borrar queue aquí inmediatamente
-     dejar que Firebase propague cambios */
-  setTimeout(() => {
-    db.ref("queue").remove();
-  }, 800);
-
+  /* REDIRECCIÓN INMEDIATA (sin borrar queue agresivo) */
   window.location.href =
     "playgame.html?room=" + roomId + "&pid=" + playerId;
 });
