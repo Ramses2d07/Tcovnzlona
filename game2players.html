@@ -112,52 +112,43 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
-/* ID estable por navegador */
+/* ID estable */
 let playerId = sessionStorage.getItem("pid");
+
 if (!playerId) {
-  playerId = "p_" + Math.random().toString(36).substr(2, 9);
+  playerId = "p_" + Date.now() + "_" + Math.random().toString(36).slice(2,6);
   sessionStorage.setItem("pid", playerId);
 }
 
 /* entrar a cola */
 db.ref("queue/" + playerId).set({
-  id: playerId,
   status: "waiting",
   time: Date.now()
 });
 
-/* lock global */
-const lockRef = db.ref("match_lock");
+/* evitar doble match */
 let matched = false;
 
+/* MATCHMAKING SEGURO */
 db.ref("queue").on("value", async (snap) => {
   if (matched) return;
 
   const data = snap.val();
   if (!data) return;
 
-  /* SOLO jugadores activos */
   const players = Object.keys(data)
-    .filter(k => data[k] && data[k].status === "waiting")
-    .sort(); // orden estable
+    .filter(p => data[p] && data[p].status === "waiting")
+    .sort();
 
   if (players.length < 2) return;
 
-  /* lock real */
-  const result = await lockRef.transaction(current => {
-    if (current) return; 
-    return {
-      owner: playerId,
-      time: Date.now()
-    };
-  });
-
-  if (!result.committed) return;
-
-  matched = true;
-
   const p1 = players[0];
   const p2 = players[1];
+
+  /* SOLO el primero crea la sala */
+  if (playerId !== p1) return;
+
+  matched = true;
 
   const roomId = "room_" + Date.now();
 
@@ -168,14 +159,15 @@ db.ref("queue").on("value", async (snap) => {
     state: "playing"
   });
 
-  /* limpiar solo jugadores usados */
-  await db.ref("queue/" + p1).remove();
-  await db.ref("queue/" + p2).remove();
+  /* limpiar cola correctamente */
+  await db.ref("queue").remove();
 
-  await db.ref("match_lock").remove();
+  document.getElementById("statusText").innerText = "Entrando a partida...";
 
-  window.location.href =
-    "playgame.html?room=" + roomId + "&pid=" + playerId;
+  setTimeout(() => {
+    window.location.href =
+      "playgame.html?room=" + roomId + "&pid=" + playerId;
+  }, 600);
 });
 </script>
 
