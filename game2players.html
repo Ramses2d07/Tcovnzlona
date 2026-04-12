@@ -117,8 +117,11 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
-/* ID jugador */
+/* ID jugador (CORREGIDO) */
 const playerId = "p_" + Math.random().toString(36).substr(2, 9);
+
+/* GUARDAR ID PARA USARLO EN PLAYGAME */
+localStorage.setItem("playerId", playerId);
 
 /* entrar a cola */
 db.ref("queue/" + playerId).set({
