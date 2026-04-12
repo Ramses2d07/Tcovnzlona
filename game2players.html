@@ -116,13 +116,11 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
-/* ID único del jugador */
+/* ID jugador */
 const playerId = "p_" + Math.random().toString(36).substr(2, 9);
 
-/* evitar reconexión doble */
-if (sessionStorage.getItem("joined")) {
-  console.log("Ya está en cola");
-} else {
+/* evitar doble entrada */
+if (!sessionStorage.getItem("joined")) {
   sessionStorage.setItem("joined", "true");
 
   db.ref("queue/" + playerId).set({
@@ -131,10 +129,10 @@ if (sessionStorage.getItem("joined")) {
   });
 }
 
-/* control de match */
+/* evitar múltiples matches */
 let matched = false;
 
-/* matchmaking estable */
+/* MATCHMAKING */
 db.ref("queue").on("value", (snap) => {
   if (matched) return;
 
@@ -143,25 +141,33 @@ db.ref("queue").on("value", (snap) => {
 
   const players = Object.keys(data);
 
-  if (players.length >= 2) {
+  if (players.length < 2) return;
 
-    matched = true;
+  matched = true;
 
-    const p1 = players[0];
-    const p2 = players[1];
+  const p1 = players[0];
+  const p2 = players[1];
 
-    const roomId = Date.now();
+  const roomId = Date.now().toString();
 
-    db.ref("rooms/" + roomId).set({
-      p1: p1,
-      p2: p2
-    });
+  /* crear sala */
+  db.ref("rooms/" + roomId).set({
+    p1,
+    p2
+  });
 
-    db.ref("queue").remove();
+  /* asignar room a cada jugador */
+  db.ref("queue/" + p1 + "/room").set(roomId);
+  db.ref("queue/" + p2 + "/room").set(roomId);
+});
 
-    window.location.href =
-      "playgame.html?room=" + roomId + "&pid=" + playerId;
-  }
+/* REDIRECCIÓN INDIVIDUAL */
+db.ref("queue/" + playerId + "/room").on("value", (snap) => {
+  const roomId = snap.val();
+  if (!roomId) return;
+
+  window.location.href =
+    "playgame.html?room=" + roomId + "&pid=" + playerId;
 });
 </script>
 
