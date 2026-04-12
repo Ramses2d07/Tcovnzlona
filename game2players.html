@@ -114,26 +114,24 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
-/* 🔑 ID persistente (IMPORTANTE) */
+/* ID único persistente */
 let playerId = sessionStorage.getItem("pid");
+
 if (!playerId) {
   playerId = "p_" + Math.random().toString(36).substr(2, 9);
   sessionStorage.setItem("pid", playerId);
 }
 
-/* evitar doble join */
-if (!sessionStorage.getItem("joined")) {
-  sessionStorage.setItem("joined", "true");
+/* entrar a cola */
+db.ref("queue/" + playerId).set({
+  time: Date.now()
+});
 
-  db.ref("queue/" + playerId).set({
-    status: "waiting",
-    time: Date.now()
-  });
-}
+/* LOCK global para evitar doble creación */
+const lockRef = db.ref("match_lock");
 
 let matched = false;
 
-/* MATCHMAKING SEGURO */
 db.ref("queue").on("value", async (snap) => {
   if (matched) return;
 
@@ -141,15 +139,27 @@ db.ref("queue").on("value", async (snap) => {
   if (!data) return;
 
   const players = Object.keys(data);
-
   if (players.length < 2) return;
+
+  /* intentar tomar control */
+  const lock = await lockRef.transaction(current => {
+    if (current) return; // alguien ya creó sala
+    return {
+      owner: playerId,
+      time: Date.now()
+    };
+  });
+
+  if (!lock.committed) return;
 
   matched = true;
 
-  const p1 = players[0];
-  const p2 = players[1];
+  const list = Object.keys(data);
 
-  const roomId = Date.now().toString();
+  const p1 = list[0];
+  const p2 = list[1];
+
+  const roomId = "room_" + Date.now();
 
   await db.ref("rooms/" + roomId).set({
     p1,
@@ -158,9 +168,9 @@ db.ref("queue").on("value", async (snap) => {
     state: "playing"
   });
 
-  /* limpiar SOLO los usados */
-  await db.ref("queue/" + p1).remove();
-  await db.ref("queue/" + p2).remove();
+  /* limpiar cola y lock */
+  await db.ref("queue").remove();
+  await db.ref("match_lock").remove();
 
   window.location.href =
     "playgame.html?room=" + roomId + "&pid=" + playerId;
