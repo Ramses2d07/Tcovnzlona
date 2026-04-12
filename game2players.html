@@ -112,7 +112,6 @@ firebase.initializeApp({
 
 const db = firebase.database();
 
-/* ID estable */
 let playerId = sessionStorage.getItem("pid");
 
 if (!playerId) {
@@ -128,9 +127,9 @@ db.ref("queue/" + playerId).set({
   time: Date.now()
 });
 
-/* MATCHMAKING ATÓMICO REAL */
 const matchRef = db.ref("matchmaker");
 
+/* MATCHMAKING SEGURO */
 matchRef.transaction(current => {
 
   if (!current) {
@@ -141,17 +140,19 @@ matchRef.transaction(current => {
     };
   }
 
-  if (current.p1 && !current.p2) {
+  if (current.state === "waiting" && current.p2 === null && current.p1 !== playerId) {
     current.p2 = playerId;
     current.state = "ready";
   }
 
   return current;
-}).then(async result => {
 
-  if (!result.committed) return;
+}, (error, committed, snapshot) => {
 
-  const data = result.snapshot.val();
+  if (error || !committed) return;
+
+  const data = snapshot.val();
+  if (!data) return;
 
   if (data.state !== "ready") {
     status.innerText = "Esperando jugador...";
@@ -163,23 +164,19 @@ matchRef.transaction(current => {
 
   const roomId = "room_" + Date.now();
 
-  await db.ref("rooms/" + roomId).set({
+  db.ref("rooms/" + roomId).set({
     p1,
     p2,
     turn: p1,
     state: "playing"
-  });
+  }).then(() => {
 
-  /* limpiar */
-  await db.ref("matchmaker").remove();
-  await db.ref("queue").remove();
+    db.ref("matchmaker").remove();
 
-  status.innerText = "Entrando...";
-
-  setTimeout(() => {
     window.location.href =
       "playgame.html?room=" + roomId + "&pid=" + playerId;
-  }, 600);
+  });
+
 });
 </script>
 
