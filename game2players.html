@@ -5,6 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">  
 <title>2 Players Room</title>  
 
+<!-- FIREBASE -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+
 <style>  
 * { box-sizing: border-box; }  
 
@@ -116,17 +120,9 @@ body {
   font-size: 22px;  
   font-weight: 900;  
   color: #fff;  
-  text-shadow:  
-    0 2px 0 #000,  
-    0 3px 6px rgba(0,0,0,0.9),  
-    0 0 6px rgba(255,255,255,0.3);  
+  text-shadow: 0 2px 0 #000, 0 3px 6px rgba(0,0,0,0.9);  
   z-index: 3;  
 }  
-
-.text-bronze { color: #cd7f32; }  
-.text-silver { color: #e0e0e0; }  
-.text-gold { color: #ffd700; }  
-.text-diamond { color: #6fe7ff; }  
 
 .rank-label {  
   position: absolute;  
@@ -141,18 +137,12 @@ body {
   border: 1px solid rgba(255,255,255,0.25);  
 }  
 
-.rank-bronze { background: linear-gradient(145deg,#cd7f32,#5a2e0f); }  
-.rank-silver { background: linear-gradient(145deg,#e0e0e0,#6b6b6b); }  
-.rank-gold { background: linear-gradient(145deg,#ffd700,#7a5c00); }  
-.rank-diamond { background: linear-gradient(145deg,#6fe7ff,#005a6b); }  
-
 .table {  
   width: 320px;  
   height: 180px;  
   border-radius: 20px;  
-  background:  
-    radial-gradient(circle at 50% 40%, rgba(255,255,255,0.15), transparent 60%),  
-    radial-gradient(circle, #0f7a35, #042610);  
+  background: radial-gradient(circle at 50% 40%, rgba(255,255,255,0.15), transparent 60%),  
+              radial-gradient(circle, #0f7a35, #042610);  
   border: 12px solid #3b2314;  
   position: relative;  
 }  
@@ -220,48 +210,36 @@ body {
 
 </div>  
 
-<script>  
-function setLevelStyle(id, level) {  
-  const el = document.getElementById(id);  
-  const color = el.querySelector(".badge-color");  
-  const text = el.querySelector(".badge-text");  
-  const label = el.querySelector(".rank-label");  
+<script>
+/* FIREBASE CONFIG */
+const firebaseConfig = {
+  apiKey: "TU_API_KEY",
+  authDomain: "truco-venezolano-6c7d7.firebaseapp.com",
+  databaseURL: "https://truco-venezolano-6c7d7-default-rtdb.firebaseio.com",
+  projectId: "truco-venezolano-6c7d7"
+};
 
-  color.className = "badge-color";  
-  text.className = "badge-text";  
-  label.className = "rank-label";  
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
 
-  let rank = "";  
+/* LEER SALA */
+const urlParams = new URLSearchParams(window.location.search);
+const roomId = urlParams.get("room");
 
-  if (level < 5) {  
-    color.classList.add("bronze");  
-    text.classList.add("text-bronze");  
-    label.classList.add("rank-bronze");  
-    rank = "BRONCE";  
-  } else if (level < 10) {  
-    color.classList.add("silver");  
-    text.classList.add("text-silver");  
-    label.classList.add("rank-silver");  
-    rank = "PLATA";  
-  } else if (level < 20) {  
-    color.classList.add("gold");  
-    text.classList.add("text-gold");  
-    label.classList.add("rank-gold");  
-    rank = "ORO";  
-  } else {  
-    color.classList.add("diamond");  
-    text.classList.add("text-diamond");  
-    label.classList.add("rank-diamond");  
-    rank = "DIAMANTE";  
-  }  
+if (!roomId) {
+  document.getElementById("statusText").innerText = "No hay sala";
+} else {
+  db.ref("rooms/" + roomId).on("value", (snap) => {
+    const room = snap.val();
 
-  text.innerText = level;  
-  label.innerText = rank;  
-}  
+    if (!room) return;
 
-setLevelStyle("p1", 7);  
-setTimeout(()=>setLevelStyle("p2",5),2000);  
-</script>  
+    document.getElementById("statusText").innerText = "Partida lista";
+
+    console.log("ROOM:", room);
+  });
+}
+</script>
 
 </body>  
 </html>
