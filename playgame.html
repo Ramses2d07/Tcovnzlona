@@ -106,63 +106,58 @@ function getRole(r){
   return null;
 }
 
-/* CARTAS */
-function value(c){
-  const v={"4":1,"5":2,"6":3,"7":4,"10":5,"11":6,"12":7,"A":8,"2":9,"3":10};
-  return v[c]||0;
-}
+/* INIT SOLO UNA VEZ (SEGURO) */
+roomRef.once("value").then(snap => {
+  const r = snap.val();
+  if(!r || r.inited) return;
 
-/* 🔥 INIT SEGURO (SOLO UNA VEZ) */
-roomRef.transaction(room => {
-  if(!room) return room;
-
-  if(room.inited) return; // evita repetir setup
-
-  const deck=["A","2","3","4","5","6","7","10","11","12"]
+  const deck = ["A","2","3","4","5","6","7","10","11","12"]
     .sort(()=>Math.random()-0.5);
 
-  room.inited = true;
-  room.turn = room.p1;
-  room.round = 1;
-  room.table = [];
-  room.score = {
-    [room.p1]:0,
-    [room.p2]:0
-  };
-  room.hands = {
-    [room.p1]:deck.slice(0,3),
-    [room.p2]:deck.slice(3,6)
-  };
-
-  return room;
+  roomRef.update({
+    inited: true,
+    turn: r.p1,
+    round: 1,
+    table: [],
+    score: {
+      [r.p1]:0,
+      [r.p2]:0
+    },
+    hands: {
+      [r.p1]: deck.slice(0,3),
+      [r.p2]: deck.slice(3,6)
+    }
+  });
 });
 
-/* JUGAR CARTA (FIX REAL) */
+/* 🔥 JUGAR CARTA (FIX DEFINITIVO) */
 function playCard(card){
 
-  roomRef.transaction(room => {
-    if(!room) return room;
+  roomRef.once("value").then(snap => {
+    const r = snap.val();
+    if(!r) return;
 
-    if(room.turn !== myId) return room;
+    if(r.turn !== myId) return;
 
-    if(!room.table) room.table = [];
+    const table = r.table || [];
+    const hands = r.hands || {};
 
-    const alreadyPlayed = room.table.some(c => c.player === myId);
-    if(alreadyPlayed) return room;
+    if(table.some(c => c.player === myId)) return;
 
-    room.table.push({
-      player: myId,
-      card
-    });
+    const myHand = hands[myId] || [];
+    if(!myHand.includes(card)) return;
 
-    if(room.hands && room.hands[myId]){
-      room.hands[myId] = room.hands[myId].filter(c => c !== card);
-    }
+    const nextTurn = (r.turn === r.p1) ? r.p2 : r.p1;
 
-    room.turn = (room.turn === room.p1) ? room.p2 : room.p1;
+    const updates = {};
 
-    return room;
+    updates.table = [...table, { player: myId, card }];
+    updates[`hands/${myId}`] = myHand.filter(c => c !== card);
+    updates.turn = nextTurn;
+
+    roomRef.update(updates);
   });
+
 }
 
 /* RENDER */
@@ -188,7 +183,6 @@ roomRef.on("value", snap => {
   document.getElementById("score").innerText =
     (r.score?.[r.p1]||0) + " - " + (r.score?.[r.p2]||0);
 
-  /* mesa */
   const tableDiv = document.getElementById("table");
   tableDiv.innerHTML = "";
 
@@ -199,7 +193,6 @@ roomRef.on("value", snap => {
     tableDiv.appendChild(d);
   });
 
-  /* mano */
   const hand = document.getElementById("hand");
   hand.innerHTML = "";
 
