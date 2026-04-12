@@ -51,17 +51,12 @@
     #btn-jugar {
       font-size: clamp(28px, 4.5vw, 60px);
       padding: clamp(18px, 3vw, 32px) clamp(70px, 10vw, 140px);
-
       font-weight: 900;
       color: white;
-
       background: linear-gradient(145deg, #2ecc71, #1e8f4f);
-
       border: 4px solid #f1c40f;
       border-radius: 16px;
-
       cursor: pointer;
-
       transition: 0.15s ease;
       box-shadow: 0 0 25px rgba(46, 204, 113, 0.5);
     }
@@ -74,17 +69,12 @@
     #lang {
       font-size: clamp(14px, 2.5vw, 28px);
       padding: clamp(10px, 1.5vw, 18px) clamp(25px, 4vw, 60px);
-
       font-weight: 900;
       color: white;
-
       background: linear-gradient(145deg, #2ecc71, #1e8f4f);
-
       border: 3px solid #f1c40f;
       border-radius: 12px;
-
       cursor: pointer;
-
       box-shadow: 0 0 20px rgba(46, 204, 113, 0.4);
       transition: 0.15s ease;
     }
@@ -93,7 +83,6 @@
       transform: scale(1.05);
       box-shadow: 0 0 35px rgba(46, 204, 113, 0.7);
     }
-
   </style>
 </head>
 
@@ -124,12 +113,10 @@
       }
     }
 
-    // 🪵 SONIDO MADERA (TOC REAL)
     function woodKnock(volume = 0.7) {
       initAudio();
 
       const duration = 0.12;
-
       const bufferSize = audioCtx.sampleRate * duration;
       const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
       const output = buffer.getChannelData(0);
@@ -157,11 +144,22 @@
       noise.stop(audioCtx.currentTime + duration);
     }
 
+    /* =========================
+       FIX IMPORTANTE
+       ID ESTABLE DEL JUGADOR
+    ========================== */
+    let playerId = sessionStorage.getItem("pid");
+
+    if (!playerId) {
+      playerId = "p_" + Math.random().toString(36).substr(2, 9);
+      sessionStorage.setItem("pid", playerId);
+    }
+
     function goLobby() {
       woodKnock(0.8);
 
       setTimeout(() => {
-        window.location.href = "lobby.html";
+        window.location.href = "lobby.html?pid=" + playerId;
       }, 120);
     }
 
