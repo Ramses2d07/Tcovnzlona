@@ -74,6 +74,7 @@ body {
 .status {  
   font-size: 14px;  
   font-weight: bold;  
+  text-align:center;
 }  
 </style>  
 </head>  
@@ -102,53 +103,63 @@ body {
 </div>  
 
 <script>
-const firebaseConfig = {
+firebase.initializeApp({
   apiKey: "TU_API_KEY",
   authDomain: "truco-venezolano-6c7d7.firebaseapp.com",
   databaseURL: "https://truco-venezolano-6c7d7-default-rtdb.firebaseio.com",
   projectId: "truco-venezolano-6c7d7"
-};
+});
 
-firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
 /* ID estable */
 let playerId = sessionStorage.getItem("pid");
 
 if (!playerId) {
-  playerId = "p_" + Date.now() + "_" + Math.random().toString(36).slice(2,6);
+  playerId = "p_" + Date.now() + "_" + Math.random().toString(36).slice(2,8);
   sessionStorage.setItem("pid", playerId);
 }
 
+const status = document.getElementById("statusText");
+status.innerText = "Buscando rival...";
+
 /* entrar a cola */
 db.ref("queue/" + playerId).set({
-  status: "waiting",
   time: Date.now()
 });
 
-/* evitar doble match */
-let matched = false;
+/* MATCHMAKING ATÓMICO REAL */
+const matchRef = db.ref("matchmaker");
 
-/* MATCHMAKING SEGURO */
-db.ref("queue").on("value", async (snap) => {
-  if (matched) return;
+matchRef.transaction(current => {
 
-  const data = snap.val();
-  if (!data) return;
+  if (!current) {
+    return {
+      p1: playerId,
+      p2: null,
+      state: "waiting"
+    };
+  }
 
-  const players = Object.keys(data)
-    .filter(p => data[p] && data[p].status === "waiting")
-    .sort();
+  if (current.p1 && !current.p2) {
+    current.p2 = playerId;
+    current.state = "ready";
+  }
 
-  if (players.length < 2) return;
+  return current;
+}).then(async result => {
 
-  const p1 = players[0];
-  const p2 = players[1];
+  if (!result.committed) return;
 
-  /* SOLO el primero crea la sala */
-  if (playerId !== p1) return;
+  const data = result.snapshot.val();
 
-  matched = true;
+  if (data.state !== "ready") {
+    status.innerText = "Esperando jugador...";
+    return;
+  }
+
+  const p1 = data.p1;
+  const p2 = data.p2;
 
   const roomId = "room_" + Date.now();
 
@@ -159,10 +170,11 @@ db.ref("queue").on("value", async (snap) => {
     state: "playing"
   });
 
-  /* limpiar cola correctamente */
+  /* limpiar */
+  await db.ref("matchmaker").remove();
   await db.ref("queue").remove();
 
-  document.getElementById("statusText").innerText = "Entrando a partida...";
+  status.innerText = "Entrando...";
 
   setTimeout(() => {
     window.location.href =
