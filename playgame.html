@@ -106,7 +106,7 @@ function getRole(r){
   return null;
 }
 
-/* INIT SOLO UNA VEZ (SEGURO) */
+/* INIT SEGURO */
 roomRef.once("value").then(snap => {
   const r = snap.val();
   if(!r || r.inited) return;
@@ -130,32 +130,34 @@ roomRef.once("value").then(snap => {
   });
 });
 
-/* 🔥 JUGAR CARTA (FIX DEFINITIVO) */
+/* 🔥 PARCHE DEFINITIVO DE JUEGO */
 function playCard(card){
 
-  roomRef.once("value").then(snap => {
-    const r = snap.val();
-    if(!r) return;
+  roomRef.transaction(room => {
 
-    if(r.turn !== myId) return;
+    if(!room) return room;
 
-    const table = r.table || [];
-    const hands = r.hands || {};
+    if(room.turn !== myId) return room;
 
-    if(table.some(c => c.player === myId)) return;
+    room.table = room.table || [];
+    room.hands = room.hands || {};
 
-    const myHand = hands[myId] || [];
-    if(!myHand.includes(card)) return;
+    const hand = room.hands[myId] || [];
 
-    const nextTurn = (r.turn === r.p1) ? r.p2 : r.p1;
+    if(!hand.includes(card)) return room;
 
-    const updates = {};
+    if(room.table.some(c => c.player === myId)) return room;
 
-    updates.table = [...table, { player: myId, card }];
-    updates[`hands/${myId}`] = myHand.filter(c => c !== card);
-    updates.turn = nextTurn;
+    room.table.push({
+      player: myId,
+      card: card
+    });
 
-    roomRef.update(updates);
+    room.hands[myId] = hand.filter(c => c !== card);
+
+    room.turn = (room.turn === room.p1) ? room.p2 : room.p1;
+
+    return room;
   });
 
 }
