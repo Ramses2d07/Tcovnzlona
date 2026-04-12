@@ -33,7 +33,13 @@ body {
 
 .turn { margin-top:10px; font-weight:bold; color:#ffd700; }
 
-#table { margin:15px 0; display:flex; justify-content:center; gap:10px; min-height:80px; }
+#table {
+  margin:15px 0;
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  min-height:80px;
+}
 
 .card {
   width:60px;
@@ -45,13 +51,23 @@ body {
   align-items:center;
   justify-content:center;
   cursor:pointer;
+  user-select:none;
 }
 
 .card.played { opacity:0.6; }
 
-#hand { margin-top:10px; display:flex; gap:10px; justify-content:center; }
+#hand {
+  margin-top:10px;
+  display:flex;
+  gap:10px;
+  justify-content:center;
+}
 
-#score { margin-top:8px; color:#00ffcc; font-weight:bold; }
+#score {
+  margin-top:8px;
+  color:#00ffcc;
+  font-weight:bold;
+}
 </style>
 </head>
 
@@ -83,7 +99,7 @@ const myId = url.get("pid");
 
 const roomRef = db.ref("rooms/" + roomId);
 
-/* valor cartas */
+/* valor cartas truco */
 function value(c){
   const v={
     "4":1,"5":2,"6":3,"7":4,
@@ -93,35 +109,57 @@ function value(c){
   return v[c]||0;
 }
 
-/* 🔥 SOLO EL PRIMER CLIENTE INICIALIZA */
-roomRef.child("init").transaction(current => {
-  if (current === true) return; // ya inicializado
-
-  const deck=["A","2","3","4","5","6","7","10","11","12"]
-    .sort(()=>Math.random()-0.5);
-
-  roomRef.set({
-    p1: roomId.includes("seed") ? myId : null, // fallback seguro
-    p2: null,
-    turn: null,
-    round:1,
-    score:{},
-    table:[],
-    hands:{},
-    state:"playing",
-    init:true
-  });
-
-  return true;
-});
-
-/* MEJOR: esperar datos válidos */
-roomRef.on("value", snap=>{
-  const r=snap.val();
+/* 🔥 inicialización segura (solo 1 vez) */
+roomRef.once("value", snap=>{
+  const r = snap.val();
   if(!r || !r.p1 || !r.p2) return;
 
-  /* asignar roles correcto */
-  const isP1 = (r.p1 === myId);
+  if(!r.hands){
+    const deck=["A","2","3","4","5","6","7","10","11","12"]
+      .sort(()=>Math.random()-0.5);
+
+    roomRef.update({
+      turn:r.p1,
+      round:1,
+      table:[],
+      score:{
+        [r.p1]:0,
+        [r.p2]:0
+      },
+      hands:{
+        [r.p1]:deck.slice(0,3),
+        [r.p2]:deck.slice(3,6)
+      }
+    });
+  }
+});
+
+/* jugar carta con transacción (IMPORTANTE FIX) */
+function playCard(card){
+  roomRef.transaction(room=>{
+    if(!room) return room;
+    if(room.turn !== myId) return room;
+
+    room.table = room.table || [];
+
+    if(room.table.some(c=>c.player===myId)) return room;
+
+    room.table.push({player:myId, card});
+
+    room.hands[myId] = room.hands[myId].filter(c=>c!==card);
+
+    room.turn = (myId === room.p1) ? room.p2 : room.p1;
+
+    return room;
+  });
+}
+
+/* loop principal */
+roomRef.on("value", snap=>{
+  const r = snap.val();
+  if(!r) return;
+
+  const isP1 = r.p1 === myId;
 
   document.getElementById("me").innerText =
     isP1 ? "Jugador 1 (Tú)" : "Jugador 2 (Tú)";
@@ -133,44 +171,28 @@ roomRef.on("value", snap=>{
     r.turn === myId ? "TU TURNO" : "Turno rival";
 
   document.getElementById("score").innerText =
-    (r.score?.[r.p1]||0)+" - "+(r.score?.[r.p2]||0);
+    (r.score?.[r.p1]||0) + " - " + (r.score?.[r.p2]||0);
 
   /* mesa */
-  const tableDiv=document.getElementById("table");
-  tableDiv.innerHTML="";
-  (r.table||[]).forEach(c=>{
-    const d=document.createElement("div");
-    d.className="card played";
-    d.innerText=c.card;
+  const tableDiv = document.getElementById("table");
+  tableDiv.innerHTML = "";
+
+  (r.table || []).forEach(c=>{
+    const d = document.createElement("div");
+    d.className = "card played";
+    d.innerText = c.card;
     tableDiv.appendChild(d);
   });
 
   /* mano */
-  const hand=document.getElementById("hand");
-  hand.innerHTML="";
+  const hand = document.getElementById("hand");
+  hand.innerHTML = "";
 
-  (r.hands?.[myId]||[]).forEach(c=>{
-    const d=document.createElement("div");
-    d.className="card";
-    d.innerText=c;
-
-    d.onclick=()=>{
-      roomRef.transaction(room=>{
-        if(!room || room.turn !== myId) return room;
-
-        if(room.table?.some(x=>x.player===myId)) return room;
-
-        room.table = room.table || [];
-        room.table.push({player:myId,card:c});
-
-        room.hands[myId] = room.hands[myId].filter(x=>x!==c);
-
-        room.turn = (myId===room.p1)?room.p2:room.p1;
-
-        return room;
-      });
-    };
-
+  (r.hands?.[myId] || []).forEach(c=>{
+    const d = document.createElement("div");
+    d.className = "card";
+    d.innerText = c;
+    d.onclick = ()=>playCard(c);
     hand.appendChild(d);
   });
 });
