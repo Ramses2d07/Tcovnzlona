@@ -33,7 +33,7 @@ body {
 
 .turn { margin-top:10px; font-weight:bold; color:#ffd700; }
 
-#table { margin:15px 0; display:flex; justify-content:center; gap:10px; }
+#table { margin:15px 0; display:flex; justify-content:center; gap:10px; min-height:80px; }
 
 .card {
   width:60px;
@@ -93,7 +93,7 @@ function value(c){
   return v[c]||0;
 }
 
-/* INICIALIZAR SOLO UNA VEZ */
+/* INICIALIZAR PARTIDA (SEGURO) */
 roomRef.once("value", s=>{
   const r=s.val();
   if(!r || !r.p1 || !r.p2) return;
@@ -138,7 +138,7 @@ function playCard(card){
   });
 }
 
-/* LOGICA PARTIDA */
+/* GAME LOOP */
 roomRef.on("value", snap=>{
   const r=snap.val();
   if(!r) return;
@@ -178,7 +178,7 @@ roomRef.on("value", snap=>{
     },600);
   }
 
-  /* IDENTIDAD CORRECTA */
+  /* UI PLAYERS */
   document.getElementById("me").innerText =
     r.p1===myId?"Jugador 1 (Tú)":"Jugador 2 (Tú)";
 
