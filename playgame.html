@@ -90,36 +90,42 @@ const myId = url.get("pid");
 
 const roomRef = db.ref("rooms/" + roomId);
 
-/* CARTA VALOR */
+/* VALOR CARTAS */
 function cardValue(c){
   const o={ "4":1,"5":2,"6":3,"7":4,"10":5,"11":6,"12":7,"A":8,"2":9,"3":10 };
   return o[c]||0;
 }
 
-/* INICIALIZAR */
-roomRef.once("value", s=>{
-  const r=s.val();
-  if(!r.hands){
-    const deck=["A","2","3","4","5","6","7","10","11","12"].sort(()=>Math.random()-0.5);
+/* 🔒 INICIALIZACIÓN SEGURA (FIX PRINCIPAL) */
+roomRef.transaction(room => {
+  if (!room) return room;
 
-    roomRef.update({
-      state:"playing",
-      turn:r.p1,
-      hands:{
-        [r.p1]:deck.slice(0,3),
-        [r.p2]:deck.slice(3,6)
-      },
-      table:[],
-      score:{[r.p1]:0,[r.p2]:0},
-      truco:{state:"none",owner:null}
-    });
-  }
+  if (room.initialized) return room;
+
+  const deck = ["A","2","3","4","5","6","7","10","11","12"]
+    .sort(() => Math.random() - 0.5);
+
+  room.initialized = true;
+  room.state = "playing";
+  room.turn = room.p1;
+
+  room.hands = {
+    [room.p1]: deck.slice(0, 3),
+    [room.p2]: deck.slice(3, 6)
+  };
+
+  room.table = [];
+  room.score = { [room.p1]: 0, [room.p2]: 0 };
+  room.truco = { state: "none", owner: null };
+
+  return room;
 });
 
 /* JUGAR CARTA */
 function playCard(card){
   roomRef.once("value", s=>{
     const r=s.val();
+    if(!r) return;
     if(r.turn!==myId) return;
     if(r.state!=="playing") return;
 
@@ -139,39 +145,11 @@ function playCard(card){
   });
 }
 
-/* RESOLVER MANO */
+/* RENDER */
 roomRef.on("value", snap=>{
   const r=snap.val();
   if(!r) return;
 
-  const t=r.table||[];
-  if(t.length===2){
-    const v1=cardValue(t[0].card);
-    const v2=cardValue(t[1].card);
-
-    let winner=null;
-    if(v1>v2) winner=t[0].player;
-    if(v2>v1) winner=t[1].player;
-
-    const score=r.score||{};
-    if(winner) score[winner]=(score[winner]||0)+1;
-
-    let nextTurn=winner||r.p1;
-
-    let finished=false;
-    if(score[r.p1]>=2||score[r.p2]>=2){
-      finished=true;
-    }
-
-    roomRef.update({
-      table:[],
-      score,
-      turn:nextTurn,
-      state: finished?"finished":"playing"
-    });
-  }
-
-  /* UI */
   document.getElementById("me").innerText =
     r.p1===myId?"Jugador 1 (Tú)":"Jugador 2 (Tú)";
 
@@ -184,20 +162,21 @@ roomRef.on("value", snap=>{
   document.getElementById("score").innerText =
     (r.score?.[r.p1]||0)+" - "+(r.score?.[r.p2]||0);
 
-  /* mesa */
+  /* MESA */
   const table=document.getElementById("table");
   table.innerHTML="";
-  t.forEach(c=>{
+  (r.table||[]).forEach(c=>{
     const d=document.createElement("div");
     d.className="card played";
     d.innerText=c.card;
     table.appendChild(d);
   });
 
-  /* mano */
+  /* MANO */
   const hand=document.getElementById("hand");
   hand.innerHTML="";
   const myHand=r.hands?.[myId]||[];
+
   myHand.forEach(c=>{
     const d=document.createElement("div");
     d.className="card";
@@ -226,12 +205,19 @@ document.getElementById("acceptBtn").onclick=()=>{
 };
 
 document.getElementById("rejectBtn").onclick=()=>{
-  roomRef.update({truco:{state:"none",owner:null}});
   roomRef.once("value",s=>{
     const r=s.val();
     const score=r.score||{};
-    score[r.truco.owner===r.p1?r.p2:r.p1]++;
-    roomRef.update({score});
+
+    const loser = r.truco.owner===r.p1?r.p1:r.p2;
+    const winner = loser===r.p1?r.p2:r.p1;
+
+    score[winner]=(score[winner]||0)+1;
+
+    roomRef.update({
+      score,
+      truco:{state:"none",owner:null}
+    });
   });
 };
 </script>
