@@ -15,7 +15,6 @@ body {
   background: #000;
   color: #fff;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
   height: 100vh;
@@ -25,7 +24,7 @@ body {
   background: #1c1f24;
   padding: 20px;
   border-radius: 12px;
-  width: 300px;
+  width: 320px;
   text-align: center;
   box-shadow: 0 0 20px rgba(0,0,0,0.5);
 }
@@ -40,8 +39,6 @@ body {
 </head>
 
 <body>
-
-<h2>Sala de Juego</h2>
 
 <div class="box">
   <div class="player" id="me">Yo: ...</div>
@@ -59,14 +56,14 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
-/* 🔴 FIX IMPORTANTE: usar URL, no localStorage */
-const params = new URLSearchParams(window.location.search);
+/* datos URL */
+const url = new URLSearchParams(window.location.search);
+const roomId = url.get("room");
+const myId = url.get("pid");
 
-const roomId = params.get("room");
-const myId = params.get("pid");
-
+/* seguridad */
 if (!roomId || !myId) {
-  document.getElementById("me").innerText = "Error: sin datos de sala";
+  document.body.innerHTML = "Error: sala inválida";
 }
 
 /* escuchar sala */
@@ -86,8 +83,8 @@ db.ref("rooms/" + roomId).on("value", (snap) => {
     rival = "Jugador 1";
   } 
   else {
-    me = "Espectador";
-    rival = "Sala no válida";
+    me = "Error de sala";
+    rival = "Sin acceso";
   }
 
   document.getElementById("me").innerText = "Yo: " + me;
