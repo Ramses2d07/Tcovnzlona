@@ -114,20 +114,26 @@ const db = firebase.database();
 
 const status = document.getElementById("statusText");
 
+/* ID único */
 let playerId = sessionStorage.getItem("pid");
 if (!playerId) {
   playerId = "p_" + Date.now() + "_" + Math.random().toString(36).slice(2,8);
   sessionStorage.setItem("pid", playerId);
 }
 
-status.innerText = "Buscando rival...";
-
-/* ENTRAR A COLA */
+/* marcar presencia en cola */
 db.ref("queue/" + playerId).set({
-  time: Date.now()
+  id: playerId,
+  time: Date.now(),
+  status: "waiting"
 });
 
-/* ESCUCHAR SALAS DIRECTAMENTE (IMPORTANTE) */
+status.innerText = "Buscando rival...";
+
+/* evitar doble creación */
+let matched = false;
+
+/* ESCUCHA DE SALAS (IMPORTANTE) */
 db.ref("rooms").on("child_added", snap => {
   const room = snap.val();
 
@@ -136,9 +142,11 @@ db.ref("rooms").on("child_added", snap => {
     status.innerText = "Entrando a partida...";
 
     if (room.p1 === playerId) {
-      document.getElementById("p1").innerText = "Tú (Jugador 1)";
+      document.getElementById("p1").innerText = "Jugador 1 (Tú)";
+      document.getElementById("p2").innerText = "Jugador 2 conectado";
     } else {
-      document.getElementById("p2").innerText = "Tú (Jugador 2)";
+      document.getElementById("p2").innerText = "Jugador 2 (Tú)";
+      document.getElementById("p1").innerText = "Jugador 1 conectado";
     }
 
     setTimeout(() => {
@@ -148,8 +156,10 @@ db.ref("rooms").on("child_added", snap => {
   }
 });
 
-/* MATCHMAKING SIMPLE Y ROBUSTO */
+/* MATCHMAKING SEGURO */
 db.ref("queue").on("value", async snap => {
+
+  if (matched) return;
 
   const data = snap.val();
   if (!data) return;
@@ -161,23 +171,21 @@ db.ref("queue").on("value", async snap => {
     return;
   }
 
-  /* orden por tiempo real (IMPORTANTE) */
+  /* orden real por tiempo */
   players.sort((a, b) => data[a].time - data[b].time);
 
   const p1 = players[0];
   const p2 = players[1];
 
-  /* SOLO p1 crea la sala */
+  /* SOLO creador */
   if (playerId !== p1) {
-    document.getElementById("p1").innerText = "Jugador 1 listo";
     status.innerText = "Conectado / esperando inicio...";
     return;
   }
 
-  const roomId = "room_" + Date.now();
+  matched = true;
 
-  const exists = await db.ref("rooms/" + roomId).once("value");
-  if (exists.exists()) return;
+  const roomId = "room_" + Date.now();
 
   await db.ref("rooms/" + roomId).set({
     p1,
@@ -186,6 +194,7 @@ db.ref("queue").on("value", async snap => {
     state: "playing"
   });
 
+  /* limpiar cola completa */
   await db.ref("queue").remove();
 });
 </script>
